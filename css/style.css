@@ -1,0 +1,92 @@
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #060709;
+}
+::-webkit-scrollbar-thumb {
+    background: #1f2430;
+    border-radius: 4px;
+    border: 1px solid rgba(230, 185, 78, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #e6b94e;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+    background: rgba(15, 18, 26, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card-gold {
+    background: rgba(20, 18, 12, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(230, 185, 78, 0.25);
+    box-shadow: 0 10px 30px -10px rgba(230, 185, 78, 0.15);
+}
+
+/* Text Shimmer Effect */
+.gold-gradient-text {
+    background: linear-gradient(135deg, #FFF0B3 0%, #E6B94E 50%, #997315 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cyan-gradient-text {
+    background: linear-gradient(135deg, #E0FFFF 0%, #00F0FF 50%, #008891 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Ambient Glow Backdrop */
+.ambient-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Custom Cursor Follower */
+#custom-cursor {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: transform 0.08s ease-out, opacity 0.2s ease;
+}
+
+/* Octavia Headlight Laser Glow */
+.headlight-beam {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, filter 0.5s ease;
+    filter: drop-shadow(0 0 25px #00f0ff);
+}
+.headlight-on .headlight-beam {
+    opacity: 0.9;
+}
+.headlight-on .headlight-bulb {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 15px #00f0ff) drop-shadow(0 0 35px #00f0ff);
+}
+
+/* Pulsing Status Dot */
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.15); }
+}
+.pulse-glow {
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Custom Grid Background Pattern */
+.grid-bg {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
