@@ -6,6 +6,7 @@
     <title>Глеб Вохрамеев | Official Digital Portfolio & Engineering Hub</title>
 
     <!-- External Typography & Icon Frameworks -->
+    <script src="js/main.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Unbounded:wght@300;400;600;800;900&display=swap" rel="stylesheet">
@@ -144,7 +145,7 @@
 
                 <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
                     <div class="p-4 rounded-2xl glass-card">
-                        <div class="text-2xl md:text-3xl font-unbounded font-bold gold-gradient-text">19</div>
+                        <div class="user-age-num text-2xl md:text-3xl font-unbounded font-bold gold-gradient-text">--</div>
                         <div class="text-xs font-mono text-slate-400 uppercase mt-1">Возраст (Лет)</div>
                     </div>
                     <div class="p-4 rounded-2xl glass-card">
@@ -172,13 +173,10 @@
                     <div class="absolute -inset-1 bg-gradient-to-r from-gold-500 via-amber-500 to-cyan-400 rounded-3xl blur-xl opacity-30 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
                     <div class="relative glass-card-gold rounded-3xl p-6 text-center space-y-6 transition-transform duration-500 group-hover:-translate-y-2">
                         <div class="relative w-48 h-48 mx-auto rounded-2xl overflow-hidden border-2 border-gold-500/40 p-1.5 bg-obsidian shadow-2xl">
-                            <div class="w-full h-full rounded-xl bg-gradient-to-br from-slate-900 via-zinc-900 to-black flex flex-col items-center justify-center relative group-hover:scale-105 transition-transform duration-700">
-                                <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-gold-500/20 to-cyan-400/20 flex items-center justify-center border border-white/10 mb-2">
-                                    <i class="fa-solid fa-user-astronaut text-5xl gold-gradient-text"></i>
-                                </div>
-                                <span class="text-[10px] font-mono text-cyan-400 tracking-widest uppercase">ITMO ENGINEER</span>
+                            <div class="w-full h-full rounded-xl overflow-hidden relative group-hover:scale-105 transition-transform duration-700">
+                                <img src="avamini.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover">
                             </div>
-                            <div class="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/80 border border-gold-500/50 text-[10px] font-mono text-gold-400">
+                            <div class="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/80 border border-gold-500/50 text-[10px] font-mono text-gold-400 z-10">
                                 VERIFIED
                             </div>
                         </div>
@@ -197,7 +195,7 @@
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 text-[11px] font-mono text-slate-300">НИУ ИТМО</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 text-[11px] font-mono text-slate-300">Java Spring</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 text-[11px] font-mono text-slate-300">VCDS / ODIS</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-white/5 text-[11px] font-mono text-slate-300">19 лет</span>
+                            <span class="user-age-text px-2.5 py-1 rounded-lg bg-white/5 text-[11px] font-mono text-slate-300">--</span>
                         </div>
                     </div>
                 </div>
@@ -230,15 +228,13 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-black/80 to-obsidian rounded-2xl border border-white/5 relative min-h-[280px]" id="car-svg-container">
-                            <div id="octavia-visual" class="w-full max-w-md transition-all duration-500 flex justify-center">
-                                <img
-                                        src="octavia.webp"
-                                        alt="Skoda Octavia A7"
-                                        class="w-full h-auto object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.6)]"
-                                />
-                            </div>
-
-
+                    <div id="octavia-visual" class="w-full max-w-md transition-all duration-500 flex justify-center">
+                        <img
+                                src="octavia.webp"
+                                alt="Skoda Octavia A7"
+                                class="w-full h-auto object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.6)]"
+                        />
+                    </div>
 
                     <div class="w-full mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-white/5">
                         <div class="text-center p-2 rounded-lg bg-white/[0.02]">
@@ -337,7 +333,6 @@
         </div>
     </section>
 
-    <!-- TAB 2: ABOUT ME PAGE -->
     <section id="tab-about" class="tab-content hidden space-y-12">
         <div class="space-y-3 border-b border-white/10 pb-6">
             <div class="text-xs font-mono text-gold-400 uppercase tracking-widest">
@@ -351,9 +346,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-4 glass-card-gold rounded-3xl p-6 space-y-6 text-center">
                 <div class="relative w-48 h-48 mx-auto rounded-2xl overflow-hidden border-2 border-gold-500/50 bg-black p-1 shadow-2xl">
-                    <div class="w-full h-full rounded-xl bg-gradient-to-br from-zinc-800 to-slate-900 flex flex-col items-center justify-center">
-                        <i class="fa-solid fa-user-gear text-6xl gold-gradient-text mb-2"></i>
-                        <span class="text-[10px] font-mono text-slate-400">ОФИЦИАЛЬНЫЙ ПРОФИЛЬ</span>
+                    <div class="w-full h-full rounded-xl overflow-hidden relative">
+                        <img src="fullava.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -364,12 +358,12 @@
 
                 <div class="p-4 rounded-xl bg-white/5 space-y-2 text-left text-xs font-mono">
                     <div class="flex justify-between text-slate-400">
-                        <span>Возраст:</span>
-                        <span class="text-white font-bold">19 лет</span>
+                        <span>Возрастs:</span>
+                        <span class="user-age-text text-white font-bold">--</span>
                     </div>
                     <div class="flex justify-between text-slate-400">
                         <span>Дата рождения:</span>
-                        <span class="text-white font-bold">14 мая 2007 г.</span>
+                        <span class="text-white font-bold">13 декабря 2006 г.</span>
                     </div>
                     <div class="flex justify-between text-slate-400">
                         <span>Город:</span>
@@ -537,7 +531,7 @@
                 </div>
                 <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                     <span class="text-[11px] font-mono text-slate-500">PostgreSQL • REST</span>
-                    <a href="https://github.com/glebbofri" target="_blank" class="text-xs text-gold-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                    <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" class="text-xs text-gold-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                 </div>
             </div>
 
@@ -554,24 +548,24 @@
                 </div>
                 <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                     <span class="text-[11px] font-mono text-slate-500">Spring Security • Redis</span>
-                    <a href="https://github.com/glebbofri" target="_blank" class="text-xs text-gold-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                    <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" class="text-xs text-gold-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                 </div>
             </div>
 
             <div class="port-card assembly glass-card rounded-3xl p-6 space-y-4 hover:border-cyan-400/40 transition-all flex flex-col justify-between">
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-1 rounded-md bg-cyan-400/10 text-cyan-400 text-[10px] font-mono">LOW-LEVEL</span>
+                        <span class="px-2.5 py-1 rounded-md bg-cyan-400/10 text-cyan-400 text-[10px] font-mono">Apple-tech</span>
                         <i class="fa-solid fa-microchip text-cyan-400 text-lg"></i>
                     </div>
-                    <h3 class="text-xl font-unbounded font-bold text-white">Assembly BEM Kernel</h3>
+                    <h3 class="text-xl font-unbounded font-bold text-white">MyItmo to Apple calendare converter</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        Экспериментальное микроядро на Ассемблере с архитектурной концепцией БЭМ для сухой изоляции процессов.
+                        Скрипт автоматически парсящий расписание из my.itmo.ru по персональному токену в Apple Calendare
                     </p>
                 </div>
                 <div class="pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span class="text-[11px] font-mono text-slate-500">x86 Assembly • OS Spec</span>
-                    <a href="https://github.com/glebbofri" target="_blank" class="text-xs text-cyan-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                    <span class="text-[11px] font-mono text-slate-500">python, github</span>
+                    <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" class="text-xs text-cyan-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                 </div>
             </div>
 
@@ -583,12 +577,12 @@
                     </div>
                     <h3 class="text-xl font-unbounded font-bold text-white">VCDS ECU Telemetry Mod</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        Модуль интерпретации сообщений шины CAN и записи логов с блока Bosch ME17 автомобиля Škoda Octavia A7.
+                        Модуль интерпретации сообщений шины CAN и записи логов с блока Bosch ME17 платформы MQB.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                     <span class="text-[11px] font-mono text-slate-500">CAN Bus • C++ / Python</span>
-                    <a href="https://github.com/glebbofri" target="_blank" class="text-xs text-amber-400 hover:underline">GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="text-xs text-amber-400 hover:underline">Ссылки не будет (пока) <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a>
                 </div>
             </div>
         </div>
@@ -637,27 +631,27 @@
 
             <div class="lg:col-span-7 glass-card rounded-3xl p-8 space-y-6">
                 <h3 class="text-xl font-unbounded font-bold text-white">Отправить сообщение</h3>
-                <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="space-y-1">
                             <label class="text-xs font-mono text-slate-400">Ваше имя</label>
-                            <input type="text" required placeholder="Александр" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
+                            <input type="text" id="contact-name" name="name" required placeholder="Александр" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
                         </div>
                         <div class="space-y-1">
                             <label class="text-xs font-mono text-slate-400">Email или Telegram</label>
-                            <input type="text" required placeholder="@username" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
+                            <input type="text" id="contact-contact" name="contact" required placeholder="@username" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
                         </div>
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-mono text-slate-400">Тема сообщения</label>
-                        <input type="text" required placeholder="Предложение о сотрудничестве" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
+                        <input type="text" id="contact-subject" name="subject" required placeholder="Предложение о сотрудничестве" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors">
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-mono text-slate-400">Текст сообщения</label>
-                        <textarea rows="4" required placeholder="Опишите детали проекта..." class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors"></textarea>
+                        <textarea id="contact-message" name="message" rows="4" required placeholder="Опишите детали проекта..." class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/10 text-white text-sm focus:border-gold-500 outline-none transition-colors"></textarea>
                     </div>
-                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-black font-unbounded font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-all shadow-lg shadow-gold-500/20">
-                        Отправить <i class="fa-solid fa-paper-plane ml-2"></i>
+                    <button type="submit" id="contact-submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-black font-unbounded font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50">
+                        <span id="btn-text">Отправить <i class="fa-solid fa-paper-plane ml-2"></i></span>
                     </button>
                 </form>
             </div>
