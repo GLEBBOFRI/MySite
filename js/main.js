@@ -10,6 +10,44 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
+function updateDynamicAge() {
+    // 13 декабря 2006 года (месяцы в JS нумеруются с 0, поэтому 11 = декабрь)
+    const birthDate = new Date(2006, 11, 13);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    function getDeclension(n) {
+        const lastDigit = n % 10;
+        const lastTwoDigits = n % 100;
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'лет';
+        if (lastDigit === 1) return 'год';
+        if (lastDigit >= 2 && lastDigit <= 4) return 'года';
+        return 'лет';
+    }
+
+    const fullAgeText = `${age} ${getDeclension(age)}`;
+
+    document.querySelectorAll('.user-age-text').forEach(el => {
+        el.textContent = fullAgeText;
+    });
+
+    document.querySelectorAll('.user-age-num').forEach(el => {
+        el.textContent = age;
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateDynamicAge);
+} else {
+    updateDynamicAge();
+}
+
 // Tab Switching Logic (Home, About, Octavia, Portfolio, Contact)
 function switchTab(tabId) {
     // Hide all tabs
@@ -168,7 +206,78 @@ function switchCodeTab(fileType) {
     document.getElementById('code-display-' + fileType).classList.remove('hidden');
     document.getElementById('code-tab-' + fileType).className = "px-3 py-1.5 rounded-lg text-xs font-mono bg-gold-500 text-black font-bold";
 }
+async function handleContactSubmit(event) {
+    event.preventDefault();
 
+    // ⚠️ Замени на свои токен бота и chat_id
+    const BOT_TOKEN = '8825903840:AAGCI-QnaEih51YERaXq5LgxeFbWqftL6rU';
+    const CHAT_ID = '1016044756';
+
+    const btn = document.getElementById('contact-submit-btn');
+    const btnText = document.getElementById('btn-text');
+
+    const name = document.getElementById('contact-name').value.trim();
+    const contact = document.getElementById('contact-contact').value.trim();
+    const subject = document.getElementById('contact-subject').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    // Форматированное сообщение в HTML для Telegram
+    const text = `📬 <b>Новое сообщение с сайта!</b>\n\n` +
+        `👤 <b>Имя:</b> ${escapeHtml(name)}\n` +
+        `💬 <b>Контакт:</b> ${escapeHtml(contact)}\n` +
+        `📌 <b>Тема:</b> ${escapeHtml(subject)}\n\n` +
+        `📝 <b>Сообщение:</b>\n${escapeHtml(message)}`;
+
+    // Индикация загрузки
+    btn.disabled = true;
+    btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Отправка...';
+
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: text,
+                parse_mode: 'HTML'
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+            btnText.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Отправлено!';
+            document.getElementById('contact-form').reset();
+
+            setTimeout(() => {
+                btnText.innerHTML = 'Отправить <i class="fa-solid fa-paper-plane ml-2"></i>';
+                btn.disabled = false;
+            }, 3000);
+        } else {
+            throw new Error(data.description || 'Ошибка Telegram API');
+        }
+    } catch (error) {
+        console.error('Ошибка отправки сообщения:', error);
+        btnText.innerHTML = '<i class="fa-solid fa-xmark mr-2"></i>Ошибка!';
+
+        setTimeout(() => {
+            btnText.innerHTML = 'Отправить <i class="fa-solid fa-paper-plane ml-2"></i>';
+            btn.disabled = false;
+        }, 3000);
+    }
+}
+
+// Вспомогательная функция для безопасного экранирования спецсимволов HTML
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 // Custom Toast Notification
 function handleContactSubmit(e) {
     e.preventDefault();
