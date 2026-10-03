@@ -1,0 +1,55 @@
+name: Deploy GitHub Pages with Config
+
+on:
+  push:
+    branches:
+      - main   # если ветка master — замените на master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Указываем окружение, где лежат ваши секреты
+    environment:
+      name: BOT_TOKEN
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Достаем секреты из окружения BOT_TOKEN и генерируем js/config.js
+      - name: Generate js/config.js
+        env:
+          TG_TOKEN: ${{ secrets.BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: |
+          mkdir -p js
+          cat << 'EOF' > js/config.js
+          window.TG_CONFIG = {
+              BOT_TOKEN: '$TG_TOKEN',
+              CHAT_ID: '$TG_CHAT_ID'
+          };
+          EOF
+          sed -i "s|\$TG_TOKEN|$TG_TOKEN|g" js/config.js
+          sed -i "s|\$TG_CHAT_ID|$TG_CHAT_ID|g" js/config.js
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
