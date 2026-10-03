@@ -1,28 +1,11 @@
-// Custom Mouse Pointer Position Tracker (Desktop Only for Performance)
+// Ambient Glow Follower for Desktop
 if (window.matchMedia('(pointer: fine)').matches) {
-    let cursorInitialized = false;
     document.addEventListener('mousemove', (e) => {
-        const cursor = document.getElementById('custom-cursor');
         const glow = document.getElementById('glow-follow');
-        if (cursor) {
-            if (!cursorInitialized) {
-                cursor.style.opacity = '1';
-                cursorInitialized = true;
-            }
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-        }
         if (glow) {
             glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
         }
-    });
-    document.addEventListener('mouseleave', () => {
-        const cursor = document.getElementById('custom-cursor');
-        if (cursor) cursor.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        const cursor = document.getElementById('custom-cursor');
-        if (cursor && cursorInitialized) cursor.style.opacity = '1';
-    });
+    }, { passive: true });
 }
 
 function updateDynamicAge() {
@@ -504,6 +487,126 @@ class OctaviaSoundSystem {
         steamNoise.stop(now + 4.0);
 
         this.isPlaying = false;
+    }
+
+    // Easter Egg: Turbo spool & flutter blow-off ("pshh-tu-tu-tu")
+    playTurboBlowoff() {
+        this.ensureContext();
+        const now = this.ctx.currentTime;
+
+        // Whistle
+        const whistleOsc = this.ctx.createOscillator();
+        const whistleGain = this.ctx.createGain();
+        whistleOsc.type = 'sine';
+        whistleOsc.frequency.setValueAtTime(1200, now);
+        whistleOsc.frequency.exponentialRampToValueAtTime(3400, now + 0.35);
+        whistleOsc.frequency.exponentialRampToValueAtTime(900, now + 0.8);
+
+        whistleGain.gain.setValueAtTime(0.01, now);
+        whistleGain.gain.linearRampToValueAtTime(0.28, now + 0.3);
+        whistleGain.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
+
+        whistleOsc.connect(whistleGain);
+        whistleGain.connect(this.masterGain);
+        whistleOsc.start(now);
+        whistleOsc.stop(now + 0.9);
+
+        // Blow-off flutter
+        const bufferSize = Math.floor(this.ctx.sampleRate * 0.9);
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.45;
+        }
+
+        const bovNoise = this.ctx.createBufferSource();
+        bovNoise.buffer = buffer;
+
+        const bovFilter = this.ctx.createBiquadFilter();
+        bovFilter.type = 'bandpass';
+        bovFilter.frequency.setValueAtTime(2600, now + 0.25);
+        bovFilter.Q.setValueAtTime(2.5, now);
+
+        const bovGain = this.ctx.createGain();
+        bovGain.gain.setValueAtTime(0.001, now + 0.25);
+        bovGain.gain.linearRampToValueAtTime(0.4, now + 0.35);
+        bovGain.gain.exponentialRampToValueAtTime(0.001, now + 0.95);
+
+        bovNoise.connect(bovFilter);
+        bovFilter.connect(bovGain);
+        bovGain.connect(this.masterGain);
+
+        bovNoise.start(now + 0.25);
+        bovNoise.stop(now + 1.0);
+    }
+
+    // Easter Egg: Anti-lag Pops & Bangs backfires
+    playPopsAndBangs(count = 4) {
+        this.ensureContext();
+        for (let i = 0; i < count; i++) {
+            const delay = i * 0.13 + Math.random() * 0.05;
+            setTimeout(() => {
+                if (!this.ctx) return;
+                const now = this.ctx.currentTime;
+                // Bass thump
+                const subOsc = this.ctx.createOscillator();
+                const subGain = this.ctx.createGain();
+                subOsc.type = 'triangle';
+                subOsc.frequency.setValueAtTime(120 + Math.random() * 40, now);
+                subOsc.frequency.exponentialRampToValueAtTime(28, now + 0.12);
+                subGain.gain.setValueAtTime(0.75, now);
+                subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+                subOsc.connect(subGain);
+                subGain.connect(this.masterGain);
+                subOsc.start(now);
+                subOsc.stop(now + 0.15);
+
+                // Gunshot crackle burst
+                const bufLen = Math.floor(this.ctx.sampleRate * 0.1);
+                const buf = this.ctx.createBuffer(1, bufLen, this.ctx.sampleRate);
+                const d = buf.getChannelData(0);
+                for (let j = 0; j < bufLen; j++) {
+                    d[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufLen * 0.16));
+                }
+                const crackle = this.ctx.createBufferSource();
+                crackle.buffer = buf;
+                const cFilter = this.ctx.createBiquadFilter();
+                cFilter.type = 'highpass';
+                cFilter.frequency.setValueAtTime(950, now);
+                const cGain = this.ctx.createGain();
+                cGain.gain.setValueAtTime(0.65, now);
+                cGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                crackle.connect(cFilter);
+                cFilter.connect(cGain);
+                cGain.connect(this.masterGain);
+                crackle.start(now);
+                crackle.stop(now + 0.13);
+            }, delay * 1000);
+        }
+    }
+
+    // Easter Egg: Nitro Rocket Spool
+    playNitroRoar() {
+        this.ensureContext();
+        const now = this.ctx.currentTime;
+
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(650, now + 0.6);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 1.2);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.25);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 1.3);
+
+        this.playTurboBlowoff();
     }
 }
 
@@ -1167,3 +1270,283 @@ async function handleContactSubmit(event) {
         }, 3000);
     }
 }
+
+// ==========================================
+// VAG-COM STAGE 3 EASTER EGG & CLICK PARTICLES SYSTEM
+// ==========================================
+let easterEggActive = false;
+let clickSparksEnabled = (localStorage.getItem('vag_stage3_unlocked') === 'true' && localStorage.getItem('vag_click_sparks') !== 'false');
+let logoClickCount = 0;
+let logoClickTimer = null;
+let keyBuffer = '';
+const konamiSequence = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+let konamiStep = 0;
+
+// Particle Canvas Management
+const eggCanvas = document.getElementById('easter-egg-canvas');
+let eggCtx = null;
+let eggParticles = [];
+let eggAnimFrame = null;
+
+function initEggCanvas() {
+    if (!eggCanvas) return;
+    eggCtx = eggCanvas.getContext('2d');
+    const resize = () => {
+        eggCanvas.width = window.innerWidth;
+        eggCanvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+}
+
+function spawnParticles(x, y, count = 35, colors = ['#f5d061', '#e6b94e', '#00f0ff', '#ff3b30', '#ffffff']) {
+    if (!eggCanvas || !eggCtx) return;
+    for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 7;
+        eggParticles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - (Math.random() * 2.5),
+            size: 1.5 + Math.random() * 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            decay: 0.02 + Math.random() * 0.03,
+            gravity: 0.1
+        });
+    }
+    if (!eggAnimFrame) {
+        renderEggParticles();
+    }
+}
+
+function renderEggParticles() {
+    if (!eggCtx) return;
+    eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+
+    for (let i = eggParticles.length - 1; i >= 0; i--) {
+        const p = eggParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+            eggParticles.splice(i, 1);
+            continue;
+        }
+
+        eggCtx.save();
+        eggCtx.globalAlpha = Math.max(0, p.alpha);
+        eggCtx.fillStyle = p.color;
+        eggCtx.shadowColor = p.color;
+        eggCtx.shadowBlur = 6;
+        eggCtx.beginPath();
+        eggCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        eggCtx.fill();
+        eggCtx.restore();
+    }
+
+    if (eggParticles.length > 0) {
+        eggAnimFrame = requestAnimationFrame(renderEggParticles);
+    } else {
+        eggAnimFrame = null;
+        eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+    }
+}
+
+// Logo Click Trigger (5 rapid clicks on "GV" brand logo)
+function handleLogoClick(e) {
+    logoClickCount++;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(() => {
+        logoClickCount = 0;
+    }, 2200);
+
+    if (logoClickCount >= 5) {
+        if (e) e.preventDefault();
+        logoClickCount = 0;
+        triggerStage3EasterEgg(e ? e.clientX : window.innerWidth / 2, e ? e.clientY : 100);
+        return false;
+    } else if (logoClickCount >= 2) {
+        showToast(`⚡ Доступ к ЭБУ: ещё ${5 - logoClickCount} клика...`, true);
+    }
+}
+
+// Keyboard Triggers (Konami code, 'vag', 'stage3', 'turbo', 'itmo')
+window.addEventListener('keydown', (e) => {
+    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (targetTag === 'input' || targetTag === 'textarea') return;
+
+    if (e.key === 'Escape') {
+        closeEasterEggModal();
+        return;
+    }
+
+    const keyLower = e.key.toLowerCase();
+
+    // Check Konami Code (supports EN and RU keyboard layout for B/A keys)
+    const expected = konamiSequence[konamiStep];
+    const isMatch = (keyLower === expected) ||
+        (expected === 'b' && (keyLower === 'b' || keyLower === 'и')) ||
+        (expected === 'a' && (keyLower === 'a' || keyLower === 'ф'));
+
+    if (isMatch) {
+        konamiStep++;
+        if (konamiStep === konamiSequence.length) {
+            konamiStep = 0;
+            triggerStage3EasterEgg();
+            return;
+        }
+    } else {
+        konamiStep = 0;
+    }
+
+    // Word Buffer Check
+    keyBuffer += keyLower;
+    if (keyBuffer.length > 12) keyBuffer = keyBuffer.slice(-12);
+
+    if (keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг') ||
+        keyBuffer.endsWith('stage3') || keyBuffer.endsWith('turbo') ||
+        keyBuffer.endsWith('турбо') || keyBuffer.endsWith('itmo') || keyBuffer.endsWith('итмо')) {
+        keyBuffer = '';
+        triggerStage3EasterEgg();
+    }
+});
+
+// Dynamic Click Sparks (Energetic lightweight feedback on clicks)
+window.addEventListener('click', (e) => {
+    if (!clickSparksEnabled) return;
+    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (targetTag === 'input' || targetTag === 'textarea') return;
+
+    spawnParticles(e.clientX, e.clientY, 8, ['#f5d061', '#00f0ff', '#ffffff']);
+}, { passive: true });
+
+function triggerStage3EasterEgg(originX, originY) {
+    const modal = document.getElementById('easter-egg-modal');
+    if (!modal) return;
+
+    soundSystem.playTurboBlowoff();
+    soundSystem.playPopsAndBangs(3);
+
+    // Screen Shake
+    document.body.classList.remove('stage3-shake');
+    void document.body.offsetWidth;
+    document.body.classList.add('stage3-shake');
+    setTimeout(() => document.body.classList.remove('stage3-shake'), 500);
+
+    // Explosive particle burst
+    const x = originX || window.innerWidth / 2;
+    const y = originY || window.innerHeight / 2;
+    spawnParticles(x, y, 60, ['#f5d061', '#ff3b30', '#00f0ff', '#ffffff', '#ff9500']);
+
+    // Animate HP counter
+    const hpCounter = document.getElementById('stage3-hp-counter');
+    if (hpCounter) {
+        let val = 180;
+        const target = 450;
+        const interval = setInterval(() => {
+            val += 15;
+            if (val >= target) {
+                val = target;
+                clearInterval(interval);
+            }
+            hpCounter.innerText = val + " HP";
+        }, 25);
+    }
+
+    modal.classList.remove('hidden');
+    easterEggActive = true;
+
+    // Enable click sparks for the user who discovered the easter egg!
+    clickSparksEnabled = true;
+    try {
+        localStorage.setItem('vag_stage3_unlocked', 'true');
+        localStorage.setItem('vag_click_sparks', 'true');
+    } catch (err) {}
+
+    const btnText = document.getElementById('toggle-sparks-text');
+    const btnIcon = document.getElementById('toggle-sparks-icon');
+    if (btnText) btnText.innerText = 'ИСКРЫ КЛИКА: ВКЛ';
+    if (btnIcon) btnIcon.className = 'fa-solid fa-wand-magic-sparkles text-amber-400';
+
+    showToast('🚀 VAG-COM STAGE 3: Секретная прошивка разблокирована!', true);
+}
+
+function closeEasterEggModal() {
+    const modal = document.getElementById('easter-egg-modal');
+    if (modal) modal.classList.add('hidden');
+    easterEggActive = false;
+}
+
+function triggerNitroBoost() {
+    soundSystem.playNitroRoar();
+    soundSystem.playPopsAndBangs(4);
+
+    // Flash speed lines
+    const overlay = document.getElementById('speed-lines-overlay');
+    if (overlay) {
+        overlay.style.opacity = '1';
+        setTimeout(() => {
+            overlay.style.opacity = '0';
+        }, 1100);
+    }
+
+    // Shake
+    document.body.classList.remove('stage3-shake');
+    void document.body.offsetWidth;
+    document.body.classList.add('stage3-shake');
+    setTimeout(() => document.body.classList.remove('stage3-shake'), 600);
+
+    spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 70, ['#ff3b30', '#ff9500', '#f5d061', '#00f0ff']);
+    showToast('🔥 ЗАКИСЬ АЗОТА АКТИВИРОВАНА: +150 HP BOOST!', true);
+}
+
+function triggerPopsAndBangs() {
+    soundSystem.playPopsAndBangs(5);
+    spawnParticles(window.innerWidth / 2, window.innerHeight * 0.7, 40, ['#ff3b30', '#f5d061', '#ffffff']);
+    showToast('💥 ВЫХЛОП: Отстрелы Anti-Lag активированы!', true);
+}
+
+function openOctaviaStage3() {
+    closeEasterEggModal();
+    switchTab('octavia');
+    const carSection = document.getElementById('octavia-car-img');
+    if (carSection) carSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    setTimeout(() => {
+        if (!engineRunning && !engineBlown) {
+            toggleEngine();
+        }
+        showToast('🏁 Octavia A7 переведена в боевой режим STAGE 3!', true);
+    }, 400);
+}
+
+function toggleClickSparks() {
+    clickSparksEnabled = !clickSparksEnabled;
+    try {
+        localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
+    } catch (e) {}
+    const btnText = document.getElementById('toggle-sparks-text');
+    const btnIcon = document.getElementById('toggle-sparks-icon');
+    if (btnText) btnText.innerText = clickSparksEnabled ? 'ИСКРЫ КЛИКА: ВКЛ' : 'ИСКРЫ КЛИКА: ВЫКЛ';
+    if (btnIcon) {
+        btnIcon.className = clickSparksEnabled ? 'fa-solid fa-wand-magic-sparkles text-amber-400' : 'fa-solid fa-wand-magic-sparkles text-slate-500';
+    }
+    showToast(clickSparksEnabled ? '✨ Неоновые искры курсора включены' : 'Искры курсора выключены', true);
+}
+
+// Initialize Easter Egg canvas and developer teaser
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEggCanvas);
+} else {
+    initEggCanvas();
+}
+
+console.log(
+    "%c🏎️ VAG-COM DIAGNOSTICS %c| Ищешь пасхалку? Введи на клавиатуре 'vag', нажми Konami Code (↑↑↓↓←→←→BA) или кликни 5 раз по логотипу GV!",
+    "background: #e6b94e; color: #000; font-weight: bold; padding: 4px 8px; border-radius: 4px;",
+    "color: #00f0ff; font-weight: bold; font-size: 12px;"
+);

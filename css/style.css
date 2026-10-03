@@ -93,15 +93,24 @@ body {
     }
 }
 
-/* Custom Cursor Follower */
-#custom-cursor {
+/* Easter Egg Screen Shake & Speed Lines FX */
+@keyframes stage3Shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    15% { transform: translate(-5px, 3px) rotate(-0.5deg); }
+    30% { transform: translate(6px, -4px) rotate(0.6deg); }
+    45% { transform: translate(-6px, 3px) rotate(-0.4deg); }
+    60% { transform: translate(5px, 4px) rotate(0.4deg); }
+    75% { transform: translate(-4px, -2px) rotate(-0.2deg); }
+    90% { transform: translate(2px, 1px) rotate(0.1deg); }
+}
+.stage3-shake {
+    animation: stage3Shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+#speed-lines-overlay {
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(245, 208, 97, 0.12) 75%, rgba(255, 60, 0, 0.28) 100%);
+    box-shadow: inset 0 0 120px rgba(255, 80, 0, 0.5);
     pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    opacity: 0;
-    transition: transform 0.08s ease-out, opacity 0.2s ease;
 }
 
 /* Octavia Headlight Laser Glow */
