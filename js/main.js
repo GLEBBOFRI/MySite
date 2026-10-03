@@ -1,14 +1,27 @@
 // Custom Mouse Pointer Position Tracker (Desktop Only for Performance)
 if (window.matchMedia('(pointer: fine)').matches) {
+    let cursorInitialized = false;
     document.addEventListener('mousemove', (e) => {
         const cursor = document.getElementById('custom-cursor');
         const glow = document.getElementById('glow-follow');
         if (cursor) {
+            if (!cursorInitialized) {
+                cursor.style.opacity = '1';
+                cursorInitialized = true;
+            }
             cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         }
         if (glow) {
             glow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
         }
+    });
+    document.addEventListener('mouseleave', () => {
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor) cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor && cursorInitialized) cursor.style.opacity = '1';
     });
 }
 
@@ -57,11 +70,13 @@ function toggleMobileMenu() {
     if (!menu) return;
 
     const isOpen = !menu.classList.contains('hidden');
+    const dock = document.getElementById('mobile-dock');
     if (isOpen) {
         closeMobileMenu();
     } else {
         menu.classList.remove('hidden');
         menu.classList.add('flex');
+        if (dock) dock.classList.add('hidden');
         document.body.classList.add('overflow-hidden');
         if (burgerIcon) {
             burgerIcon.classList.remove('fa-bars-staggered');
@@ -73,10 +88,12 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const menu = document.getElementById('mobile-drawer');
     const burgerIcon = document.getElementById('burger-icon');
+    const dock = document.getElementById('mobile-dock');
     if (!menu) return;
 
     menu.classList.add('hidden');
     menu.classList.remove('flex');
+    if (dock) dock.classList.remove('hidden');
     document.body.classList.remove('overflow-hidden');
     if (burgerIcon) {
         burgerIcon.classList.remove('fa-xmark');
@@ -809,7 +826,7 @@ function triggerOverheatDisaster() {
         pedalBtn.className = "gas-pedal w-full sm:w-auto px-5 py-2.5 rounded-xl bg-red-950/40 border border-red-500/40 text-red-400 opacity-50 cursor-not-allowed select-none flex items-center justify-center gap-2";
     }
 
-    showToast("⚠️ Октавия съела все масло! Сухой картер, коленвал намертво заклинил. Перезагрузите сайт.", false);
+    showToast("Октавия съела все масло! Сухой картер, коленвал намертво заклинил. Перезагрузите сайт.", false);
 }
 
 // Continuous Frame Loop
@@ -906,25 +923,23 @@ function runECUScan() {
 
     if (engineBlown) {
         const brokenLogs = [
-            "> [OBD-II CAN-Bus 500kbps]: Считывание кодов DTC...",
-            "> ❌ [01 - ЭБУ ДВИГАТЕЛЯ (Bosch ME17)]: 000532 - Давление масла: 0.0 BAR (КРИТИЧЕСКИ НИЗКОЕ)",
-            "> ❌ [01 - ЭБУ ДВИГАТЕЛЯ]: P0016 - Фатальное несоответствие коленвала/распредвала (МЕХАНИЧЕСКИЙ КЛИН)",
-            "> ❌ [01 - ЭБУ ДВИГАТЕЛЯ]: P0219 - Превышение предельных оборотов отсечки (Over-Rev Recorded)",
-            "> ❌ [01 - ЭБУ ДВИГАТЕЛЯ]: P0118 - Температура ОЖ 150.0°C (Тепловой шок и коробление ГБЦ)",
-            "> ⚠️ [02 - АКПП Aisin 09G]: U0100 - Потеря шины связи с блоком управления двигателем",
-            "> ⚠️ [03 - Блок ABS/ESP MK100]: 01314 - Опрос блока ДВС: Сигнал недостоверен / Аварийный режим",
-            "> 🔴 [17 - Приборная панель]: Загорелась КРАСНАЯ МАСЛЕНКА: STOP! ENGINE OIL DEFECT!",
-            "> ⚠️ [19 - Диагностический Gateway]: Аварийный переход CAN-сети в защитный режим",
-            "> 💀 ВЕРДИКТ VAG ODIS: Октавия съела все масло. Провернуло шатунные вкладыши. ДВС мертв!"
+            { icon: "fa-solid fa-terminal text-cyan-400", text: "[OBD-II CAN-Bus 500kbps]: Считывание кодов DTC...", color: "text-slate-300" },
+            { icon: "fa-solid fa-circle-xmark text-red-500", text: "[01 - ЭБУ ДВИГАТЕЛЯ (Bosch ME17)]: 000532 - Давление масла: 0.0 BAR (КРИТИЧЕСКИ НИЗКОЕ)", color: "text-red-400" },
+            { icon: "fa-solid fa-circle-xmark text-red-500", text: "[01 - ЭБУ ДВИГАТЕЛЯ]: P0016 - Фатальное несоответствие коленвала/распредвала (МЕХАНИЧЕСКИЙ КЛИН)", color: "text-red-400" },
+            { icon: "fa-solid fa-circle-xmark text-red-500", text: "[01 - ЭБУ ДВИГАТЕЛЯ]: P0219 - Превышение предельных оборотов отсечки (Over-Rev Recorded)", color: "text-red-400" },
+            { icon: "fa-solid fa-circle-xmark text-red-500", text: "[01 - ЭБУ ДВИГАТЕЛЯ]: P0118 - Температура ОЖ 150.0°C (Тепловой шок и коробление ГБЦ)", color: "text-red-400" },
+            { icon: "fa-solid fa-triangle-exclamation text-amber-400", text: "[02 - АКПП Aisin 09G]: U0100 - Потеря шины связи с блоком управления двигателем", color: "text-amber-400" },
+            { icon: "fa-solid fa-triangle-exclamation text-amber-400", text: "[03 - Блок ABS/ESP MK100]: 01314 - Опрос блока ДВС: Сигнал недостоверен / Аварийный режим", color: "text-amber-400" },
+            { icon: "fa-solid fa-oil-can text-red-500 animate-pulse", text: "[17 - Приборная панель]: Загорелась КРАСНАЯ МАСЛЕНКА: STOP! ENGINE OIL DEFECT!", color: "text-red-400 font-semibold" },
+            { icon: "fa-solid fa-triangle-exclamation text-amber-400", text: "[19 - Диагностический Gateway]: Аварийный переход CAN-сети в защитный режим", color: "text-amber-400" },
+            { icon: "fa-solid fa-skull-crossbones text-red-500", text: "ВЕРДИКТ VAG ODIS: Октавия съела все масло. Провернуло шатунные вкладыши. ДВС мертв!", color: "text-red-400 font-extrabold" }
         ];
 
-        brokenLogs.forEach((log, index) => {
+        brokenLogs.forEach((item, index) => {
             setTimeout(() => {
                 const line = document.createElement('div');
-                line.className = index === brokenLogs.length - 1 
-                    ? "text-red-400 font-extrabold" 
-                    : (log.includes('❌') || log.includes('🔴') ? "text-red-400" : "text-amber-400");
-                line.innerText = log;
+                line.className = `flex items-start gap-2 ${item.color}`;
+                line.innerHTML = `<i class="${item.icon} mt-0.5 flex-shrink-0"></i><span>${item.text}</span>`;
                 output.appendChild(line);
                 output.scrollTop = output.scrollHeight;
             }, index * 260);
@@ -933,23 +948,23 @@ function runECUScan() {
     }
 
     const logs = [
-        "> Подключение к разъему OBD-II (CAN-High 500kbps)...",
-        "> Адрес 01: ЭБУ Двигателя (Bosch ME17.5.26 CWVA) - OK",
-        "> Адрес 02: АКПП (Aisin 09G 6-speed) - OK",
-        "> Адрес 03: Блок ABS/ESP (MK100) - OK",
-        "> Сканирование ошибок DTC: 0 Faults Found.",
-        "> Проверка параметров VAG: Давление масла OK, Лямбда 1.00",
-        "> СТАТУС: Все системы Octavia A7 функционируют идеально!"
+        { icon: "fa-solid fa-terminal text-cyan-400", text: "Подключение к разъему OBD-II (CAN-High 500kbps)...", color: "text-slate-300" },
+        { icon: "fa-solid fa-check text-emerald-400", text: "Адрес 01: ЭБУ Двигателя (Bosch ME17.5.26 CWVA) - OK", color: "text-cyan-300" },
+        { icon: "fa-solid fa-check text-emerald-400", text: "Адрес 02: АКПП (Aisin 09G 6-speed) - OK", color: "text-cyan-300" },
+        { icon: "fa-solid fa-check text-emerald-400", text: "Адрес 03: Блок ABS/ESP (MK100) - OK", color: "text-cyan-300" },
+        { icon: "fa-solid fa-circle-check text-emerald-400", text: "Сканирование ошибок DTC: 0 Faults Found.", color: "text-cyan-300" },
+        { icon: "fa-solid fa-check text-emerald-400", text: "Проверка параметров VAG: Давление масла OK, Лямбда 1.00", color: "text-cyan-300" },
+        { icon: "fa-solid fa-shield-halved text-emerald-400", text: "СТАТУС: Все системы Octavia A7 функционируют идеально!", color: "text-emerald-400 font-bold" }
     ];
 
-    logs.forEach((log, index) => {
+    logs.forEach((item, index) => {
         setTimeout(() => {
             const line = document.createElement('div');
-            line.className = index === logs.length - 1 ? "text-emerald-400 font-bold" : "text-cyan-300";
-            line.innerText = log;
+            line.className = `flex items-start gap-2 ${item.color}`;
+            line.innerHTML = `<i class="${item.icon} mt-0.5 flex-shrink-0"></i><span>${item.text}</span>`;
             output.appendChild(line);
             output.scrollTop = output.scrollHeight;
-        }, index * 350);
+        }, index * 320);
     });
 }
 
@@ -1054,12 +1069,12 @@ function showToast(message, isSuccess = true) {
 
     const toast = document.createElement('div');
     toast.id = 'app-toast';
-    toast.className = `fixed bottom-20 sm:bottom-8 right-4 sm:right-8 z-50 px-5 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 shadow-2xl backdrop-blur-xl border transition-all duration-300 ${
+    toast.className = `fixed bottom-24 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-md z-50 px-5 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 shadow-2xl backdrop-blur-xl border transition-all duration-300 ${
         isSuccess 
         ? 'glass-card-gold text-gold-400 border-gold-500/40' 
-        : 'bg-red-950/80 text-red-300 border-red-500/40'
+        : 'bg-red-950/90 text-red-300 border-red-500/40'
     }`;
-    toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check text-base text-gold-400' : 'fa-circle-exclamation text-base text-red-400'}"></i> <span>${message}</span>`;
+    toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check text-base text-gold-400' : 'fa-circle-exclamation text-base text-red-400'} flex-shrink-0"></i> <span class="break-words leading-relaxed">${message}</span>`;
     document.body.appendChild(toast);
 
     setTimeout(() => {
@@ -1068,7 +1083,7 @@ function showToast(message, isSuccess = true) {
             toast.style.transform = 'translateY(10px)';
             setTimeout(() => toast.remove(), 300);
         }
-    }, 4000);
+    }, 4500);
 }
 
 // Escape HTML for safe Telegram markdown/HTML formatting
@@ -1105,11 +1120,11 @@ async function handleContactSubmit(event) {
         return;
     }
 
-    const text = `📬 <b>Новое сообщение с сайта!</b>\n\n` +
-        `👤 <b>Имя:</b> ${escapeHtml(name)}\n` +
-        `💬 <b>Контакт:</b> ${escapeHtml(contact)}\n` +
-        `📌 <b>Тема:</b> ${escapeHtml(subject)}\n\n` +
-        `📝 <b>Сообщение:</b>\n${escapeHtml(message)}`;
+    const text = `<b>[НОВОЕ СООБЩЕНИЕ С САЙТА]</b>\n\n` +
+        `<b>От:</b> ${escapeHtml(name)}\n` +
+        `<b>Контакт:</b> ${escapeHtml(contact)}\n` +
+        `<b>Тема:</b> ${escapeHtml(subject)}\n\n` +
+        `<b>Сообщение:</b>\n${escapeHtml(message)}`;
 
     if (btn) btn.disabled = true;
     if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Отправка...';

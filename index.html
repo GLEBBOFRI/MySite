@@ -123,7 +123,7 @@
 </header>
 
 <!-- Mobile Slide-out Drawer Menu -->
-<div id="mobile-drawer" class="fixed inset-0 z-40 bg-obsidian/95 backdrop-blur-2xl hidden flex-col justify-between p-6 pt-24 lg:hidden border-b border-white/10 overflow-y-auto">
+<div id="mobile-drawer" class="fixed inset-0 z-50 bg-obsidian/95 backdrop-blur-2xl hidden flex-col justify-between p-6 pt-24 lg:hidden border-b border-white/10 overflow-y-auto">
     <div class="space-y-3 max-w-md mx-auto w-full">
         <div class="text-[11px] font-mono text-gold-400 uppercase tracking-widest pb-1 border-b border-white/10 flex items-center justify-between">
             <span>Навигация по разделам</span>
@@ -167,7 +167,7 @@
 </div>
 
 <!-- Floating Mobile Bottom Navigation Dock (Phones & Small Tablets) -->
-<nav class="fixed safe-bottom-dock left-1/2 -translate-x-1/2 z-40 lg:hidden w-[calc(100%-1.5rem)] max-w-md p-1.5 bg-obsidian/90 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-2xl shadow-black/80 flex items-center justify-between">
+<nav id="mobile-dock" class="fixed safe-bottom-dock left-1/2 -translate-x-1/2 z-40 lg:hidden w-[calc(100%-1.5rem)] max-w-md p-1.5 bg-obsidian/90 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-2xl shadow-black/80 flex items-center justify-between transition-all duration-300">
     <button onclick="switchTab('home')" id="dock-nav-home" class="dock-nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center justify-center gap-0.5 text-gold-400 bg-gold-500/15 border border-gold-500/30 transition-all">
         <i class="fa-solid fa-house text-sm"></i>
         <span class="text-[9px] font-semibold tracking-tight">Главная</span>
@@ -308,7 +308,7 @@
             </div>
 
             <!-- Overheat Disaster Warning Banner (Hidden by default) -->
-            <div id="overheat-banner" class="hidden p-4 rounded-2xl bg-red-950/80 border-2 border-red-500 text-red-200 font-mono text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[0_0_35px_rgba(239,68,68,0.4)] animate-bounce">
+            <div id="overheat-banner" class="hidden p-4 rounded-2xl bg-red-950/90 border-2 border-red-500 text-red-200 font-mono text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[0_0_35px_rgba(239,68,68,0.5)] transition-all">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-oil-can text-2xl text-red-400 animate-pulse flex-shrink-0"></i>
                     <div>
@@ -322,7 +322,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
-                <div class="lg:col-span-7 flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-black/80 to-obsidian rounded-2xl border border-white/5 relative min-h-[220px] sm:min-h-[280px]" id="car-svg-container">
+                <div class="lg:col-span-7 flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-black/80 to-obsidian rounded-2xl border border-white/5 relative min-h-[220px] sm:min-h-[280px] overflow-hidden" id="car-svg-container">
                     <div id="octavia-visual" class="w-full max-w-md transition-all duration-500 flex justify-center relative select-none">
                         <img
                                 src="octavia.webp"
