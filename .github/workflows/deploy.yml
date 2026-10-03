@@ -14,7 +14,7 @@ jobs:
 
       - name: Generate TG Config from Secrets
         env:
-          TG_BOT_TOKEN: ${{ secrets.TOKEN }}
+          TG_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.CHAT_ID }}
         run: |
           mkdir -p js
