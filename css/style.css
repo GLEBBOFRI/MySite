@@ -1,6 +1,24 @@
-/* Custom Scrollbar */
+/* Base Setup & Overflow Protection for Mobile */
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom Scrollbar (Desktop) */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-track {
     background: #060709;
@@ -14,19 +32,37 @@
     background: #e6b94e;
 }
 
+/* Hide scrollbar utility for mobile carousels and tabs */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* Glassmorphism Classes */
 .glass-card {
-    background: rgba(15, 18, 26, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(15, 18, 26, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card-gold {
-    background: rgba(20, 18, 12, 0.7);
-    backdrop-filter: blur(20px);
+    background: rgba(20, 18, 12, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(230, 185, 78, 0.25);
     box-shadow: 0 10px 30px -10px rgba(230, 185, 78, 0.15);
+}
+
+.glass-card-interactive {
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.glass-card-interactive:hover {
+    border-color: rgba(230, 185, 78, 0.4);
+    box-shadow: 0 12px 30px -8px rgba(230, 185, 78, 0.2);
 }
 
 /* Text Shimmer Effect */
@@ -46,9 +82,15 @@
 .ambient-glow {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(100px);
     pointer-events: none;
     z-index: 0;
+}
+@media (max-width: 768px) {
+    .ambient-glow {
+        filter: blur(70px);
+        opacity: 0.7;
+    }
 }
 
 /* Custom Cursor Follower */
@@ -89,4 +131,124 @@
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 50px 50px;
+}
+@media (max-width: 640px) {
+    .grid-bg {
+        background-size: 30px 30px;
+    }
+}
+
+/* Safe area padding for mobile bottom bar */
+.safe-pb {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+}
+.safe-bottom-dock {
+    bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+
+/* Touch friendly button active scale */
+button:active, a:active {
+    transform: scale(0.97);
+}
+
+/* Mobile fluid typography helpers */
+.title-responsive {
+    font-size: clamp(1.75rem, 5.2vw, 4.5rem);
+    line-height: 1.05;
+}
+@media (min-width: 1024px) and (max-width: 1200px) {
+    .title-responsive {
+        font-size: clamp(2.1rem, 3.7vw, 3.1rem);
+    }
+}
+.subtitle-responsive {
+    font-size: clamp(1.35rem, 4.5vw, 2.75rem);
+    line-height: 1.15;
+}
+
+/* Engine Vibration Animations (Idling vs Revving) */
+@keyframes engineIdleShake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-0.35px, 0.4px); }
+    50% { transform: translate(0.4px, -0.3px); }
+    75% { transform: translate(-0.3px, -0.4px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes engineRevShake {
+    0% { transform: translate(0, 0) scale(1); }
+    20% { transform: translate(-0.9px, 0.8px) scale(1.002); }
+    40% { transform: translate(1px, -0.7px) scale(1.003); }
+    60% { transform: translate(-0.8px, -1px) scale(1.001); }
+    80% { transform: translate(0.9px, 0.9px) scale(1.003); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+.engine-idling-shake {
+    animation: engineIdleShake 0.048s infinite linear;
+}
+
+.engine-revving-shake {
+    animation: engineRevShake 0.035s infinite linear;
+}
+
+/* Overheat Smoke Particles */
+@keyframes smokeBillow {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.3) rotate(0deg);
+        filter: blur(2px);
+    }
+    20% {
+        opacity: 0.85;
+    }
+    60% {
+        opacity: 0.6;
+        filter: blur(8px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(30px, -130px) scale(3.5) rotate(45deg);
+        filter: blur(18px);
+    }
+}
+
+.smoke-cloud {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(220, 225, 235, 0.5) 45%, transparent 75%);
+    pointer-events: none;
+    animation: smokeBillow 2.8s infinite ease-out;
+}
+
+/* Sport Gas Pedal Styles */
+.gas-pedal {
+    transition: transform 0.08s cubic-bezier(0.1, 0.9, 0.2, 1), box-shadow 0.08s ease, border-color 0.15s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+.gas-pedal:active, .gas-pedal.pedal-active {
+    transform: perspective(300px) rotateX(15deg) translateY(4px) scale(0.96) !important;
+    border-color: #f5d061 !important;
+    box-shadow: 0 2px 10px rgba(230, 185, 78, 0.4), inset 0 3px 6px rgba(0,0,0,0.8) !important;
+}
+
+/* Overheat Alarm Animation */
+@keyframes overheatPulse {
+    0%, 100% {
+        background-color: rgba(220, 38, 38, 0.2);
+        box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+        color: #ff4d4d;
+    }
+    50% {
+        background-color: rgba(220, 38, 38, 0.45);
+        box-shadow: 0 0 45px rgba(255, 0, 0, 0.9);
+        color: #ffffff;
+    }
+}
+.temp-alarm {
+    animation: overheatPulse 0.4s infinite ease-in-out;
 }

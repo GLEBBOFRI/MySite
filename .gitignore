@@ -1,0 +1,16 @@
+# Operating System & IDE Files
+.DS_Store
+.idea/
+*.log
+
+# Dependencies
+node_modules/
+
+# Sensitive Configuration & Telegram Secrets
+js/config.js
+config.js
+.env
+.env.local
+
+# Temporary & Scratch Dirs
+scratch/
