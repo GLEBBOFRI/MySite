@@ -93,24 +93,22 @@ body {
     }
 }
 
-/* Easter Egg Screen Shake & Speed Lines FX */
-@keyframes stage3Shake {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    15% { transform: translate(-5px, 3px) rotate(-0.5deg); }
-    30% { transform: translate(6px, -4px) rotate(0.6deg); }
-    45% { transform: translate(-6px, 3px) rotate(-0.4deg); }
-    60% { transform: translate(5px, 4px) rotate(0.4deg); }
-    75% { transform: translate(-4px, -2px) rotate(-0.2deg); }
-    90% { transform: translate(2px, 1px) rotate(0.1deg); }
+/* macOS Terminal Window Styles */
+#terminal-window {
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
-.stage3-shake {
-    animation: stage3Shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+#terminal-screen::-webkit-scrollbar {
+    width: 6px;
 }
-
-#speed-lines-overlay {
-    background: radial-gradient(ellipse at center, transparent 35%, rgba(245, 208, 97, 0.12) 75%, rgba(255, 60, 0, 0.28) 100%);
-    box-shadow: inset 0 0 120px rgba(255, 80, 0, 0.5);
-    pointer-events: none;
+#terminal-screen::-webkit-scrollbar-track {
+    background: transparent;
+}
+#terminal-screen::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+#terminal-screen::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* Octavia Headlight Laser Glow */

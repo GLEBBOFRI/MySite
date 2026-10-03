@@ -613,10 +613,42 @@ class OctaviaSoundSystem {
 const soundSystem = new OctaviaSoundSystem();
 
 // ==========================================
-// INTERACTIVE LIGHTS SYSTEM (DRL 2X BLINK -> ON)
+// INTERACTIVE LIGHTS & HAZARD SYSTEM (PNG PHOTO ANIMATION)
 // ==========================================
 let headlightsOn = false;
 let isFlashingHeadlights = false;
+let hazardLightsOn = false;
+let hazardInterval = null;
+
+function setOrangeFlash(val) {
+    const orangeImg = document.getElementById('octavia-orange-img');
+    if (orangeImg) {
+        orangeImg.style.opacity = val ? '1' : '0';
+    }
+}
+
+function setHeadlightsState(val) {
+    const lightsImg = document.getElementById('octavia-lights-img');
+    const frontBeam = document.getElementById('headlight-beam-cone');
+    const rearBeam = document.getElementById('taillight-beam-cone');
+    const container = document.getElementById('car-svg-container');
+
+    if (lightsImg) lightsImg.style.opacity = val ? '1' : '0';
+    if (frontBeam) frontBeam.style.opacity = val ? '0.9' : '0';
+    if (rearBeam) rearBeam.style.opacity = val ? '0.85' : '0';
+
+    if (container) {
+        if (val) container.classList.add('headlight-on');
+        else container.classList.remove('headlight-on');
+    }
+}
+
+function setCarShake(type) {
+    const visual = document.getElementById('octavia-visual');
+    if (!visual) return;
+    visual.classList.remove('engine-idling-shake', 'engine-revving-shake');
+    if (type) visual.classList.add(type);
+}
 
 async function toggleHeadlights() {
     if (engineBlown) return;
@@ -624,72 +656,95 @@ async function toggleHeadlights() {
 
     const btnText = document.getElementById('headlight-status-text');
     const btn = document.getElementById('headlight-toggle-btn');
-    const container = document.getElementById('car-svg-container');
-
-    const frontAmber = document.getElementById('headlight-amber');
-    const frontWhite = document.getElementById('headlight-white');
-    const frontBeam = document.getElementById('headlight-beam-cone');
-
-    const rearAmber = document.getElementById('taillight-amber');
-    const rearRed = document.getElementById('taillight-red');
-    const rearBeam = document.getElementById('taillight-beam-cone');
-
-    const mirrorAmber = document.getElementById('mirror-amber');
+    const btnIcon = document.getElementById('headlight-btn-icon');
 
     if (!headlightsOn) {
         isFlashingHeadlights = true;
         if (btnText) btnText.innerText = "Фары: ...";
 
-        const setAmber = (val) => {
-            if (frontAmber) frontAmber.style.opacity = val;
-            if (rearAmber) rearAmber.style.opacity = val;
-            if (mirrorAmber) mirrorAmber.style.opacity = val;
-        };
-
-        // Flash 1 (Emergency blinker / Аварийка)
-        setAmber('1');
+        // Double Amber DRL / Emergency Flash before Xenon Ignition (using orange flash.png)
+        setOrangeFlash(true);
         soundSystem.playRelayClick();
         await sleep(180);
-        setAmber('0');
+        setOrangeFlash(false);
         await sleep(140);
 
-        // Flash 2
-        setAmber('1');
+        setOrangeFlash(true);
         soundSystem.playRelayClick();
         await sleep(180);
-        setAmber('0');
+        setOrangeFlash(false);
         await sleep(140);
 
-        // Turn ON main xenon/LED lights + ruby red rear lights
-        if (frontWhite) frontWhite.style.opacity = '1';
-        if (frontBeam) frontBeam.style.opacity = '0.9';
-        if (rearRed) rearRed.style.opacity = '1';
-        if (rearBeam) rearBeam.style.opacity = '0.85';
+        // Turn ON main xenon/LED lights + ruby red rear lights (using lights.png)
+        setHeadlightsState(true);
 
-        if (container) container.classList.add('headlight-on');
         if (btnText) {
             btnText.innerText = "Фары: ВКЛ";
             btnText.classList.add('text-cyan-400');
+        }
+        if (btnIcon) {
+            btnIcon.className = "fa-solid fa-lightbulb text-cyan-400";
         }
         if (btn) btn.classList.add('border-cyan-400/50', 'bg-cyan-400/10');
 
         headlightsOn = true;
         isFlashingHeadlights = false;
     } else {
-        // Smooth fade out to black
-        if (frontWhite) frontWhite.style.opacity = '0';
-        if (frontBeam) frontBeam.style.opacity = '0';
-        if (rearRed) rearRed.style.opacity = '0';
-        if (rearBeam) rearBeam.style.opacity = '0';
+        // Smooth fade out
+        setHeadlightsState(false);
 
-        if (container) container.classList.remove('headlight-on');
         if (btnText) {
             btnText.innerText = "Фары: ВЫКЛ";
             btnText.classList.remove('text-cyan-400');
         }
+        if (btnIcon) {
+            btnIcon.className = "fa-solid fa-lightbulb text-gold-400";
+        }
         if (btn) btn.classList.remove('border-cyan-400/50', 'bg-cyan-400/10');
 
         headlightsOn = false;
+    }
+}
+
+function toggleHazardLights(force) {
+    const newState = (force !== undefined) ? force : !hazardLightsOn;
+    if (newState === hazardLightsOn) return;
+    hazardLightsOn = newState;
+
+    const btn = document.getElementById('hazard-toggle-btn');
+    const btnText = document.getElementById('hazard-status-text');
+    const btnIcon = document.getElementById('hazard-btn-icon');
+
+    if (hazardInterval) {
+        clearInterval(hazardInterval);
+        hazardInterval = null;
+    }
+
+    if (hazardLightsOn) {
+        if (btnText) btnText.innerText = "Аварийка: ВКЛ";
+        if (btnIcon) btnIcon.className = "fa-solid fa-triangle-exclamation text-amber-400 animate-pulse";
+        if (btn) {
+            btn.classList.remove('bg-white/5', 'border-white/10');
+            btn.classList.add('bg-amber-400/15', 'border-amber-400/50', 'text-amber-400', 'shadow-[0_0_15px_rgba(251,191,36,0.25)]');
+        }
+
+        let flashState = false;
+        const doFlash = () => {
+            flashState = !flashState;
+            setOrangeFlash(flashState);
+            soundSystem.playRelayClick();
+        };
+
+        doFlash();
+        hazardInterval = setInterval(doFlash, 380);
+    } else {
+        setOrangeFlash(false);
+        if (btnText) btnText.innerText = "Аварийка: ВЫКЛ";
+        if (btnIcon) btnIcon.className = "fa-solid fa-triangle-exclamation text-amber-400";
+        if (btn) {
+            btn.classList.remove('bg-amber-400/15', 'border-amber-400/50', 'text-amber-400', 'shadow-[0_0_15px_rgba(251,191,36,0.25)]');
+            btn.classList.add('bg-white/5', 'border-white/10');
+        }
     }
 }
 
@@ -748,9 +803,7 @@ async function toggleEngine() {
             toggleHeadlights();
         }
 
-        if (carImg) {
-            carImg.classList.remove('engine-idling-shake', 'engine-revving-shake');
-        }
+        setCarShake(null);
         if (btnText) btnText.innerText = "Завести двигатель";
         if (btnIcon) btnIcon.className = "fa-solid fa-power-off text-gold-400";
         if (btn) {
@@ -796,9 +849,7 @@ async function toggleEngine() {
         currentRpm = 1350;
         targetRpm = 780;
 
-        if (carImg) {
-            carImg.classList.add('engine-idling-shake');
-        }
+        setCarShake('engine-idling-shake');
         if (btnText) btnText.innerText = "Заглушить двигатель";
         if (btnIcon) btnIcon.className = "fa-solid fa-power-off text-emerald-400 animate-pulse";
         if (btn) {
@@ -827,13 +878,9 @@ function pressGasPedal(e) {
     pedalPressStartTime = Date.now();
 
     const pedalBtn = document.getElementById('gas-pedal-btn');
-    const carImg = document.getElementById('octavia-car-img');
 
     if (pedalBtn) pedalBtn.classList.add('pedal-active');
-    if (carImg) {
-        carImg.classList.remove('engine-idling-shake');
-        carImg.classList.add('engine-revving-shake');
-    }
+    setCarShake('engine-revving-shake');
 
     targetRpm = 5800 + Math.random() * 250;
 }
@@ -843,15 +890,11 @@ function releaseGasPedal(e) {
     isPedalPressed = false;
 
     const pedalBtn = document.getElementById('gas-pedal-btn');
-    const carImg = document.getElementById('octavia-car-img');
 
     if (pedalBtn) pedalBtn.classList.remove('pedal-active');
 
     if (engineRunning && !engineBlown) {
-        if (carImg) {
-            carImg.classList.remove('engine-revving-shake');
-            carImg.classList.add('engine-idling-shake');
-        }
+        setCarShake('engine-idling-shake');
         targetRpm = 780;
     }
 }
@@ -872,14 +915,14 @@ function triggerOverheatDisaster() {
         toggleHeadlights();
     }
 
+    // Automatically trigger emergency hazard flashers (orange flash.png blinking!)
+    toggleHazardLights(true);
+
     // Car visuals & smoke
-    const carImg = document.getElementById('octavia-car-img');
     const smokeContainer = document.getElementById('engine-smoke-container');
     const banner = document.getElementById('overheat-banner');
 
-    if (carImg) {
-        carImg.classList.remove('engine-idling-shake', 'engine-revving-shake');
-    }
+    setCarShake(null);
     if (smokeContainer) {
         smokeContainer.classList.remove('hidden');
     }
@@ -1272,88 +1315,112 @@ async function handleContactSubmit(event) {
 }
 
 // ==========================================
-// VAG-COM STAGE 3 EASTER EGG & CLICK PARTICLES SYSTEM
+// MACOS UNIX TERMINAL (EASTER EGG)
 // ==========================================
-let easterEggActive = false;
-let clickSparksEnabled = (localStorage.getItem('vag_stage3_unlocked') === 'true' && localStorage.getItem('vag_click_sparks') !== 'false');
+let terminalOpen = false;
+let terminalHistory = [];
+let terminalHistoryIndex = -1;
 let logoClickCount = 0;
 let logoClickTimer = null;
 let keyBuffer = '';
 const konamiSequence = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
 let konamiStep = 0;
+let terminalExpanded = false;
 
-// Particle Canvas Management
-const eggCanvas = document.getElementById('easter-egg-canvas');
-let eggCtx = null;
-let eggParticles = [];
-let eggAnimFrame = null;
-
-function initEggCanvas() {
-    if (!eggCanvas) return;
-    eggCtx = eggCanvas.getContext('2d');
-    const resize = () => {
-        eggCanvas.width = window.innerWidth;
-        eggCanvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
-}
-
-function spawnParticles(x, y, count = 35, colors = ['#f5d061', '#e6b94e', '#00f0ff', '#ff3b30', '#ffffff']) {
-    if (!eggCanvas || !eggCtx) return;
-    for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 2 + Math.random() * 7;
-        eggParticles.push({
-            x: x,
-            y: y,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - (Math.random() * 2.5),
-            size: 1.5 + Math.random() * 3,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: 1,
-            decay: 0.02 + Math.random() * 0.03,
-            gravity: 0.1
+function initTerminal() {
+    const timeEl = document.getElementById('terminal-login-time');
+    if (timeEl) {
+        timeEl.innerText = new Date().toLocaleString('en-US', {
+            weekday: 'short', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
         });
     }
-    if (!eggAnimFrame) {
-        renderEggParticles();
+
+    const input = document.getElementById('terminal-input');
+    if (!input) return;
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (terminalHistory.length > 0) {
+                if (terminalHistoryIndex === -1) {
+                    terminalHistoryIndex = terminalHistory.length - 1;
+                } else if (terminalHistoryIndex > 0) {
+                    terminalHistoryIndex--;
+                }
+                input.value = terminalHistory[terminalHistoryIndex] || '';
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (terminalHistoryIndex !== -1) {
+                if (terminalHistoryIndex < terminalHistory.length - 1) {
+                    terminalHistoryIndex++;
+                    input.value = terminalHistory[terminalHistoryIndex] || '';
+                } else {
+                    terminalHistoryIndex = -1;
+                    input.value = '';
+                }
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const val = input.value.trim().toLowerCase();
+            const cmds = ['help', 'about', 'skills', 'stack', 'projects', 'github', 'octavia', 'contact', 'clear', 'exit', 'whoami', 'date'];
+            const match = cmds.find(c => c.startsWith(val));
+            if (match) {
+                input.value = match;
+            }
+        }
+    });
+}
+
+function focusTerminalInput() {
+    const input = document.getElementById('terminal-input');
+    if (input) input.focus();
+}
+
+function handleTerminalBackdropClick(e) {
+    if (e.target && e.target.id === 'easter-egg-modal') {
+        closeEasterEggModal();
     }
 }
 
-function renderEggParticles() {
-    if (!eggCtx) return;
-    eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+function clearTerminal() {
+    const log = document.getElementById('terminal-log');
+    if (log) log.innerHTML = '';
+    focusTerminalInput();
+}
 
-    for (let i = eggParticles.length - 1; i >= 0; i--) {
-        const p = eggParticles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.gravity;
-        p.alpha -= p.decay;
-
-        if (p.alpha <= 0) {
-            eggParticles.splice(i, 1);
-            continue;
-        }
-
-        eggCtx.save();
-        eggCtx.globalAlpha = Math.max(0, p.alpha);
-        eggCtx.fillStyle = p.color;
-        eggCtx.shadowColor = p.color;
-        eggCtx.shadowBlur = 6;
-        eggCtx.beginPath();
-        eggCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        eggCtx.fill();
-        eggCtx.restore();
-    }
-
-    if (eggParticles.length > 0) {
-        eggAnimFrame = requestAnimationFrame(renderEggParticles);
+function toggleTerminalExpand() {
+    const win = document.getElementById('terminal-window');
+    const screen = document.getElementById('terminal-screen');
+    if (!win || !screen) return;
+    terminalExpanded = !terminalExpanded;
+    if (terminalExpanded) {
+        win.classList.remove('max-w-2xl');
+        win.classList.add('max-w-4xl');
+        screen.classList.remove('h-[340px]', 'sm:h-[420px]');
+        screen.classList.add('h-[520px]', 'sm:h-[620px]');
     } else {
-        eggAnimFrame = null;
-        eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+        win.classList.add('max-w-2xl');
+        win.classList.remove('max-w-4xl');
+        screen.classList.add('h-[340px]', 'sm:h-[420px]');
+        screen.classList.remove('h-[520px]', 'sm:h-[620px]');
     }
+    focusTerminalInput();
+}
+
+function openTerminal() {
+    const modal = document.getElementById('easter-egg-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    terminalOpen = true;
+    setTimeout(focusTerminalInput, 60);
+}
+
+function closeEasterEggModal() {
+    const modal = document.getElementById('easter-egg-modal');
+    if (modal) modal.classList.add('hidden');
+    terminalOpen = false;
 }
 
 // Logo Click Trigger (5 rapid clicks on "GV" brand logo)
@@ -1367,26 +1434,31 @@ function handleLogoClick(e) {
     if (logoClickCount >= 5) {
         if (e) e.preventDefault();
         logoClickCount = 0;
-        triggerStage3EasterEgg(e ? e.clientX : window.innerWidth / 2, e ? e.clientY : 100);
+        openTerminal();
         return false;
-    } else if (logoClickCount >= 2) {
-        showToast(`⚡ Доступ к ЭБУ: ещё ${5 - logoClickCount} клика...`, true);
+    } else if (logoClickCount >= 3) {
+        showToast(`Доступ к терминалу: ещё ${5 - logoClickCount} клика...`, true);
     }
 }
 
-// Keyboard Triggers (Konami code, 'vag', 'stage3', 'turbo', 'itmo')
+// Keyboard Triggers (Konami code, 'term', 'zsh', 'vag')
 window.addEventListener('keydown', (e) => {
     const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-    if (targetTag === 'input' || targetTag === 'textarea') return;
+    if (targetTag === 'input' && e.target.id !== 'terminal-input') return;
+    if (targetTag === 'textarea') return;
 
     if (e.key === 'Escape') {
-        closeEasterEggModal();
-        return;
+        if (terminalOpen) {
+            closeEasterEggModal();
+            return;
+        }
     }
+
+    if (terminalOpen) return;
 
     const keyLower = e.key.toLowerCase();
 
-    // Check Konami Code (supports EN and RU keyboard layout for B/A keys)
+    // Check Konami Code
     const expected = konamiSequence[konamiStep];
     const isMatch = (keyLower === expected) ||
         (expected === 'b' && (keyLower === 'b' || keyLower === 'и')) ||
@@ -1396,7 +1468,7 @@ window.addEventListener('keydown', (e) => {
         konamiStep++;
         if (konamiStep === konamiSequence.length) {
             konamiStep = 0;
-            triggerStage3EasterEgg();
+            openTerminal();
             return;
         }
     } else {
@@ -1407,146 +1479,221 @@ window.addEventListener('keydown', (e) => {
     keyBuffer += keyLower;
     if (keyBuffer.length > 12) keyBuffer = keyBuffer.slice(-12);
 
-    if (keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг') ||
-        keyBuffer.endsWith('stage3') || keyBuffer.endsWith('turbo') ||
-        keyBuffer.endsWith('турбо') || keyBuffer.endsWith('itmo') || keyBuffer.endsWith('итмо')) {
+    if (keyBuffer.endsWith('term') || keyBuffer.endsWith('терм') ||
+        keyBuffer.endsWith('terminal') || keyBuffer.endsWith('zsh') ||
+        keyBuffer.endsWith('bash') || keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг')) {
         keyBuffer = '';
-        triggerStage3EasterEgg();
+        openTerminal();
     }
 });
 
-// Dynamic Click Sparks (Energetic lightweight feedback on clicks)
-window.addEventListener('click', (e) => {
-    if (!clickSparksEnabled) return;
-    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-    if (targetTag === 'input' || targetTag === 'textarea') return;
+async function handleTerminalSubmit(e) {
+    if (e) e.preventDefault();
+    const input = document.getElementById('terminal-input');
+    const log = document.getElementById('terminal-log');
+    const screen = document.getElementById('terminal-screen');
+    if (!input || !log) return;
 
-    spawnParticles(e.clientX, e.clientY, 8, ['#f5d061', '#00f0ff', '#ffffff']);
-}, { passive: true });
+    const raw = input.value;
+    const cmd = raw.trim();
+    input.value = '';
 
-function triggerStage3EasterEgg(originX, originY) {
-    const modal = document.getElementById('easter-egg-modal');
-    if (!modal) return;
+    if (!cmd) return;
 
-    soundSystem.playTurboBlowoff();
-    soundSystem.playPopsAndBangs(3);
+    terminalHistory.push(cmd);
+    terminalHistoryIndex = -1;
 
-    // Screen Shake
-    document.body.classList.remove('stage3-shake');
-    void document.body.offsetWidth;
-    document.body.classList.add('stage3-shake');
-    setTimeout(() => document.body.classList.remove('stage3-shake'), 500);
+    // Append entered command line
+    const cmdLine = document.createElement('div');
+    cmdLine.className = 'flex items-center gap-2 text-slate-300';
+    cmdLine.innerHTML = `<span class="text-emerald-400 font-bold select-none whitespace-nowrap">gleb:~/site$</span> <span>${escapeHtml(cmd)}</span>`;
+    log.appendChild(cmdLine);
 
-    // Explosive particle burst
-    const x = originX || window.innerWidth / 2;
-    const y = originY || window.innerHeight / 2;
-    spawnParticles(x, y, 60, ['#f5d061', '#ff3b30', '#00f0ff', '#ffffff', '#ff9500']);
+    // Process command
+    const parts = cmd.split(/\s+/);
+    const primary = parts[0].toLowerCase();
 
-    // Animate HP counter
-    const hpCounter = document.getElementById('stage3-hp-counter');
-    if (hpCounter) {
-        let val = 180;
-        const target = 450;
-        const interval = setInterval(() => {
-            val += 15;
-            if (val >= target) {
-                val = target;
-                clearInterval(interval);
+    const outputDiv = document.createElement('div');
+    outputDiv.className = 'text-slate-300 text-xs sm:text-[13px] leading-relaxed pb-1';
+
+    switch (primary) {
+        case 'help':
+            outputDiv.innerHTML = `
+<div class="text-slate-400 space-y-0.5">
+  <div class="text-gold-400 font-semibold mb-1">Доступные команды:</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">about</span> - краткая информация и досье</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">skills</span> - стек технологий и компетенции</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">projects</span> - инженерные проекты и репозитории</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">github</span> - live запрос публичных репозиториев GitHub</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">octavia</span> - досье Škoda Octavia A7 Black Edition</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">contact</span> - способы связи и Telegram</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">whoami</span> - идентификатор текущего пользователя</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">date</span> - текущее системное время</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">clear</span> - очистить экран</div>
+  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">exit</span> - закрыть терминал (Esc)</div>
+</div>`;
+            break;
+
+        case 'about':
+            outputDiv.innerHTML = `
+<div class="space-y-1 text-slate-300">
+  <div class="text-white font-bold">Глеб Вохрамеев (Gleb Vokhrameev)</div>
+  <div class="text-slate-400">Backend & Systems Developer • ИТМО (Санкт-Петербург)</div>
+  <p class="text-slate-300 mt-1">
+    Разработка надежных микросервисов, высоконагруженных Telegram-ботов и системных утилит.
+    Особый интерес — архитектура распределенных систем, автоматизация и протоколы автомобильной телеметрии VAG CAN-Bus.
+  </p>
+</div>`;
+            break;
+
+        case 'skills':
+        case 'stack':
+            outputDiv.innerHTML = `
+<div class="space-y-1 text-slate-300 font-mono">
+  <div><span class="text-gold-400 font-bold">Backend:</span>    Java 17/21, Spring Boot, Spring Security, Python, REST APIs</div>
+  <div><span class="text-gold-400 font-bold">Databases:</span>  PostgreSQL, Redis, Liquibase, Hibernate</div>
+  <div><span class="text-gold-400 font-bold">Systems:</span>    macOS / Linux, zsh/bash, Docker, Git, iCal / Apple EventKit</div>
+  <div><span class="text-gold-400 font-bold">Automotive:</span> CAN-Bus sniffer, VCDS, ODIS Service, Bosch ME17 ECU telemetry</div>
+</div>`;
+            break;
+
+        case 'projects':
+            outputDiv.innerHTML = `
+<div class="space-y-2 text-slate-300">
+  <div>
+    <span class="text-cyan-400 font-bold">1. SBLink Telegram Bot</span>
+    <span class="text-slate-400 text-xs ml-2">[Java • Spring Boot • PostgreSQL]</span>
+    <div class="text-slate-400">Бот для распределенной обработки потоковых данных и ссылок.</div>
+    <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" rel="noopener" class="text-gold-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/SBLink</a>
+  </div>
+  <div>
+    <span class="text-cyan-400 font-bold">2. TestRain Platform</span>
+    <span class="text-slate-400 text-xs ml-2">[Spring Boot • Redis • Security]</span>
+    <div class="text-slate-400">Платформа автоматизированного тестирования микросервисных архитектур.</div>
+    <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" rel="noopener" class="text-gold-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/TestRain</a>
+  </div>
+  <div>
+    <span class="text-cyan-400 font-bold">3. MyItmo to Apple Calendar</span>
+    <span class="text-slate-400 text-xs ml-2">[Python • iCal • EventKit]</span>
+    <div class="text-slate-400">Синхронизация расписания ИТМО по токену в нативный Apple Calendar.</div>
+    <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" rel="noopener" class="text-cyan-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/schedule</a>
+  </div>
+</div>`;
+            break;
+
+        case 'github':
+        case 'repos':
+            outputDiv.innerHTML = `<div class="text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Запрос данных с api.github.com/users/GLEBBOFRI/repos...</div>`;
+            log.appendChild(outputDiv);
+            if (screen) screen.scrollTop = screen.scrollHeight;
+
+            try {
+                const res = await fetch('https://api.github.com/users/GLEBBOFRI/repos?sort=updated&per_page=6');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const repos = await res.json();
+                if (!Array.isArray(repos) || repos.length === 0) {
+                    outputDiv.innerHTML = `<div class="text-amber-400">Репозитории не найдены или профиль скрыт.</div>`;
+                } else {
+                    let html = `<div class="text-gold-400 font-bold mb-1.5">Публичные репозитории @GLEBBOFRI:</div><div class="space-y-1.5">`;
+                    repos.forEach(r => {
+                        const lang = r.language ? `<span class="text-cyan-400 font-mono text-[11px]">[${r.language}]</span>` : '';
+                        const stars = r.stargazers_count > 0 ? ` ⭐ ${r.stargazers_count}` : '';
+                        const desc = r.description ? `<div class="text-slate-400 text-[11px]">${escapeHtml(r.description)}</div>` : '';
+                        html += `
+<div>
+  <a href="${r.html_url}" target="_blank" rel="noopener" class="text-emerald-400 font-bold hover:underline">📁 ${escapeHtml(r.name)}</a>
+  ${lang}${stars}
+  ${desc}
+</div>`;
+                    });
+                    html += `</div><div class="text-slate-500 text-[11px] mt-2">Всего публичных проектов: ${repos.length}. <a href="https://github.com/GLEBBOFRI" target="_blank" class="text-gold-400 underline">Открыть GitHub профиль ↗</a></div>`;
+                    outputDiv.innerHTML = html;
+                }
+            } catch (err) {
+                outputDiv.innerHTML = `
+<div class="text-amber-400 text-xs">
+  <div>Не удалось подключиться к GitHub API (лимит запросов или офлайн).</div>
+  <div class="text-slate-400 mt-1">Основные репозитории:</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" class="text-gold-400 underline">SBLink</a> (Java/Spring Boot)</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" class="text-gold-400 underline">TestRain</a> (Spring Boot/Redis)</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" class="text-gold-400 underline">schedule</a> (Python/Apple Calendar)</div>
+</div>`;
             }
-            hpCounter.innerText = val + " HP";
-        }, 25);
+            if (screen) screen.scrollTop = screen.scrollHeight;
+            return;
+
+        case 'octavia':
+            outputDiv.innerHTML = `
+<div class="space-y-1 text-slate-300 font-mono">
+  <div class="text-gold-400 font-bold">Škoda Octavia A7 Black Edition (Typ 5E)</div>
+  <div>  Кузов:        Лифтбек (Deep Black Pearl)</div>
+  <div>  Двигатель:    1.6 MPI CWVA (EA211), 16V DOHC, 110 л.с., 155 Н·м</div>
+  <div>  Трансмиссия:  6-ступенчатая гидротрансформаторная АКПП Aisin 09G</div>
+  <div>  Диагностика:  VCDS / ODIS Service (CAN-Bus Gateway, Bosch ME17)</div>
+  <div class="text-slate-400 text-xs mt-1">Инженерный стенд доступен во вкладке <span class="text-cyan-400 font-bold">'Octavia A7'</span> на сайте.</div>
+</div>`;
+            break;
+
+        case 'contact':
+            outputDiv.innerHTML = `
+<div class="space-y-1 text-slate-300">
+  <div><span class="text-gold-400 font-bold">Telegram:</span>  <a href="https://t.me/TLVRLX" target="_blank" rel="noopener" class="text-cyan-400 underline">@TLVRLX</a></div>
+  <div><span class="text-gold-400 font-bold">GitHub:</span>    <a href="https://github.com/GLEBBOFRI" target="_blank" rel="noopener" class="text-cyan-400 underline">github.com/GLEBBOFRI</a></div>
+  <div><span class="text-gold-400 font-bold">Локация:</span>   Санкт-Петербург, Россия</div>
+</div>`;
+            break;
+
+        case 'whoami':
+            outputDiv.innerHTML = `<div class="text-emerald-400">gleb (uid=1000 gid=1000 groups=staff,admin,wheel)</div>`;
+            break;
+
+        case 'sudo':
+            outputDiv.innerHTML = `<div class="text-red-400">gleb is not in the sudoers file. This incident will be reported.</div>`;
+            break;
+
+        case 'date':
+            outputDiv.innerHTML = `<div>${new Date().toString()}</div>`;
+            break;
+
+        case 'clear':
+            clearTerminal();
+            return;
+
+        case 'exit':
+        case 'quit':
+            closeEasterEggModal();
+            return;
+
+        default:
+            outputDiv.innerHTML = `<div class="text-red-400">zsh: command not found: ${escapeHtml(primary)}. Введите <span class="text-cyan-400 font-bold">'help'</span> для списка команд.</div>`;
+            break;
     }
 
-    modal.classList.remove('hidden');
-    easterEggActive = true;
-
-    // Enable click sparks for the user who discovered the easter egg!
-    clickSparksEnabled = true;
-    try {
-        localStorage.setItem('vag_stage3_unlocked', 'true');
-        localStorage.setItem('vag_click_sparks', 'true');
-    } catch (err) {}
-
-    const btnText = document.getElementById('toggle-sparks-text');
-    const btnIcon = document.getElementById('toggle-sparks-icon');
-    if (btnText) btnText.innerText = 'ИСКРЫ КЛИКА: ВКЛ';
-    if (btnIcon) btnIcon.className = 'fa-solid fa-wand-magic-sparkles text-amber-400';
-
-    showToast('🚀 VAG-COM STAGE 3: Секретная прошивка разблокирована!', true);
-}
-
-function closeEasterEggModal() {
-    const modal = document.getElementById('easter-egg-modal');
-    if (modal) modal.classList.add('hidden');
-    easterEggActive = false;
-}
-
-function triggerNitroBoost() {
-    soundSystem.playNitroRoar();
-    soundSystem.playPopsAndBangs(4);
-
-    // Flash speed lines
-    const overlay = document.getElementById('speed-lines-overlay');
-    if (overlay) {
-        overlay.style.opacity = '1';
-        setTimeout(() => {
-            overlay.style.opacity = '0';
-        }, 1100);
+    log.appendChild(outputDiv);
+    if (screen) {
+        screen.scrollTop = screen.scrollHeight;
     }
-
-    // Shake
-    document.body.classList.remove('stage3-shake');
-    void document.body.offsetWidth;
-    document.body.classList.add('stage3-shake');
-    setTimeout(() => document.body.classList.remove('stage3-shake'), 600);
-
-    spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 70, ['#ff3b30', '#ff9500', '#f5d061', '#00f0ff']);
-    showToast('🔥 ЗАКИСЬ АЗОТА АКТИВИРОВАНА: +150 HP BOOST!', true);
 }
 
-function triggerPopsAndBangs() {
-    soundSystem.playPopsAndBangs(5);
-    spawnParticles(window.innerWidth / 2, window.innerHeight * 0.7, 40, ['#ff3b30', '#f5d061', '#ffffff']);
-    showToast('💥 ВЫХЛОП: Отстрелы Anti-Lag активированы!', true);
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
-function openOctaviaStage3() {
-    closeEasterEggModal();
-    switchTab('octavia');
-    const carSection = document.getElementById('octavia-car-img');
-    if (carSection) carSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    setTimeout(() => {
-        if (!engineRunning && !engineBlown) {
-            toggleEngine();
-        }
-        showToast('🏁 Octavia A7 переведена в боевой режим STAGE 3!', true);
-    }, 400);
-}
-
-function toggleClickSparks() {
-    clickSparksEnabled = !clickSparksEnabled;
-    try {
-        localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
-    } catch (e) {}
-    const btnText = document.getElementById('toggle-sparks-text');
-    const btnIcon = document.getElementById('toggle-sparks-icon');
-    if (btnText) btnText.innerText = clickSparksEnabled ? 'ИСКРЫ КЛИКА: ВКЛ' : 'ИСКРЫ КЛИКА: ВЫКЛ';
-    if (btnIcon) {
-        btnIcon.className = clickSparksEnabled ? 'fa-solid fa-wand-magic-sparkles text-amber-400' : 'fa-solid fa-wand-magic-sparkles text-slate-500';
-    }
-    showToast(clickSparksEnabled ? '✨ Неоновые искры курсора включены' : 'Искры курсора выключены', true);
-}
-
-// Initialize Easter Egg canvas and developer teaser
+// Initialize Terminal on DOM load
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initEggCanvas);
+    document.addEventListener('DOMContentLoaded', initTerminal);
 } else {
-    initEggCanvas();
+    initTerminal();
 }
 
 console.log(
-    "%c🏎️ VAG-COM DIAGNOSTICS %c| Ищешь пасхалку? Введи на клавиатуре 'vag', нажми Konami Code (↑↑↓↓←→←→BA) или кликни 5 раз по логотипу GV!",
-    "background: #e6b94e; color: #000; font-weight: bold; padding: 4px 8px; border-radius: 4px;",
-    "color: #00f0ff; font-weight: bold; font-size: 12px;"
+    "%c⚡ GLEB TERMINAL %c| Открыть терминал: введи 'term' на клавиатуре или нажми 5 раз на логотип GV",
+    "background: #161b22; color: #27c93f; font-weight: bold; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);",
+    "color: #f5d061; font-weight: bold; font-size: 11px;"
 );
