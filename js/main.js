@@ -96,41 +96,37 @@ function switchTab(tabId) {
         activeTab.classList.remove('hidden');
     }
 
-    // 1. Update Desktop Nav Button States
+    // 1. Update Desktop Nav Button States (Letter Design System: 2px, Paper White, Vault Ink)
     const navBtns = document.querySelectorAll('.nav-btn');
     navBtns.forEach(btn => {
-        btn.className = "nav-btn px-4 xl:px-5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-300 text-slate-400 hover:text-white hover:bg-white/5";
+        btn.className = "nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 text-fog-gray hover:text-white hover:bg-white/5";
     });
 
     const activeBtn = document.getElementById('nav-' + tabId);
     if (activeBtn) {
-        activeBtn.className = "nav-btn px-4 xl:px-5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-300 bg-gold-500 text-black shadow-md shadow-gold-500/20";
+        activeBtn.className = "nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 bg-paper-white text-vault-ink";
     }
 
     // 2. Update Mobile Drawer Buttons
     const drawerBtns = document.querySelectorAll('.drawer-nav-btn');
     drawerBtns.forEach(btn => {
-        btn.classList.remove('bg-gold-500', 'text-black', 'border-gold-500/50');
-        btn.classList.add('text-slate-300', 'bg-white/5', 'border-white/5');
+        btn.className = "drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all text-fog-gray hover:text-white bg-white/5";
     });
 
     const activeDrawerBtn = document.getElementById('drawer-nav-' + tabId);
     if (activeDrawerBtn) {
-        activeDrawerBtn.classList.remove('text-slate-300', 'bg-white/5', 'border-white/5');
-        activeDrawerBtn.classList.add('bg-gold-500', 'text-black', 'border-gold-500/50');
+        activeDrawerBtn.className = "drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-paper-white text-vault-ink";
     }
 
     // 3. Update Mobile Bottom Dock Buttons
     const dockBtns = document.querySelectorAll('.dock-nav-btn');
     dockBtns.forEach(btn => {
-        btn.classList.remove('text-gold-400', 'bg-gold-500/15', 'border-gold-500/30');
-        btn.classList.add('text-slate-400', 'hover:text-white');
+        btn.className = "dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-fog-gray hover:text-white transition-all";
     });
 
     const activeDockBtn = document.getElementById('dock-nav-' + tabId);
     if (activeDockBtn) {
-        activeDockBtn.classList.remove('text-slate-400');
-        activeDockBtn.classList.add('text-gold-400', 'bg-gold-500/15', 'border-gold-500/30');
+        activeDockBtn.className = "dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-vault-ink bg-paper-white transition-all";
     }
 
     // Close mobile menu if opened
@@ -1127,12 +1123,12 @@ function filterPortfolio(category, evt) {
 
     const filterBtns = document.querySelectorAll('.port-filter-btn');
     filterBtns.forEach(btn => {
-        btn.className = "port-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs font-mono bg-white/5 text-slate-300 hover:bg-white/10 transition-colors flex-shrink-0";
+        btn.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-mist-white text-vault-ink border border-hairline hover:bg-hairline";
     });
 
     const target = evt ? evt.currentTarget || evt.target : (window.event ? window.event.target : null);
     if (target) {
-        target.className = "port-filter-btn whitespace-nowrap px-4 py-2 rounded-xl text-xs font-mono bg-gold-500 text-black font-bold flex-shrink-0";
+        target.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-vault-ink text-white font-medium";
     }
 }
 
@@ -1150,12 +1146,12 @@ async function switchCodeTab(fileType) {
     const tabHtml = document.getElementById('code-tab-html');
     const tabCss = document.getElementById('code-tab-css');
     const tabJs = document.getElementById('code-tab-js');
-    if (tabHtml) tabHtml.className = "px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white bg-white/5 whitespace-nowrap";
-    if (tabCss) tabCss.className = "px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white bg-white/5 whitespace-nowrap";
-    if (tabJs) tabJs.className = "px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white bg-white/5 whitespace-nowrap";
+    if (tabHtml) tabHtml.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap";
+    if (tabCss) tabCss.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap";
+    if (tabJs) tabJs.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap";
 
     const targetTab = document.getElementById('code-tab-' + fileType);
-    if (targetTab) targetTab.className = "px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono bg-gold-500 text-black font-bold whitespace-nowrap";
+    if (targetTab) targetTab.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono bg-paper-white text-vault-ink font-bold whitespace-nowrap";
 
     const display = document.getElementById('code-display');
     const loading = document.getElementById('code-loading');
@@ -1315,17 +1311,325 @@ async function handleContactSubmit(event) {
 }
 
 // ==========================================
-// MACOS UNIX TERMINAL (EASTER EGG)
+// EASTER EGG SYSTEM (VAG-COM STAGE 3 & MACOS TERMINAL)
 // ==========================================
-let terminalOpen = false;
-let terminalHistory = [];
-let terminalHistoryIndex = -1;
+let easterEggModalOpen = false;
+let clickSparksEnabled = (localStorage.getItem('vag_click_sparks') === 'true');
 let logoClickCount = 0;
 let logoClickTimer = null;
 let keyBuffer = '';
 const konamiSequence = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
 let konamiStep = 0;
 let terminalExpanded = false;
+let terminalHistory = [];
+let terminalHistoryIndex = -1;
+
+// Particle Canvas Management
+const eggCanvas = document.getElementById('easter-egg-canvas');
+let eggCtx = null;
+let eggParticles = [];
+let eggAnimFrame = null;
+
+function initEggCanvas() {
+    if (!eggCanvas) return;
+    eggCtx = eggCanvas.getContext('2d');
+    const resize = () => {
+        eggCanvas.width = window.innerWidth;
+        eggCanvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+}
+
+function spawnParticles(x, y, count = 35, colors = ['#186f64', '#536eff', '#f5d061', '#ffffff', '#00f0ff']) {
+    if (!eggCanvas || !eggCtx) {
+        initEggCanvas();
+        if (!eggCanvas || !eggCtx) return;
+    }
+    for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 7;
+        eggParticles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - (Math.random() * 2.5),
+            size: 1.5 + Math.random() * 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            decay: 0.02 + Math.random() * 0.03,
+            gravity: 0.1
+        });
+    }
+    if (!eggAnimFrame) {
+        renderEggParticles();
+    }
+}
+
+function renderEggParticles() {
+    if (!eggCtx) return;
+    eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+
+    for (let i = eggParticles.length - 1; i >= 0; i--) {
+        const p = eggParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+            eggParticles.splice(i, 1);
+            continue;
+        }
+
+        eggCtx.save();
+        eggCtx.globalAlpha = Math.max(0, p.alpha);
+        eggCtx.fillStyle = p.color;
+        eggCtx.shadowColor = p.color;
+        eggCtx.shadowBlur = 6;
+        eggCtx.beginPath();
+        eggCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        eggCtx.fill();
+        eggCtx.restore();
+    }
+
+    if (eggParticles.length > 0) {
+        eggAnimFrame = requestAnimationFrame(renderEggParticles);
+    } else {
+        eggAnimFrame = null;
+        eggCtx.clearRect(0, 0, eggCanvas.width, eggCanvas.height);
+    }
+}
+
+function syncSparksButtonUI() {
+    const btnText = document.getElementById('toggle-sparks-text');
+    const btnIcon = document.getElementById('toggle-sparks-icon');
+    const btn = document.getElementById('toggle-sparks-btn');
+    if (btnText) {
+        btnText.innerText = clickSparksEnabled ? 'ИСКРЫ КЛИКА: ВКЛ' : 'ИСКРЫ КЛИКА: ВЫКЛ';
+    }
+    if (btnIcon) {
+        btnIcon.className = clickSparksEnabled ? 'fa-solid fa-wand-magic-sparkles text-emerald-400' : 'fa-solid fa-wand-magic-sparkles text-fog-gray';
+    }
+    if (btn) {
+        if (clickSparksEnabled) {
+            btn.classList.add('border-emerald-500/50', 'bg-emerald-500/10', 'text-white');
+            btn.classList.remove('border-white/20');
+        } else {
+            btn.classList.remove('border-emerald-500/50', 'bg-emerald-500/10');
+            btn.classList.add('border-white/20');
+        }
+    }
+}
+
+function toggleClickSparks() {
+    clickSparksEnabled = !clickSparksEnabled;
+    try {
+        localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
+    } catch (e) {}
+    syncSparksButtonUI();
+    if (clickSparksEnabled) {
+        spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 45, ['#186f64', '#536eff', '#ffffff', '#00f0ff', '#f5d061']);
+        showToast('✨ Неоновые искры включены! Кликайте по экрану', true);
+    } else {
+        showToast('Искры клика выключены', true);
+    }
+}
+
+// Window Click listener for sparks
+window.addEventListener('click', (e) => {
+    if (!clickSparksEnabled) return;
+    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (targetTag === 'input' && e.target.id === 'terminal-input') return;
+    spawnParticles(e.clientX, e.clientY, 10, ['#186f64', '#536eff', '#ffffff', '#f5d061', '#00f0ff']);
+}, { passive: true });
+
+function switchEasterEggTab(tab) {
+    const stage3View = document.getElementById('egg-view-stage3');
+    const terminalView = document.getElementById('egg-view-terminal');
+    const stage3Tab = document.getElementById('egg-tab-stage3');
+    const terminalTab = document.getElementById('egg-tab-terminal');
+
+    if (tab === 'stage3') {
+        if (stage3View) stage3View.classList.remove('hidden');
+        if (terminalView) {
+            terminalView.classList.add('hidden');
+            terminalView.classList.remove('flex');
+        }
+        if (stage3Tab) {
+            stage3Tab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-bold bg-deep-teal text-white transition-all';
+        }
+        if (terminalTab) {
+            terminalTab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-medium text-fog-gray hover:text-white bg-white/5 transition-all';
+        }
+        syncSparksButtonUI();
+    } else if (tab === 'terminal') {
+        if (stage3View) stage3View.classList.add('hidden');
+        if (terminalView) {
+            terminalView.classList.remove('hidden');
+            terminalView.classList.add('flex');
+        }
+        if (stage3Tab) {
+            stage3Tab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-medium text-fog-gray hover:text-white bg-white/5 transition-all';
+        }
+        if (terminalTab) {
+            terminalTab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-bold bg-deep-teal text-white transition-all';
+        }
+        setTimeout(focusTerminalInput, 50);
+    }
+}
+
+function openEasterEggModal(initialTab = 'stage3') {
+    const modal = document.getElementById('easter-egg-modal');
+    if (!modal) return;
+    initEggCanvas();
+    modal.classList.remove('hidden');
+    easterEggModalOpen = true;
+
+    switchEasterEggTab(initialTab);
+    syncSparksButtonUI();
+
+    soundSystem.playTurboBlowoff();
+
+    // HP Counter animation if in stage3
+    const hpCounter = document.getElementById('stage3-hp-counter');
+    if (hpCounter) {
+        let val = 180;
+        const target = 450;
+        const interval = setInterval(() => {
+            val += 15;
+            if (val >= target) {
+                val = target;
+                clearInterval(interval);
+            }
+            hpCounter.innerText = val + " HP";
+        }, 20);
+    }
+}
+
+function openTerminal() {
+    openEasterEggModal('terminal');
+}
+
+function closeEasterEggModal() {
+    const modal = document.getElementById('easter-egg-modal');
+    if (modal) modal.classList.add('hidden');
+    easterEggModalOpen = false;
+}
+
+function handleTerminalBackdropClick(e) {
+    if (e.target && e.target.id === 'easter-egg-modal') {
+        closeEasterEggModal();
+    }
+}
+
+function triggerNitroBoost() {
+    soundSystem.playNitroRoar();
+    soundSystem.playPopsAndBangs(4);
+
+    const overlay = document.getElementById('speed-lines-overlay');
+    if (overlay) {
+        overlay.style.opacity = '1';
+        setTimeout(() => {
+            overlay.style.opacity = '0';
+        }, 1100);
+    }
+
+    document.body.classList.remove('stage3-shake');
+    void document.body.offsetWidth;
+    document.body.classList.add('stage3-shake');
+    setTimeout(() => document.body.classList.remove('stage3-shake'), 600);
+
+    spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 70, ['#186f64', '#536eff', '#ffffff', '#00f0ff']);
+    showToast('🔥 ЗАКИСЬ АЗОТА АКТИВИРОВАНА: +150 HP BOOST!', true);
+}
+
+function triggerPopsAndBangs() {
+    soundSystem.playPopsAndBangs(5);
+    spawnParticles(window.innerWidth / 2, window.innerHeight * 0.7, 40, ['#ff3b30', '#f5d061', '#ffffff']);
+    showToast('💥 ВЫХЛОП: Отстрелы Anti-Lag активированы!', true);
+}
+
+function openOctaviaStage3() {
+    closeEasterEggModal();
+    switchTab('octavia');
+    const carSection = document.getElementById('octavia-car-img');
+    if (carSection) carSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    setTimeout(() => {
+        if (!engineRunning && !engineBlown) {
+            toggleEngine();
+        }
+        showToast('🏁 Octavia A7 переведена в боевой режим STAGE 3!', true);
+    }, 400);
+}
+
+// Logo Click Trigger (5 rapid clicks on "GV" brand logo)
+function handleLogoClick(e) {
+    logoClickCount++;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(() => {
+        logoClickCount = 0;
+    }, 2200);
+
+    if (logoClickCount >= 5) {
+        if (e) e.preventDefault();
+        logoClickCount = 0;
+        openEasterEggModal('stage3');
+        return false;
+    } else if (logoClickCount >= 3) {
+        showToast(`Доступ к секретам: ещё ${5 - logoClickCount} клика...`, true);
+    }
+}
+
+// Keyboard Triggers (Konami code, 'term', 'zsh', 'vag', 'stage3')
+window.addEventListener('keydown', (e) => {
+    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (targetTag === 'input' && e.target.id !== 'terminal-input') return;
+    if (targetTag === 'textarea') return;
+
+    if (e.key === 'Escape') {
+        if (easterEggModalOpen) {
+            closeEasterEggModal();
+            return;
+        }
+    }
+
+    if (easterEggModalOpen && e.target.id === 'terminal-input') return;
+
+    const keyLower = e.key.toLowerCase();
+
+    // Check Konami Code
+    const expected = konamiSequence[konamiStep];
+    const isMatch = (keyLower === expected) ||
+        (expected === 'b' && (keyLower === 'b' || keyLower === 'и')) ||
+        (expected === 'a' && (keyLower === 'a' || keyLower === 'ф'));
+
+    if (isMatch) {
+        konamiStep++;
+        if (konamiStep === konamiSequence.length) {
+            konamiStep = 0;
+            openEasterEggModal('stage3');
+            return;
+        }
+    } else {
+        konamiStep = 0;
+    }
+
+    // Word Buffer Check
+    keyBuffer += keyLower;
+    if (keyBuffer.length > 12) keyBuffer = keyBuffer.slice(-12);
+
+    if (keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг') ||
+        keyBuffer.endsWith('stage3') || keyBuffer.endsWith('turbo') || keyBuffer.endsWith('турбо')) {
+        keyBuffer = '';
+        openEasterEggModal('stage3');
+    } else if (keyBuffer.endsWith('term') || keyBuffer.endsWith('терм') ||
+        keyBuffer.endsWith('terminal') || keyBuffer.endsWith('zsh') || keyBuffer.endsWith('bash')) {
+        keyBuffer = '';
+        openEasterEggModal('terminal');
+    }
+});
 
 function initTerminal() {
     const timeEl = document.getElementById('terminal-login-time');
@@ -1378,12 +1682,6 @@ function focusTerminalInput() {
     if (input) input.focus();
 }
 
-function handleTerminalBackdropClick(e) {
-    if (e.target && e.target.id === 'easter-egg-modal') {
-        closeEasterEggModal();
-    }
-}
-
 function clearTerminal() {
     const log = document.getElementById('terminal-log');
     if (log) log.innerHTML = '';
@@ -1398,104 +1696,25 @@ function toggleTerminalExpand() {
     if (terminalExpanded) {
         win.classList.remove('max-w-2xl');
         win.classList.add('max-w-4xl');
-        screen.classList.remove('h-[340px]', 'sm:h-[420px]');
+        screen.classList.remove('h-[340px]', 'sm:h-[400px]');
         screen.classList.add('h-[520px]', 'sm:h-[620px]');
     } else {
         win.classList.add('max-w-2xl');
         win.classList.remove('max-w-4xl');
-        screen.classList.add('h-[340px]', 'sm:h-[420px]');
+        screen.classList.add('h-[340px]', 'sm:h-[400px]');
         screen.classList.remove('h-[520px]', 'sm:h-[620px]');
     }
     focusTerminalInput();
 }
 
-function openTerminal() {
-    const modal = document.getElementById('easter-egg-modal');
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    terminalOpen = true;
-    setTimeout(focusTerminalInput, 60);
-}
-
-function closeEasterEggModal() {
-    const modal = document.getElementById('easter-egg-modal');
-    if (modal) modal.classList.add('hidden');
-    terminalOpen = false;
-}
-
-// Logo Click Trigger (5 rapid clicks on "GV" brand logo)
-function handleLogoClick(e) {
-    logoClickCount++;
-    clearTimeout(logoClickTimer);
-    logoClickTimer = setTimeout(() => {
-        logoClickCount = 0;
-    }, 2200);
-
-    if (logoClickCount >= 5) {
-        if (e) e.preventDefault();
-        logoClickCount = 0;
-        openTerminal();
-        return false;
-    } else if (logoClickCount >= 3) {
-        showToast(`Доступ к терминалу: ещё ${5 - logoClickCount} клика...`, true);
-    }
-}
-
-// Keyboard Triggers (Konami code, 'term', 'zsh', 'vag')
-window.addEventListener('keydown', (e) => {
-    const targetTag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-    if (targetTag === 'input' && e.target.id !== 'terminal-input') return;
-    if (targetTag === 'textarea') return;
-
-    if (e.key === 'Escape') {
-        if (terminalOpen) {
-            closeEasterEggModal();
-            return;
-        }
-    }
-
-    if (terminalOpen) return;
-
-    const keyLower = e.key.toLowerCase();
-
-    // Check Konami Code
-    const expected = konamiSequence[konamiStep];
-    const isMatch = (keyLower === expected) ||
-        (expected === 'b' && (keyLower === 'b' || keyLower === 'и')) ||
-        (expected === 'a' && (keyLower === 'a' || keyLower === 'ф'));
-
-    if (isMatch) {
-        konamiStep++;
-        if (konamiStep === konamiSequence.length) {
-            konamiStep = 0;
-            openTerminal();
-            return;
-        }
-    } else {
-        konamiStep = 0;
-    }
-
-    // Word Buffer Check
-    keyBuffer += keyLower;
-    if (keyBuffer.length > 12) keyBuffer = keyBuffer.slice(-12);
-
-    if (keyBuffer.endsWith('term') || keyBuffer.endsWith('терм') ||
-        keyBuffer.endsWith('terminal') || keyBuffer.endsWith('zsh') ||
-        keyBuffer.endsWith('bash') || keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг')) {
-        keyBuffer = '';
-        openTerminal();
-    }
-});
-
 async function handleTerminalSubmit(e) {
-    if (e) e.preventDefault();
+    e.preventDefault();
     const input = document.getElementById('terminal-input');
     const log = document.getElementById('terminal-log');
     const screen = document.getElementById('terminal-screen');
     if (!input || !log) return;
 
-    const raw = input.value;
-    const cmd = raw.trim();
+    const cmd = input.value.trim();
     input.value = '';
 
     if (!cmd) return;
@@ -1506,7 +1725,7 @@ async function handleTerminalSubmit(e) {
     // Append entered command line
     const cmdLine = document.createElement('div');
     cmdLine.className = 'flex items-center gap-2 text-slate-300';
-    cmdLine.innerHTML = `<span class="text-emerald-400 font-bold select-none whitespace-nowrap">gleb:~/site$</span> <span>${escapeHtml(cmd)}</span>`;
+    cmdLine.innerHTML = `<span class="text-deep-teal font-bold select-none whitespace-nowrap">gleb:~/site$</span> <span>${escapeHtml(cmd)}</span>`;
     log.appendChild(cmdLine);
 
     // Process command
@@ -1519,18 +1738,18 @@ async function handleTerminalSubmit(e) {
     switch (primary) {
         case 'help':
             outputDiv.innerHTML = `
-<div class="text-slate-400 space-y-0.5">
-  <div class="text-gold-400 font-semibold mb-1">Доступные команды:</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">about</span> - краткая информация и досье</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">skills</span> - стек технологий и компетенции</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">projects</span> - инженерные проекты и репозитории</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">github</span> - live запрос публичных репозиториев GitHub</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">octavia</span> - досье Škoda Octavia A7 Black Edition</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">contact</span> - способы связи и Telegram</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">whoami</span> - идентификатор текущего пользователя</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">date</span> - текущее системное время</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">clear</span> - очистить экран</div>
-  <div>  <span class="text-cyan-400 font-bold w-24 inline-block">exit</span> - закрыть терминал (Esc)</div>
+<div class="text-fog-gray space-y-0.5">
+  <div class="text-white font-semibold mb-1">Доступные команды:</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">about</span> - краткая информация и досье</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">skills</span> - стек технологий и компетенции</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">projects</span> - инженерные проекты и репозитории</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">github</span> - live запрос публичных репозиториев GitHub</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">octavia</span> - досье Škoda Octavia A7 Black Edition</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">contact</span> - способы связи и Telegram</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">whoami</span> - идентификатор текущего пользователя</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">date</span> - текущее системное время</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">clear</span> - очистить экран</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">exit</span> - закрыть терминал (Esc)</div>
 </div>`;
             break;
 
@@ -1538,7 +1757,7 @@ async function handleTerminalSubmit(e) {
             outputDiv.innerHTML = `
 <div class="space-y-1 text-slate-300">
   <div class="text-white font-bold">Глеб Вохрамеев (Gleb Vokhrameev)</div>
-  <div class="text-slate-400">Backend & Systems Developer • ИТМО (Санкт-Петербург)</div>
+  <div class="text-fog-gray">Backend & Systems Developer • ИТМО (Санкт-Петербург)</div>
   <p class="text-slate-300 mt-1">
     Разработка надежных микросервисов, высоконагруженных Telegram-ботов и системных утилит.
     Особый интерес — архитектура распределенных систем, автоматизация и протоколы автомобильной телеметрии VAG CAN-Bus.
@@ -1550,10 +1769,10 @@ async function handleTerminalSubmit(e) {
         case 'stack':
             outputDiv.innerHTML = `
 <div class="space-y-1 text-slate-300 font-mono">
-  <div><span class="text-gold-400 font-bold">Backend:</span>    Java 17/21, Spring Boot, Spring Security, Python, REST APIs</div>
-  <div><span class="text-gold-400 font-bold">Databases:</span>  PostgreSQL, Redis, Liquibase, Hibernate</div>
-  <div><span class="text-gold-400 font-bold">Systems:</span>    macOS / Linux, zsh/bash, Docker, Git, iCal / Apple EventKit</div>
-  <div><span class="text-gold-400 font-bold">Automotive:</span> CAN-Bus sniffer, VCDS, ODIS Service, Bosch ME17 ECU telemetry</div>
+  <div><span class="text-deep-teal font-bold">Backend:</span>    Java 17/21, Spring Boot, Spring Security, Python, REST APIs</div>
+  <div><span class="text-deep-teal font-bold">Databases:</span>  PostgreSQL, Redis, Liquibase, Hibernate</div>
+  <div><span class="text-deep-teal font-bold">Systems:</span>    macOS / Linux, zsh/bash, Docker, Git, iCal / Apple EventKit</div>
+  <div><span class="text-deep-teal font-bold">Automotive:</span> CAN-Bus sniffer, VCDS, ODIS Service, Bosch ME17 ECU telemetry</div>
 </div>`;
             break;
 
@@ -1561,29 +1780,29 @@ async function handleTerminalSubmit(e) {
             outputDiv.innerHTML = `
 <div class="space-y-2 text-slate-300">
   <div>
-    <span class="text-cyan-400 font-bold">1. SBLink Telegram Bot</span>
-    <span class="text-slate-400 text-xs ml-2">[Java • Spring Boot • PostgreSQL]</span>
-    <div class="text-slate-400">Бот для распределенной обработки потоковых данных и ссылок.</div>
-    <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" rel="noopener" class="text-gold-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/SBLink</a>
+    <span class="text-white font-bold">1. SBLink Telegram Bot</span>
+    <span class="text-fog-gray text-xs ml-2">[Java • Spring Boot • PostgreSQL]</span>
+    <div class="text-fog-gray">Бот для распределенной обработки потоковых данных и ссылок.</div>
+    <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" rel="noopener" class="text-deep-teal text-xs hover:underline">↳ github.com/GLEBBOFRI/SBLink</a>
   </div>
   <div>
-    <span class="text-cyan-400 font-bold">2. TestRain Platform</span>
-    <span class="text-slate-400 text-xs ml-2">[Spring Boot • Redis • Security]</span>
-    <div class="text-slate-400">Платформа автоматизированного тестирования микросервисных архитектур.</div>
-    <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" rel="noopener" class="text-gold-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/TestRain</a>
+    <span class="text-white font-bold">2. TestRain Platform</span>
+    <span class="text-fog-gray text-xs ml-2">[Spring Boot • Redis • Security]</span>
+    <div class="text-fog-gray">Платформа автоматизированного тестирования микросервисных архитектур.</div>
+    <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" rel="noopener" class="text-deep-teal text-xs hover:underline">↳ github.com/GLEBBOFRI/TestRain</a>
   </div>
   <div>
-    <span class="text-cyan-400 font-bold">3. MyItmo to Apple Calendar</span>
-    <span class="text-slate-400 text-xs ml-2">[Python • iCal • EventKit]</span>
-    <div class="text-slate-400">Синхронизация расписания ИТМО по токену в нативный Apple Calendar.</div>
-    <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" rel="noopener" class="text-cyan-400 text-xs hover:underline">↳ github.com/GLEBBOFRI/schedule</a>
+    <span class="text-white font-bold">3. MyItmo to Apple Calendar</span>
+    <span class="text-fog-gray text-xs ml-2">[Python • iCal • EventKit]</span>
+    <div class="text-fog-gray">Синхронизация расписания ИТМО по токену в нативный Apple Calendar.</div>
+    <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" rel="noopener" class="text-deep-teal text-xs hover:underline">↳ github.com/GLEBBOFRI/schedule</a>
   </div>
 </div>`;
             break;
 
         case 'github':
         case 'repos':
-            outputDiv.innerHTML = `<div class="text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Запрос данных с api.github.com/users/GLEBBOFRI/repos...</div>`;
+            outputDiv.innerHTML = `<div class="text-fog-gray"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Запрос данных с api.github.com/users/GLEBBOFRI/repos...</div>`;
             log.appendChild(outputDiv);
             if (screen) screen.scrollTop = screen.scrollHeight;
 
@@ -1594,29 +1813,29 @@ async function handleTerminalSubmit(e) {
                 if (!Array.isArray(repos) || repos.length === 0) {
                     outputDiv.innerHTML = `<div class="text-amber-400">Репозитории не найдены или профиль скрыт.</div>`;
                 } else {
-                    let html = `<div class="text-gold-400 font-bold mb-1.5">Публичные репозитории @GLEBBOFRI:</div><div class="space-y-1.5">`;
+                    let html = `<div class="text-white font-bold mb-1.5">Публичные репозитории @GLEBBOFRI:</div><div class="space-y-1.5">`;
                     repos.forEach(r => {
-                        const lang = r.language ? `<span class="text-cyan-400 font-mono text-[11px]">[${r.language}]</span>` : '';
+                        const lang = r.language ? `<span class="text-deep-teal font-mono text-[11px]">[${r.language}]</span>` : '';
                         const stars = r.stargazers_count > 0 ? ` ⭐ ${r.stargazers_count}` : '';
-                        const desc = r.description ? `<div class="text-slate-400 text-[11px]">${escapeHtml(r.description)}</div>` : '';
+                        const desc = r.description ? `<div class="text-fog-gray text-[11px]">${escapeHtml(r.description)}</div>` : '';
                         html += `
 <div>
-  <a href="${r.html_url}" target="_blank" rel="noopener" class="text-emerald-400 font-bold hover:underline">📁 ${escapeHtml(r.name)}</a>
+  <a href="${r.html_url}" target="_blank" rel="noopener" class="text-white font-bold hover:underline">📁 ${escapeHtml(r.name)}</a>
   ${lang}${stars}
   ${desc}
 </div>`;
                     });
-                    html += `</div><div class="text-slate-500 text-[11px] mt-2">Всего публичных проектов: ${repos.length}. <a href="https://github.com/GLEBBOFRI" target="_blank" class="text-gold-400 underline">Открыть GitHub профиль ↗</a></div>`;
+                    html += `</div><div class="text-fog-gray text-[11px] mt-2">Всего публичных проектов: ${repos.length}. <a href="https://github.com/GLEBBOFRI" target="_blank" class="text-deep-teal underline">Открыть GitHub профиль ↗</a></div>`;
                     outputDiv.innerHTML = html;
                 }
             } catch (err) {
                 outputDiv.innerHTML = `
 <div class="text-amber-400 text-xs">
   <div>Не удалось подключиться к GitHub API (лимит запросов или офлайн).</div>
-  <div class="text-slate-400 mt-1">Основные репозитории:</div>
-  <div>• <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" class="text-gold-400 underline">SBLink</a> (Java/Spring Boot)</div>
-  <div>• <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" class="text-gold-400 underline">TestRain</a> (Spring Boot/Redis)</div>
-  <div>• <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" class="text-gold-400 underline">schedule</a> (Python/Apple Calendar)</div>
+  <div class="text-fog-gray mt-1">Основные репозитории:</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" class="text-white underline">SBLink</a> (Java/Spring Boot)</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" class="text-white underline">TestRain</a> (Spring Boot/Redis)</div>
+  <div>• <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" class="text-white underline">schedule</a> (Python/Apple Calendar)</div>
 </div>`;
             }
             if (screen) screen.scrollTop = screen.scrollHeight;
@@ -1625,21 +1844,21 @@ async function handleTerminalSubmit(e) {
         case 'octavia':
             outputDiv.innerHTML = `
 <div class="space-y-1 text-slate-300 font-mono">
-  <div class="text-gold-400 font-bold">Škoda Octavia A7 Black Edition (Typ 5E)</div>
+  <div class="text-white font-bold">Škoda Octavia A7 Black Edition (Typ 5E)</div>
   <div>  Кузов:        Лифтбек (Deep Black Pearl)</div>
   <div>  Двигатель:    1.6 MPI CWVA (EA211), 16V DOHC, 110 л.с., 155 Н·м</div>
   <div>  Трансмиссия:  6-ступенчатая гидротрансформаторная АКПП Aisin 09G</div>
   <div>  Диагностика:  VCDS / ODIS Service (CAN-Bus Gateway, Bosch ME17)</div>
-  <div class="text-slate-400 text-xs mt-1">Инженерный стенд доступен во вкладке <span class="text-cyan-400 font-bold">'Octavia A7'</span> на сайте.</div>
+  <div class="text-fog-gray text-xs mt-1">Инженерный стенд доступен во вкладке <span class="text-deep-teal font-bold">'Octavia A7'</span> на сайте.</div>
 </div>`;
             break;
 
         case 'contact':
             outputDiv.innerHTML = `
 <div class="space-y-1 text-slate-300">
-  <div><span class="text-gold-400 font-bold">Telegram:</span>  <a href="https://t.me/TLVRLX" target="_blank" rel="noopener" class="text-cyan-400 underline">@TLVRLX</a></div>
-  <div><span class="text-gold-400 font-bold">GitHub:</span>    <a href="https://github.com/GLEBBOFRI" target="_blank" rel="noopener" class="text-cyan-400 underline">github.com/GLEBBOFRI</a></div>
-  <div><span class="text-gold-400 font-bold">Локация:</span>   Санкт-Петербург, Россия</div>
+  <div><span class="text-deep-teal font-bold">Telegram:</span>  <a href="https://t.me/TLVRLX" target="_blank" rel="noopener" class="text-white underline">@TLVRLX</a></div>
+  <div><span class="text-deep-teal font-bold">GitHub:</span>    <a href="https://github.com/GLEBBOFRI" target="_blank" rel="noopener" class="text-white underline">github.com/GLEBBOFRI</a></div>
+  <div><span class="text-deep-teal font-bold">Локация:</span>   Санкт-Петербург, Россия</div>
 </div>`;
             break;
 
@@ -1665,7 +1884,7 @@ async function handleTerminalSubmit(e) {
             return;
 
         default:
-            outputDiv.innerHTML = `<div class="text-red-400">zsh: command not found: ${escapeHtml(primary)}. Введите <span class="text-cyan-400 font-bold">'help'</span> для списка команд.</div>`;
+            outputDiv.innerHTML = `<div class="text-red-400">zsh: command not found: ${escapeHtml(primary)}. Введите <span class="text-deep-teal font-bold">'help'</span> для списка команд.</div>`;
             break;
     }
 
@@ -1685,15 +1904,21 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
-// Initialize Terminal on DOM load
+// Initialize on DOM load
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTerminal);
+    document.addEventListener('DOMContentLoaded', () => {
+        initTerminal();
+        initEggCanvas();
+        syncSparksButtonUI();
+    });
 } else {
     initTerminal();
+    initEggCanvas();
+    syncSparksButtonUI();
 }
 
 console.log(
-    "%c⚡ GLEB TERMINAL %c| Открыть терминал: введи 'term' на клавиатуре или нажми 5 раз на логотип GV",
-    "background: #161b22; color: #27c93f; font-weight: bold; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);",
-    "color: #f5d061; font-weight: bold; font-size: 11px;"
+    "%cLETTER GALLERY // GV %c| Открыть выставочное меню: нажми 5 раз на логотип GV или введи 'vag' / 'term'",
+    "background: #191b1f; color: #186f64; font-weight: bold; padding: 4px 8px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.1);",
+    "color: #9fabad; font-size: 11px;"
 );
