@@ -62,8 +62,7 @@ function toggleMobileMenu() {
         if (dock) dock.classList.add('hidden');
         document.body.classList.add('overflow-hidden');
         if (burgerIcon) {
-            burgerIcon.classList.remove('fa-bars-staggered');
-            burgerIcon.classList.add('fa-xmark');
+            burgerIcon.className = 'fa-solid fa-xmark text-sm text-white';
         }
     }
 }
@@ -79,8 +78,7 @@ function closeMobileMenu() {
     if (dock) dock.classList.remove('hidden');
     document.body.classList.remove('overflow-hidden');
     if (burgerIcon) {
-        burgerIcon.classList.remove('fa-xmark');
-        burgerIcon.classList.add('fa-bars-staggered');
+        burgerIcon.className = 'fa-solid fa-bars text-xs text-white';
     }
 }
 
@@ -1289,7 +1287,7 @@ async function handleContactSubmit(event) {
         if (data.ok) {
             if (btnText) btnText.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Отправлено!';
             document.getElementById('contact-form').reset();
-            showToast('Сообщение успешно отправлено Глебу в Telegram!', true);
+            showToast('Сообщение успешно отправлено мне в Telegram!', true);
 
             setTimeout(() => {
                 if (btnText) btnText.innerHTML = 'Отправить <i class="fa-solid fa-paper-plane ml-2"></i>';
@@ -1450,7 +1448,6 @@ function openTerminal() {
     initEggCanvas();
     modal.classList.remove('hidden');
     easterEggModalOpen = true;
-    soundSystem.playTurboBlowoff();
     setTimeout(focusTerminalInput, 60);
 }
 
@@ -1511,8 +1508,11 @@ function openOctaviaStage3() {
     }, 400);
 }
 
-// Logo Click Trigger (5 rapid clicks on "GV" brand logo)
+// Logo Click Trigger (Navigates to home tab; 5 rapid clicks triggers terminal)
 function handleLogoClick(e) {
+    if (e) e.preventDefault();
+    switchTab('home');
+
     logoClickCount++;
     clearTimeout(logoClickTimer);
     logoClickTimer = setTimeout(() => {
@@ -1520,12 +1520,11 @@ function handleLogoClick(e) {
     }, 2200);
 
     if (logoClickCount >= 5) {
-        if (e) e.preventDefault();
         logoClickCount = 0;
         openTerminal();
         return false;
     } else if (logoClickCount >= 3) {
-        showToast(`Доступ к секретам: ещё ${5 - logoClickCount} клика...`, true);
+        showToast(`Доступ к терминалу: ещё ${5 - logoClickCount} клика...`, true);
     }
 }
 
@@ -1744,8 +1743,8 @@ async function handleTerminalSubmit(e) {
   <div class="text-white font-bold">Глеб Вохрамеев (Gleb Vokhrameev)</div>
   <div class="text-fog-gray">Backend & Systems Developer • ИТМО (Санкт-Петербург)</div>
   <p class="text-slate-300 mt-1">
-    Разработка надежных микросервисов, высоконагруженных Telegram-ботов и системных утилит.
-    Особый интерес — архитектура распределенных систем, автоматизация и протоколы автомобильной телеметрии VAG CAN-Bus.
+    Разрабатываю надежные распределенные серверные сервисы, Telegram-боты и решения на Java Spring Boot.
+    Исследую низкоуровневые протоколы автомобильной телеметрии VAG CAN-Bus.
   </p>
 </div>`;
             break;

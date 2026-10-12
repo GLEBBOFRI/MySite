@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Глеб Вохрамеев — Private Gallery & Engineering Hub</title>
 
-    <!-- Typography: Playfair Display (Serif Display), Plus Jakarta Sans (Extended Grotesque), JetBrains Mono -->
+    <!-- Typography: Plus Jakarta Sans (Clean Minimalist Grotesque), Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -37,8 +37,8 @@
                         'sapphire-blue': '#154ea5'
                     },
                     fontFamily: {
-                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                        serif: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace']
                     },
                     borderRadius: {
@@ -66,7 +66,7 @@
 <!-- ==========================================================================
      PRIMARY ARCHITECTURAL NAVIGATION BAR
      ========================================================================== -->
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 md:px-12 py-3.5 transition-all duration-300 bg-vault-ink/95 border-b border-white/10">
+<header id="site-header" class="fixed top-0 left-0 right-0 z-[80] px-4 sm:px-8 md:px-12 py-3.5 transition-all duration-300 bg-vault-ink/95 border-b border-white/10">
     <div class="max-w-[1200px] mx-auto flex items-center justify-between">
         <!-- Monogram Logo Mark (Click 5 times for Easter Egg) -->
         <a href="#home" id="brand-logo-btn" onclick="handleLogoClick(event)" class="group flex items-center gap-3 cursor-pointer select-none">
@@ -89,7 +89,7 @@
                 Главная
             </button>
             <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 text-fog-gray hover:text-white hover:bg-white/5">
-                О себе
+                Обо мне
             </button>
             <button onclick="switchTab('octavia')" id="nav-octavia" class="nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 text-fog-gray hover:text-white hover:bg-white/5">
                 Octavia A7
@@ -122,11 +122,14 @@
 </header>
 
 <!-- Mobile Slide-out Drawer Menu -->
-<div id="mobile-drawer" class="fixed inset-0 z-50 bg-vault-ink/98 hidden flex-col justify-between p-6 pt-24 lg:hidden border-b border-white/10 overflow-y-auto">
+<div id="mobile-drawer" class="fixed inset-0 z-[70] bg-[#14161a] hidden flex-col justify-between p-6 pt-24 lg:hidden border-b border-white/10 overflow-y-auto" style="background-color: #14161a !important;">
     <div class="space-y-2.5 max-w-md mx-auto w-full">
-        <div class="text-[10px] font-sans font-medium text-fog-gray uppercase tracking-[0.18em] pb-2 border-b border-white/10 flex items-center justify-between">
-            <span>Галерея разделов</span>
-            <span class="text-white">ITMO '29</span>
+    <div class="space-y-3 max-w-md mx-auto w-full">
+        <div class="text-[10px] font-sans font-medium text-fog-gray uppercase tracking-[0.18em] pb-3 border-b border-white/10 flex items-center justify-between">
+            <span>Галерея разделов // ITMO '29</span>
+            <button onclick="closeMobileMenu()" aria-label="Закрыть меню" class="w-7 h-7 rounded-[2px] border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
         </div>
         <button onclick="switchTab('home')" id="drawer-nav-home" class="drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-deep-teal text-white">
             <i class="fa-solid fa-house w-4 text-center"></i>
@@ -134,7 +137,7 @@
         </button>
         <button onclick="switchTab('about')" id="drawer-nav-about" class="drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all text-fog-gray hover:text-white bg-white/5">
             <i class="fa-solid fa-user w-4 text-center"></i>
-            <span>О себе</span>
+            <span>Обо мне</span>
         </button>
         <button onclick="switchTab('octavia')" id="drawer-nav-octavia" class="drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all text-fog-gray hover:text-white bg-white/5">
             <i class="fa-solid fa-car w-4 text-center"></i>
@@ -280,7 +283,7 @@
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
                         <button onclick="switchTab('contact')" class="link-teal font-sans">
-                            <span>Связаться с Глебом →</span>
+                            <span>Связаться со мной →</span>
                         </button>
                     </div>
                 </div>
@@ -437,6 +440,94 @@
                         ДОСЬЕ // АКАДЕМИЧЕСКИЙ И ПРАКТИЧЕСКИЙ ПРОФИЛЬ
                     </div>
 
+                    <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
+                        Обо мне
+                    </h1>
+                </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    <!-- Left Sidebar Card -->
+                    <div class="lg:col-span-4 card-dark p-6 space-y-6 border border-white/10">
+                        <div class="aspect-square w-full bg-[#101215] rounded-[2px] overflow-hidden border border-white/10">
+                            <img src="fullava.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="space-y-1 text-center">
+                            <h2 class="font-serif font-bold text-xl text-white">Глеб Дмитриевич Вохрамеев</h2>
+                            <p class="text-xs font-sans text-deep-teal uppercase tracking-[0.14em]">Разработчик • Системный Инженер</p>
+                        </div>
+
+                        <div class="p-4 rounded-[2px] bg-[#101215] border border-white/10 space-y-2 text-xs font-sans">
+                            <div class="flex justify-between text-fog-gray">
+                                <span>Возраст:</span>
+                                <span class="user-age-text font-bold text-white">--</span>
+                            </div>
+                            <div class="flex justify-between text-fog-gray">
+                                <span>Дата рождения:</span>
+                                <span class="font-bold text-white">13 декабря 2006 г.</span>
+                            </div>
+                            <div class="flex justify-between text-fog-gray">
+                                <span>Локация:</span>
+                                <span class="font-bold text-white">Санкт-Петербург</span>
+                            </div>
+                            <div class="flex justify-between text-fog-gray">
+                                <span>Университет:</span>
+                                <span class="font-bold text-deep-teal">НИУ ИТМО</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column Curriculum Details -->
+                    <div class="lg:col-span-8 space-y-8">
+                        <div class="card-dark p-8 space-y-4 border border-white/10">
+                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">
+                                ОБРАЗОВАТЕЛЬНЫЙ ВЕКТОР
+                            </div>
+                            <h3 class="font-serif-subheading font-bold text-white">
+                                НИУ ИТМО — Программная Инженерия и Компьютерная Техника
+                            </h3>
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
+                                Обучение на факультете ПИиКТ с фокусом на проектировании архитектур высокого уровня, алгоритмической оптимизации, исследовании ядер операционных систем и разработке серверных платформ.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="card-mint p-6 space-y-2">
+                                <h4 class="font-serif font-bold text-base text-white">Java & Spring Ecosystem</h4>
+                                <p class="text-xs font-sans text-slate-300">Spring Boot, Spring Security, Hibernate, JPA, PostgreSQL, REST, Docker, Redis.</p>
+                            </div>
+                            <div class="card-lavender p-6 space-y-2">
+                                <h4 class="font-serif font-bold text-base text-white">Automotive VAG Diagnostics</h4>
+                                <p class="text-xs font-sans text-slate-300">Кодирование блоков ЭБУ, диагностические сканеры VCDS/ODIS, сниффинг шины CAN.</p>
+                            </div>
+                            <div class="card-peach p-6 space-y-2">
+                                <h4 class="font-serif font-bold text-base text-white">Low-Level & Assembly BEM</h4>
+                                <p class="text-xs font-sans text-slate-300">Ассемблерная разработка с методологией BEM для изоляции модулей и прямого управления регистрами.</p>
+                            </div>
+                            <div class="card-dark p-6 space-y-2 border border-white/10">
+                                <h4 class="font-serif font-bold text-base text-white">Automation & Apple Tech</h4>
+                                <p class="text-xs font-sans text-slate-300">Python скрипты парсинга my.itmo.ru, генерация iCal календарей, автоматизация macOS.</p>
+                            </div>
+                        </div>
+
+                        <div class="card-dark p-8 space-y-4 border border-white/10">
+                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-fog-gray">
+                                ИНЖЕНЕРНЫЙ МАНИФЕСТ
+                            </div>
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
+                                «Настоящая инженерия не терпит приблизительности. Доходя до уровня ассемблерных инструкций или аппаратных CAN-фреймов в блоках управления автомобилем, ты начинаешь понимать систему целиком. Это знание дает абсолютный контроль и уверенность при создании масштабируемых систем любого уровня сложности».
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE -->
+    <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE (Cohesive Dark Vault Theme) -->
+    <section id="tab-octavia" class="tab-content hidden">
 <!-- 4. ŠKODA OCTAVIA A7 BLACK EDITION SHOWCASE (Vault Ink Dark Studio) -->
         <div id="showroom" class="bg-vault-ink text-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-8">
@@ -577,99 +668,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    
-
-
-                    <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
-                        О себе | Глеб Вохрамеев
-                    </h1>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                    <!-- Left Sidebar Card -->
-                    <div class="lg:col-span-4 card-dark p-6 space-y-6 border border-white/10">
-                        <div class="aspect-square w-full bg-[#101215] rounded-[2px] overflow-hidden border border-white/10">
-                            <img src="fullava.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover">
-                        </div>
-
-                        <div class="space-y-1 text-center">
-                            <h2 class="font-serif font-bold text-xl text-white">Глеб Дмитриевич Вохрамеев</h2>
-                            <p class="text-xs font-sans text-deep-teal uppercase tracking-[0.14em]">Разработчик • Системный Инженер</p>
-                        </div>
-
-                        <div class="p-4 rounded-[2px] bg-[#101215] border border-white/10 space-y-2 text-xs font-sans">
-                            <div class="flex justify-between text-fog-gray">
-                                <span>Возраст:</span>
-                                <span class="user-age-text font-bold text-white">--</span>
-                            </div>
-                            <div class="flex justify-between text-fog-gray">
-                                <span>Дата рождения:</span>
-                                <span class="font-bold text-white">13 декабря 2006 г.</span>
-                            </div>
-                            <div class="flex justify-between text-fog-gray">
-                                <span>Локация:</span>
-                                <span class="font-bold text-white">Санкт-Петербург</span>
-                            </div>
-                            <div class="flex justify-between text-fog-gray">
-                                <span>Университет:</span>
-                                <span class="font-bold text-deep-teal">НИУ ИТМО</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column Curriculum Details -->
-                    <div class="lg:col-span-8 space-y-8">
-                        <div class="card-dark p-8 space-y-4 border border-white/10">
-                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">
-                                ОБРАЗОВАТЕЛЬНЫЙ ВЕКТОР
-                            </div>
-                            <h3 class="font-serif-subheading font-bold text-white">
-                                НИУ ИТМО — Программная Инженерия и Компьютерная Техника
-                            </h3>
-                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
-                                Обучение на факультете ПИиКТ с фокусом на проектировании архитектур высокого уровня, алгоритмической оптимизации, исследовании ядер операционных систем и разработке серверных платформ.
-                            </p>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="card-mint p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-white">Java & Spring Ecosystem</h4>
-                                <p class="text-xs font-sans text-slate-300">Spring Boot, Spring Security, Hibernate, JPA, PostgreSQL, REST, Docker, Redis.</p>
-                            </div>
-                            <div class="card-lavender p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-white">Automotive VAG Diagnostics</h4>
-                                <p class="text-xs font-sans text-slate-300">Кодирование блоков ЭБУ, диагностические сканеры VCDS/ODIS, сниффинг шины CAN.</p>
-                            </div>
-                            <div class="card-peach p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-white">Low-Level & Assembly BEM</h4>
-                                <p class="text-xs font-sans text-slate-300">Ассемблерная разработка с методологией BEM для изоляции модулей и прямого управления регистрами.</p>
-                            </div>
-                            <div class="card-dark p-6 space-y-2 border border-white/10">
-                                <h4 class="font-serif font-bold text-base text-white">Automation & Apple Tech</h4>
-                                <p class="text-xs font-sans text-slate-300">Python скрипты парсинга my.itmo.ru, генерация iCal календарей, автоматизация macOS.</p>
-                            </div>
-                        </div>
-
-                        <div class="card-dark p-8 space-y-4 border border-white/10">
-                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-fog-gray">
-                                ИНЖЕНЕРНЫЙ МАНИФЕСТ
-                            </div>
-                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
-                                «Настоящая инженерия не терпит приблизительности. Доходя до уровня ассемблерных инструкций или аппаратных CAN-фреймов в блоках управления автомобилем, ты начинаешь понимать систему целиком. Это знание дает абсолютный контроль и уверенность при создании масштабируемых систем любого уровня сложности».
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE -->
-    <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE (Cohesive Dark Vault Theme) -->
-    <section id="tab-octavia" class="tab-content hidden">
         <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-10">
                 <div class="space-y-2 border-b border-white/10 pb-6">
@@ -1021,7 +1020,7 @@
                 <!-- Welcome Banner -->
                 <div class="text-slate-400 text-[11px] sm:text-xs">
                     <div>Last login: <span id="terminal-login-time"></span> on ttys001</div>
-                    <div class="text-slate-400 mt-1">Добро пожаловать в персональный шелл Глеба Вохрамеева.</div>
+                    <div class="text-slate-400 mt-1">Добро пожаловать в мой персональный шелл.</div>
                     <div class="text-emerald-400/90 mt-0.5">Введите <span class="text-cyan-400 font-bold">'help'</span> для списка доступных команд.</div>
                 </div>
             </div>
