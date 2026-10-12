@@ -955,7 +955,7 @@ function triggerOverheatDisaster() {
     const engineBtnIcon = document.getElementById('engine-btn-icon');
     if (engineBtn) {
         engineBtn.disabled = true;
-        engineBtn.className = "flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-red-950/60 border border-red-500/60 text-xs font-mono text-red-400 opacity-60 cursor-not-allowed flex items-center justify-center gap-2 font-bold";
+        engineBtn.className = "flex-1 sm:flex-initial px-4 py-2.5 rounded-[2px] bg-red-950/60 border border-red-500/60 text-xs font-mono text-red-400 opacity-60 cursor-not-allowed flex items-center justify-center gap-2 font-bold";
     }
     if (engineBtnText) engineBtnText.innerText = "Двигатель заклинил";
     if (engineBtnIcon) engineBtnIcon.className = "fa-solid fa-skull text-red-400";
@@ -963,7 +963,7 @@ function triggerOverheatDisaster() {
     const pedalBtn = document.getElementById('gas-pedal-btn');
     if (pedalBtn) {
         pedalBtn.disabled = true;
-        pedalBtn.className = "gas-pedal w-full sm:w-auto px-5 py-2.5 rounded-xl bg-red-950/40 border border-red-500/40 text-red-400 opacity-50 cursor-not-allowed select-none flex items-center justify-center gap-2";
+        pedalBtn.className = "gas-pedal w-full sm:w-auto px-5 py-2.5 rounded-[2px] bg-red-950/40 border border-red-500/40 text-red-400 opacity-50 cursor-not-allowed select-none flex items-center justify-center gap-2";
     }
 
     showToast("Октавия съела все масло! Сухой картер, коленвал намертво заклинил. Перезагрузите сайт.", false);
@@ -1199,6 +1199,12 @@ function toggleCodeModal() {
         switchCodeTab(currentCodeTab);
     } else {
         document.body.classList.remove('overflow-hidden');
+    }
+}
+
+function handleCodeModalBackdrop(e) {
+    if (e.target && e.target.id === 'code-modal') {
+        toggleCodeModal();
     }
 }
 
@@ -1888,21 +1894,30 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
+function initDeepLinking() {
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    if (hash && ['home', 'about', 'octavia', 'portfolio', 'contact'].includes(hash)) {
+        switchTab(hash);
+    }
+}
+
 // Initialize on DOM load
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initTerminal();
         initEggCanvas();
         syncSparksButtonUI();
+        initDeepLinking();
     });
 } else {
     initTerminal();
     initEggCanvas();
     syncSparksButtonUI();
+    initDeepLinking();
 }
 
 console.log(
-    "%cLETTER GALLERY // GV %c| Открыть выставочное меню: нажми 5 раз на логотип GV или введи 'vag' / 'term'",
+    "%cGLEB VOKHRAMEEV // DEV %c| Открыть терминал: нажми 5 раз на логотип GV или введи 'term'",
     "background: #191b1f; color: #186f64; font-weight: bold; padding: 4px 8px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.1);",
     "color: #9fabad; font-size: 11px;"
 );
