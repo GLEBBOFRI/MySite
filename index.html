@@ -70,7 +70,7 @@
     <div class="max-w-[1200px] mx-auto flex items-center justify-between">
         <!-- Monogram Logo Mark (Click 5 times for Easter Egg) -->
         <a href="#home" id="brand-logo-btn" onclick="handleLogoClick(event)" class="group flex items-center gap-3 cursor-pointer select-none">
-            <div class="w-8 h-8 rounded-[2px] bg-paper-white text-vault-ink flex items-center justify-center font-serif font-bold text-sm tracking-widest transition-transform group-hover:scale-105">
+            <div class="w-8 h-8 rounded-[2px] bg-deep-teal text-white flex items-center justify-center font-serif font-bold text-sm tracking-widest transition-transform group-hover:scale-105 border border-deep-teal/50">
                 GV
             </div>
             <div class="flex flex-col">
@@ -85,7 +85,7 @@
 
         <!-- Desktop Navigation Links (Gallery Pacing) -->
         <nav class="hidden lg:flex items-center gap-1.5 p-1 bg-white/[0.04] border border-white/10 rounded-[2px]">
-            <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 bg-paper-white text-vault-ink">
+            <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 bg-deep-teal text-white">
                 Главная
             </button>
             <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 text-fog-gray hover:text-white hover:bg-white/5">
@@ -128,7 +128,7 @@
             <span>Галерея разделов</span>
             <span class="text-white">ITMO '29</span>
         </div>
-        <button onclick="switchTab('home')" id="drawer-nav-home" class="drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-paper-white text-vault-ink">
+        <button onclick="switchTab('home')" id="drawer-nav-home" class="drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-deep-teal text-white">
             <i class="fa-solid fa-house w-4 text-center"></i>
             <span>Главная</span>
         </button>
@@ -167,7 +167,7 @@
 
 <!-- Floating Mobile Bottom Navigation Dock (Phones) -->
 <nav id="mobile-dock" class="fixed safe-bottom-dock left-1/2 -translate-x-1/2 z-40 lg:hidden w-[calc(100%-2rem)] max-w-md p-1 bg-vault-ink/95 border border-white/15 rounded-[2px] flex items-center justify-between transition-all duration-300">
-    <button onclick="switchTab('home')" id="dock-nav-home" class="dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-vault-ink bg-paper-white transition-all">
+    <button onclick="switchTab('home')" id="dock-nav-home" class="dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-white bg-deep-teal transition-all">
         <i class="fa-solid fa-house text-xs"></i>
         <span class="text-[9px] font-semibold tracking-tight uppercase">Главная</span>
     </button>
@@ -257,20 +257,20 @@
             </div>
         </div>
 
-        <!-- 2. EDITORIAL SPLIT SECTION (Paper White #ffffff) -->
-        <div class="bg-paper-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-hairline">
+        <!-- 2. EDITORIAL SPLIT SECTION (Cohesive Dark Vault Stage) -->
+        <div class="bg-[#14161a] px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
                 <div class="lg:col-span-7 space-y-6">
                     <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
                         ВЫСТАВОЧНОЕ ДОСЬЕ // АРХИТЕКТУРА И ПРИНЦИПЫ
                     </div>
-                    <h2 class="font-serif-heading font-semibold text-obsidian tracking-[0.02em]">
+                    <h2 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
                         Инженерия как баланс математической строгости и эстетики
                     </h2>
-                    <p class="text-base text-vault-ink/80 leading-relaxed font-sans">
-                        Моя специализация сфокусирована на создании отказоустойчивых серверных микросервисов на <strong class="text-obsidian font-semibold">Java 17/21 и Spring Boot</strong>, проектировании нормализованных баз данных PostgreSQL, а также низкоуровневом исследовании автомобильных CAN-шин VAG-группы и протоколов Bosch ME17.
+                    <p class="text-base text-slate-300 leading-relaxed font-sans">
+                        Моя специализация сфокусирована на создании отказоустойчивых серверных микросервисов на <strong class="text-white font-semibold">Java 17/21 и Spring Boot</strong>, проектировании нормализованных баз данных PostgreSQL, а также низкоуровневом исследовании автомобильных CAN-шин VAG-группы и протоколов Bosch ME17.
                     </p>
-                    <p class="text-base text-vault-ink/80 leading-relaxed font-sans">
+                    <p class="text-base text-slate-300 leading-relaxed font-sans">
                         В НИУ ИТМО я углубленно исследую распределенные вычисления, сетевые стеки и алгоритмическую оптимизацию. Программы должны работать предсказуемо, масштабироваться без деградации и выглядеть безупречно.
                     </p>
 
@@ -285,17 +285,17 @@
                     </div>
                 </div>
 
-                <!-- Gallery Portrait Artifact (Sharp 2px edges, zero shadows) -->
+                <!-- Gallery Portrait Artifact (Sharp 2px edges, dark luxury) -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <div onclick="openProfileCardDetail()" class="group cursor-pointer w-full max-w-sm card-white p-4 transition-transform hover:-translate-y-1">
-                        <div class="relative aspect-square w-full bg-mist-white overflow-hidden rounded-[2px] border border-hairline">
+                    <div onclick="openProfileCardDetail()" class="group cursor-pointer w-full max-w-sm card-dark p-4 transition-transform hover:-translate-y-1">
+                        <div class="relative aspect-square w-full bg-[#101215] overflow-hidden rounded-[2px] border border-white/10">
                             <img src="avamini.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                            <div class="absolute top-3 right-3 px-2 py-1 bg-vault-ink text-white font-mono text-[9px] uppercase tracking-wider rounded-[2px]">
+                            <div class="absolute top-3 right-3 px-2 py-1 bg-vault-ink text-white font-mono text-[9px] uppercase tracking-wider rounded-[2px] border border-white/10">
                                 VERIFIED ARTIFACT
                             </div>
                         </div>
                         <div class="pt-4 space-y-1 text-center">
-                            <h3 class="font-serif font-bold text-lg text-obsidian">Глеб Дмитриевич Вохрамеев</h3>
+                            <h3 class="font-serif font-bold text-lg text-white">Глеб Дмитриевич Вохрамеев</h3>
                             <p class="text-xs font-sans text-fog-gray uppercase tracking-[0.14em]">ITMO University '29 • Developer</p>
                         </div>
                     </div>
@@ -303,15 +303,15 @@
             </div>
         </div>
 
-        <!-- 3. TINTED GALLERY WALL PANELS (Peach, Mint, Lavender) -->
-        <div class="bg-mist-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-hairline">
+        <!-- 3. TINTED GALLERY WALL PANELS (Dark Vault Luxury Cards) -->
+        <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-10">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                     <div>
                         <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
                             КОМПЕТЕНЦИИ // ТРИ ГАЛЕРЕЙНЫХ ЗАЛА
                         </div>
-                        <h2 class="font-serif-heading font-semibold text-obsidian tracking-[0.02em] mt-1">
+                        <h2 class="font-serif-heading font-semibold text-white tracking-[0.02em] mt-1">
                             Технологический инструментарий
                         </h2>
                     </div>
@@ -327,14 +327,14 @@
                             <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">
                                 HALL 01 • SERVER SYSTEMS
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 High-Load & Java Spring
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Проектирование микросервисов на Java 17/21, Spring Boot, Spring Security, Hibernate, PostgreSQL, Redis и Kafka для обработки потоковых транзакций.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <button onclick="switchTab('portfolio')" class="btn-teal text-xs py-2 px-4">
                                 <span>Проекты зала</span>
                             </button>
@@ -345,49 +345,99 @@
                     <!-- Peach Gallery Wall Panel -->
                     <div class="card-peach p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-3">
-                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-[#9b592b]">
+                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-amber-400">
                                 HALL 02 • LOW-LEVEL
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 Assembly & Machine Code
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Архитектурная методология BEM на уровне Ассемблера, оптимизация регистровых операций, системные вызовы Unix и низкоуровневая отладка.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
-                            <button onclick="switchTab('portfolio')" class="btn-ghost-dark text-xs py-2 px-4">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                            <button onclick="switchTab('portfolio')" class="btn-ghost-light text-xs py-2 px-4 border-white/20">
                                 <span>Репозитории</span>
                             </button>
-                            <span class="text-[11px] font-mono text-[#9b592b]">Assembly BEM</span>
+                            <span class="text-[11px] font-mono text-amber-400">Assembly BEM</span>
                         </div>
                     </div>
 
                     <!-- Lavender Gallery Wall Panel -->
                     <div class="card-lavender p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-3">
-                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-royal-violet">
+                            <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-electric-violet">
                                 HALL 03 • AUTOMOTIVE
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 VAG Telemetry & CAN-Bus
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Чтение и парсинг CAN-сообщений платформы MQB, диагностические сканеры VCDS и ODIS Service, работа с блоком управления двигателем Bosch ME17.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <button onclick="switchTab('octavia')" class="btn-violet text-xs py-2 px-4">
                                 <span>Стенд Octavia</span>
                             </button>
-                            <span class="text-[11px] font-mono text-royal-violet">CAN 500kbps</span>
+                            <span class="text-[11px] font-mono text-electric-violet">CAN 500kbps</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. ŠKODA OCTAVIA A7 BLACK EDITION SHOWCASE (Vault Ink Dark Studio) -->
+        <!-- 4. ŠKODA OCTAVIA A7 GALLERY PREVIEW -->
+        <div class="bg-vault-ink text-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
+            <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
+                        АВТОМОБИЛЬНЫЙ СТЕНД // MQB LAB
+                    </div>
+                    <h2 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
+                        Škoda Octavia A7 Black Edition
+                    </h2>
+                    <p class="text-base text-slate-300 leading-relaxed font-sans">
+                        Интерактивная автомобильная лаборатория: переключение фотореалистичных фар, аварийной сигнализации, акустический запуск 16-клапанного двигателя 1.6 MPI CWVA, динамическая педаль газа и телеметрия ODIS CAN-Bus в реальном времени.
+                    </p>
+                    <div class="flex items-center gap-4 pt-2">
+                        <button onclick="switchTab('octavia')" class="btn-teal">
+                            <span>Запустить стенд Octavia A7</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                        <button onclick="openEasterEggModal()" class="link-teal font-sans">
+                            <span>macOS Terminal →</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 flex justify-center">
+                    <div onclick="switchTab('octavia')" class="group cursor-pointer w-full card-dark p-4 transition-transform hover:-translate-y-1 border border-white/10">
+                        <div class="relative aspect-video w-full bg-[#101215] overflow-hidden rounded-[2px] border border-white/10 flex items-center justify-center p-3">
+                            <img src="octavia.webp" alt="Škoda Octavia A7" class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105">
+                            <div class="absolute top-3 right-3 px-2 py-1 bg-deep-teal text-white font-mono text-[9px] uppercase tracking-wider rounded-[2px]">
+                                INTERACTIVE LAB
+                            </div>
+                        </div>
+                        <div class="pt-4 flex items-center justify-between text-xs font-sans">
+                            <span class="text-white font-semibold">CWVA 1.6 MPI • Deep Black Pearl</span>
+                            <span class="text-deep-teal font-medium group-hover:underline">Открыть стенд ↗</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 2: ABOUT PAGE (Cohesive Dark Vault Theme) -->
+    <section id="tab-about" class="tab-content hidden">
+        <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
+            <div class="max-w-[1200px] mx-auto space-y-12">
+                <div class="space-y-2 border-b border-white/10 pb-6">
+                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
+                        ДОСЬЕ // АКАДЕМИЧЕСКИЙ И ПРАКТИЧЕСКИЙ ПРОФИЛЬ
+                    </div>
+
+<!-- 4. ŠKODA OCTAVIA A7 BLACK EDITION SHOWCASE (Vault Ink Dark Studio) -->
         <div id="showroom" class="bg-vault-ink text-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-8">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
@@ -430,7 +480,7 @@
                             <div class="text-[11px] text-red-300">Легендарный масложор 1.6 MPI CWVA дал о себе знать: сухой картер, масляное голодание, провернуло вкладыши!</div>
                         </div>
                     </div>
-                    <button onclick="location.reload()" class="btn-teal bg-red-600 hover:bg-red-700 text-xs py-2 px-4 whitespace-nowrap">
+                    <button onclick="location.reload()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-[2px] font-sans font-medium text-xs whitespace-nowrap transition-colors">
                         Перезагрузить страницу
                     </button>
                 </div>
@@ -530,47 +580,40 @@
             </div>
         </div>
 
-    </section>
+    
 
-    <!-- TAB 2: ABOUT PAGE -->
-    <section id="tab-about" class="tab-content hidden">
-        <div class="bg-paper-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-hairline">
-            <div class="max-w-[1200px] mx-auto space-y-12">
-                <div class="space-y-2 border-b border-hairline pb-6">
-                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
-                        ДОСЬЕ // АКАДЕМИЧЕСКИЙ И ПРАКТИЧЕСКИЙ ПРОФИЛЬ
-                    </div>
-                    <h1 class="font-serif-heading font-semibold text-obsidian tracking-[0.02em]">
+
+                    <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
                         О себе | Глеб Вохрамеев
                     </h1>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                     <!-- Left Sidebar Card -->
-                    <div class="lg:col-span-4 card-mint p-6 space-y-6">
-                        <div class="aspect-square w-full bg-paper-white rounded-[2px] overflow-hidden border border-black/5">
+                    <div class="lg:col-span-4 card-dark p-6 space-y-6 border border-white/10">
+                        <div class="aspect-square w-full bg-[#101215] rounded-[2px] overflow-hidden border border-white/10">
                             <img src="fullava.jpg" alt="Глеб Вохрамеев" class="w-full h-full object-cover">
                         </div>
 
                         <div class="space-y-1 text-center">
-                            <h2 class="font-serif font-bold text-xl text-obsidian">Глеб Дмитриевич Вохрамеев</h2>
+                            <h2 class="font-serif font-bold text-xl text-white">Глеб Дмитриевич Вохрамеев</h2>
                             <p class="text-xs font-sans text-deep-teal uppercase tracking-[0.14em]">Разработчик • Системный Инженер</p>
                         </div>
 
-                        <div class="p-4 rounded-[2px] bg-paper-white border border-black/5 space-y-2 text-xs font-sans">
-                            <div class="flex justify-between text-vault-ink/70">
+                        <div class="p-4 rounded-[2px] bg-[#101215] border border-white/10 space-y-2 text-xs font-sans">
+                            <div class="flex justify-between text-fog-gray">
                                 <span>Возраст:</span>
-                                <span class="user-age-text font-bold text-obsidian">--</span>
+                                <span class="user-age-text font-bold text-white">--</span>
                             </div>
-                            <div class="flex justify-between text-vault-ink/70">
+                            <div class="flex justify-between text-fog-gray">
                                 <span>Дата рождения:</span>
-                                <span class="font-bold text-obsidian">13 декабря 2006 г.</span>
+                                <span class="font-bold text-white">13 декабря 2006 г.</span>
                             </div>
-                            <div class="flex justify-between text-vault-ink/70">
+                            <div class="flex justify-between text-fog-gray">
                                 <span>Локация:</span>
-                                <span class="font-bold text-obsidian">Санкт-Петербург</span>
+                                <span class="font-bold text-white">Санкт-Петербург</span>
                             </div>
-                            <div class="flex justify-between text-vault-ink/70">
+                            <div class="flex justify-between text-fog-gray">
                                 <span>Университет:</span>
                                 <span class="font-bold text-deep-teal">НИУ ИТМО</span>
                             </div>
@@ -579,42 +622,42 @@
 
                     <!-- Right Column Curriculum Details -->
                     <div class="lg:col-span-8 space-y-8">
-                        <div class="card-white p-8 space-y-4">
+                        <div class="card-dark p-8 space-y-4 border border-white/10">
                             <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">
                                 ОБРАЗОВАТЕЛЬНЫЙ ВЕКТОР
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 НИУ ИТМО — Программная Инженерия и Компьютерная Техника
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Обучение на факультете ПИиКТ с фокусом на проектировании архитектур высокого уровня, алгоритмической оптимизации, исследовании ядер операционных систем и разработке серверных платформ.
                             </p>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="card-peach p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-obsidian">Java & Spring Ecosystem</h4>
-                                <p class="text-xs font-sans text-vault-ink/80">Spring Boot, Spring Security, Hibernate, JPA, PostgreSQL, REST, Docker, Redis.</p>
+                            <div class="card-mint p-6 space-y-2">
+                                <h4 class="font-serif font-bold text-base text-white">Java & Spring Ecosystem</h4>
+                                <p class="text-xs font-sans text-slate-300">Spring Boot, Spring Security, Hibernate, JPA, PostgreSQL, REST, Docker, Redis.</p>
                             </div>
                             <div class="card-lavender p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-obsidian">Automotive VAG Diagnostics</h4>
-                                <p class="text-xs font-sans text-vault-ink/80">Кодирование блоков ЭБУ, диагностические сканеры VCDS/ODIS, сниффинг шины CAN.</p>
+                                <h4 class="font-serif font-bold text-base text-white">Automotive VAG Diagnostics</h4>
+                                <p class="text-xs font-sans text-slate-300">Кодирование блоков ЭБУ, диагностические сканеры VCDS/ODIS, сниффинг шины CAN.</p>
                             </div>
-                            <div class="card-mint p-6 space-y-2">
-                                <h4 class="font-serif font-bold text-base text-obsidian">Low-Level & Assembly BEM</h4>
-                                <p class="text-xs font-sans text-vault-ink/80">Ассемблерная разработка с методологией BEM для изоляции модулей и прямого управления регистрами.</p>
+                            <div class="card-peach p-6 space-y-2">
+                                <h4 class="font-serif font-bold text-base text-white">Low-Level & Assembly BEM</h4>
+                                <p class="text-xs font-sans text-slate-300">Ассемблерная разработка с методологией BEM для изоляции модулей и прямого управления регистрами.</p>
                             </div>
-                            <div class="card-white p-6 space-y-2 border border-hairline">
-                                <h4 class="font-serif font-bold text-base text-obsidian">Automation & Apple Tech</h4>
-                                <p class="text-xs font-sans text-vault-ink/80">Python скрипты парсинга my.itmo.ru, генерация iCal календарей, автоматизация macOS.</p>
+                            <div class="card-dark p-6 space-y-2 border border-white/10">
+                                <h4 class="font-serif font-bold text-base text-white">Automation & Apple Tech</h4>
+                                <p class="text-xs font-sans text-slate-300">Python скрипты парсинга my.itmo.ru, генерация iCal календарей, автоматизация macOS.</p>
                             </div>
                         </div>
 
-                        <div class="card-white p-8 space-y-4">
+                        <div class="card-dark p-8 space-y-4 border border-white/10">
                             <div class="text-[11px] font-sans font-bold uppercase tracking-[0.18em] text-fog-gray">
                                 ИНЖЕНЕРНЫЙ МАНИФЕСТ
                             </div>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 «Настоящая инженерия не терпит приблизительности. Доходя до уровня ассемблерных инструкций или аппаратных CAN-фреймов в блоках управления автомобилем, ты начинаешь понимать систему целиком. Это знание дает абсолютный контроль и уверенность при создании масштабируемых систем любого уровня сложности».
                             </p>
                         </div>
@@ -625,44 +668,45 @@
     </section>
 
     <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE -->
+    <!-- TAB 3: OCTAVIA A7 DETAILED LAB PAGE (Cohesive Dark Vault Theme) -->
     <section id="tab-octavia" class="tab-content hidden">
-        <div class="bg-mist-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-hairline">
+        <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-10">
-                <div class="space-y-2 border-b border-hairline pb-6">
-                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-royal-violet">
+                <div class="space-y-2 border-b border-white/10 pb-6">
+                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-electric-violet">
                         ИССЛЕДОВАТЕЛЬСКИЙ СТЕНД // MQB PLATFORM
                     </div>
-                    <h1 class="font-serif-heading font-semibold text-obsidian tracking-[0.02em]">
+                    <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
                         Škoda Octavia A7 Laboratory
                     </h1>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-8 card-white p-8 space-y-6">
-                        <h3 class="font-serif-subheading font-bold text-obsidian">
+                    <div class="lg:col-span-8 card-dark p-8 space-y-6 border border-white/10">
+                        <h3 class="font-serif-subheading font-bold text-white">
                             Техническое Досье двигателя 1.6 MPI (CWVA)
                         </h3>
-                        <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                        <p class="text-sm font-sans text-slate-300 leading-relaxed">
                             16-клапанный атмосферный двигатель семейства EA211 с алюминиевым блоком цилиндров и выпускным коллектором, интегрированным в ГБЦ. Сопряжен с надежной гидротрансформаторной автоматической коробкой передач Aisin 09G.
                         </p>
 
                         <div class="grid grid-cols-3 gap-3 font-sans text-xs">
                             <div class="card-peach p-4 text-center">
                                 <span class="text-fog-gray uppercase text-[10px] tracking-wider">Рабочий объем</span>
-                                <div class="font-serif text-lg font-bold text-obsidian mt-1">1598 см³</div>
+                                <div class="font-serif text-lg font-bold text-white mt-1">1598 см³</div>
                             </div>
                             <div class="card-mint p-4 text-center">
                                 <span class="text-fog-gray uppercase text-[10px] tracking-wider">Крутящий момент</span>
-                                <div class="font-serif text-lg font-bold text-obsidian mt-1">155 N·m @ 3800</div>
+                                <div class="font-serif text-lg font-bold text-white mt-1">155 N·m @ 3800</div>
                             </div>
                             <div class="card-lavender p-4 text-center">
                                 <span class="text-fog-gray uppercase text-[10px] tracking-wider">Экология</span>
-                                <div class="font-serif text-lg font-bold text-obsidian mt-1">Euro-5</div>
+                                <div class="font-serif text-lg font-bold text-white mt-1">Euro-5</div>
                             </div>
                         </div>
 
                         <!-- VAG OBD-II Diagnostics Protocol Simulator -->
-                        <div class="card-dark p-6 space-y-4 text-white">
+                        <div class="p-6 rounded-[2px] bg-[#101215] border border-white/10 space-y-4 text-white">
                             <div class="flex items-center justify-between pb-3 border-b border-white/10">
                                 <span class="text-xs font-mono font-bold text-deep-teal">
                                     <i class="fa-solid fa-laptop-code mr-2"></i>VCDS / ODIS CAN Bus Protocol Analyzer
@@ -678,22 +722,22 @@
                     </div>
 
                     <!-- Right Specification Card -->
-                    <div class="lg:col-span-4 card-lavender p-8 flex flex-col justify-between space-y-6">
+                    <div class="lg:col-span-4 card-dark p-8 flex flex-col justify-between space-y-6 border border-white/10">
                         <div class="space-y-4">
-                            <div class="w-10 h-10 rounded-[2px] bg-white flex items-center justify-center text-royal-violet text-lg">
+                            <div class="w-10 h-10 rounded-[2px] bg-white/5 border border-white/10 flex items-center justify-center text-electric-violet text-lg">
                                 <i class="fa-solid fa-car-side"></i>
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 Философия VAG
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Архитектура платформы MQB дает бесконечные возможности для аппаратного дооснащения, глубокого кодирования блоков и интеграции с телеметрическими сервисами.
                             </p>
                         </div>
 
-                        <div class="p-4 bg-white rounded-[2px] border border-black/5 text-center">
+                        <div class="p-4 bg-[#101215] rounded-[2px] border border-white/10 text-center">
                             <div class="text-[10px] font-sans uppercase tracking-[0.14em] text-fog-gray">Персональный гараж</div>
-                            <div class="font-serif font-bold text-base text-obsidian mt-0.5">Gleb Vokhrameev Edition</div>
+                            <div class="font-serif font-bold text-base text-white mt-0.5">Gleb Vokhrameev Edition</div>
                         </div>
                     </div>
                 </div>
@@ -701,26 +745,26 @@
         </div>
     </section>
 
-    <!-- TAB 4: PORTFOLIO & PROJECTS SECTION -->
+    <!-- TAB 4: PORTFOLIO & PROJECTS SECTION (Cohesive Dark Vault Theme) -->
     <section id="tab-portfolio" class="tab-content hidden">
-        <div class="bg-paper-white px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-hairline">
+        <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
             <div class="max-w-[1200px] mx-auto space-y-10">
-                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline pb-6">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
                     <div>
                         <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-deep-teal">
                             ИНЖЕНЕРНЫЙ ПОРТФЕЛЬ // РЕПОЗИТОРИИ & РАЗРАБОТКИ
                         </div>
-                        <h1 class="font-serif-heading font-semibold text-obsidian tracking-[0.02em] mt-1">
+                        <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em] mt-1">
                             Проекты и Разработки
                         </h1>
                     </div>
 
-                    <!-- Filter Tags (Strict 2px corners, zero pill radius) -->
+                    <!-- Filter Tags (Strict 2px corners, dark luxury) -->
                     <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-                        <button onclick="filterPortfolio('all', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-vault-ink text-white font-medium">Все проекты</button>
-                        <button onclick="filterPortfolio('backend', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-mist-white text-vault-ink border border-hairline hover:bg-hairline">Java / Backend</button>
-                        <button onclick="filterPortfolio('assembly', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-mist-white text-vault-ink border border-hairline hover:bg-hairline">Assembly / Apple</button>
-                        <button onclick="filterPortfolio('auto', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-mist-white text-vault-ink border border-hairline hover:bg-hairline">Automotive ECU</button>
+                        <button onclick="filterPortfolio('all', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-deep-teal text-white font-medium border border-deep-teal">Все проекты</button>
+                        <button onclick="filterPortfolio('backend', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-white/5 text-fog-gray border border-white/10 hover:text-white hover:bg-white/10">Java / Backend</button>
+                        <button onclick="filterPortfolio('assembly', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-white/5 text-fog-gray border border-white/10 hover:text-white hover:bg-white/10">Assembly / Apple</button>
+                        <button onclick="filterPortfolio('auto', event)" class="port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-white/5 text-fog-gray border border-white/10 hover:text-white hover:bg-white/10">Automotive ECU</button>
                     </div>
                 </div>
 
@@ -732,14 +776,14 @@
                                 <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">JAVA 21 • SPRING BOOT</span>
                                 <i class="fa-solid fa-robot text-deep-teal text-base"></i>
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 SBLink Telegram Bot
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Высокопроизводительный распределенный бот на Java Spring Boot с PostgreSQL для обработки потоковых данных и масштабируемого управления ссылками.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <span class="text-xs font-mono text-fog-gray">PostgreSQL • REST</span>
                             <a href="https://github.com/GLEBBOFRI/SBLink" target="_blank" rel="noopener" class="link-teal font-sans">
                                 <span>Открыть репозиторий →</span>
@@ -751,17 +795,17 @@
                     <div class="port-card backend card-peach p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-[#9b592b]">SPRING SECURITY • REDIS</span>
-                                <i class="fa-solid fa-cloud text-[#9b592b] text-base"></i>
+                                <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-amber-400">SPRING SECURITY • REDIS</span>
+                                <i class="fa-solid fa-cloud text-amber-400 text-base"></i>
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 TestRain Platform
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Платформа автоматизированного тестирования микросервисных архитектур, сбор метрик покрытия кода и аналитика надежности API.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <span class="text-xs font-mono text-fog-gray">Redis • Spring Security</span>
                             <a href="https://github.com/GLEBBOFRI/TestRain" target="_blank" rel="noopener" class="link-teal font-sans">
                                 <span>Открыть репозиторий →</span>
@@ -773,17 +817,17 @@
                     <div class="port-card assembly card-lavender p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-royal-violet">PYTHON • APPLE EVENTKIT</span>
-                                <i class="fa-solid fa-calendar-check text-royal-violet text-base"></i>
+                                <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-electric-violet">PYTHON • APPLE EVENTKIT</span>
+                                <i class="fa-solid fa-calendar-check text-electric-violet text-base"></i>
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 MyItmo to Apple Calendar
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Скрипт автоматической синхронизации расписания занятий из my.itmo.ru по персональному токену в нативный Apple Calendar через iCal протокол.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <span class="text-xs font-mono text-fog-gray">Python • iCal API</span>
                             <a href="https://github.com/GLEBBOFRI/schedule" target="_blank" rel="noopener" class="link-violet font-sans">
                                 <span>Открыть репозиторий →</span>
@@ -791,21 +835,21 @@
                         </div>
                     </div>
 
-                    <!-- Project 4: VCDS ECU Telemetry (Mist Wall) -->
-                    <div class="port-card auto card-white p-8 border border-hairline flex flex-col justify-between space-y-6">
+                    <!-- Project 4: VCDS ECU Telemetry (Dark Wall) -->
+                    <div class="port-card auto card-dark p-8 border border-white/10 flex flex-col justify-between space-y-6">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] font-sans font-bold uppercase tracking-[0.18em] text-deep-teal">VAG CAN-BUS • C++ & PYTHON</span>
                                 <i class="fa-solid fa-microchip text-deep-teal text-base"></i>
                             </div>
-                            <h3 class="font-serif-subheading font-bold text-obsidian">
+                            <h3 class="font-serif-subheading font-bold text-white">
                                 VCDS ECU Telemetry Mod
                             </h3>
-                            <p class="text-sm font-sans text-vault-ink/80 leading-relaxed">
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
                                 Модуль перехвата и интерпретации сообщений шины CAN-High 500kbps, логирование параметров в реальном времени с блока Bosch ME17 платформы MQB.
                             </p>
                         </div>
-                        <div class="pt-4 border-t border-black/5 flex items-center justify-between">
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                             <span class="text-xs font-mono text-fog-gray">CAN 2.0B • Bosch ECU</span>
                             <button onclick="switchTab('octavia')" class="link-teal font-sans">
                                 <span>Перейти к стенду →</span>
@@ -909,7 +953,7 @@
             <span>•</span>
             <a href="https://github.com/GLEBBOFRI" target="_blank" class="hover:text-white transition-colors">GitHub</a>
             <span>•</span>
-            <button onclick="openEasterEggModal()" class="hover:text-deep-teal transition-colors">VAG-COM Secret</button>
+            <button onclick="openEasterEggModal()" class="hover:text-deep-teal transition-colors">macOS Terminal</button>
         </div>
     </div>
 </footer>
@@ -920,7 +964,7 @@
         <div class="p-3.5 bg-black/80 border-b border-white/10 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
                 <span class="text-xs font-mono text-fog-gray mr-2 flex-shrink-0"><i class="fa-solid fa-folder-tree"></i> Project:</span>
-                <button onclick="switchCodeTab('html')" id="code-tab-html" class="px-3 py-1.5 rounded-[2px] text-xs font-mono bg-paper-white text-vault-ink font-bold whitespace-nowrap">index.html</button>
+                <button onclick="switchCodeTab('html')" id="code-tab-html" class="px-3 py-1.5 rounded-[2px] text-xs font-mono bg-deep-teal text-white font-bold whitespace-nowrap">index.html</button>
                 <button onclick="switchCodeTab('css')" id="code-tab-css" class="px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap">css/style.css</button>
                 <button onclick="switchCodeTab('js')" id="code-tab-js" class="px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap">js/main.js</button>
             </div>
@@ -940,114 +984,61 @@
 </div>
 
 <!-- ==========================================================================
-     EASTER EGG MODAL: VAG-COM STAGE 3 COCKPIT + MACOS UNIX TERMINAL
+     MACOS UNIX TERMINAL (EASTER EGG)
      ========================================================================== -->
-<div id="easter-egg-modal" class="fixed inset-0 z-[9995] bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" onclick="handleTerminalBackdropClick(event)">
-    <div id="terminal-window" class="w-full max-w-2xl card-dark rounded-[2px] border border-white/20 overflow-hidden flex flex-col font-mono text-xs sm:text-sm text-slate-200 transition-all duration-200" onclick="event.stopPropagation()">
-        <!-- Titlebar with Mode Switcher & Window Controls -->
-        <div class="h-11 px-4 flex items-center justify-between border-b border-white/10 select-none bg-black/60 flex-shrink-0">
-            <!-- Mode Switcher Tabs -->
-            <div class="flex items-center gap-1.5">
-                <button onclick="switchEasterEggTab('stage3')" id="egg-tab-stage3" class="px-3 py-1 rounded-[2px] text-xs font-mono font-bold bg-deep-teal text-white transition-all">
-                    <i class="fa-solid fa-bolt mr-1"></i> Stage 3 VAG
-                </button>
-                <button onclick="switchEasterEggTab('terminal')" id="egg-tab-terminal" class="px-3 py-1 rounded-[2px] text-xs font-mono font-medium text-fog-gray hover:text-white bg-white/5 transition-all">
-                    <i class="fa-solid fa-terminal mr-1"></i> macOS zsh
-                </button>
-            </div>
-
+<div id="easter-egg-modal" class="fixed inset-0 z-[9995] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" onclick="handleTerminalBackdropClick(event)">
+    <div id="terminal-window" class="w-full max-w-2xl bg-[#0d1117]/95 border border-white/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-mono text-xs sm:text-sm text-slate-200 transition-all duration-200" onclick="event.stopPropagation()">
+        <!-- macOS Window Titlebar -->
+        <div class="h-10 px-4 flex items-center justify-between border-b border-white/10 select-none bg-[#161b22]/90 flex-shrink-0">
+            <!-- Traffic Lights -->
             <div class="flex items-center gap-2">
-                <button onclick="toggleTerminalExpand()" title="Развернуть" class="w-6 h-6 rounded-[2px] bg-white/5 text-fog-gray hover:text-white flex items-center justify-center">
-                    <i class="fa-solid fa-expand text-[10px]"></i>
+                <button onclick="closeEasterEggModal()" title="Закрыть (Esc)" class="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-110 active:brightness-90 transition-all flex items-center justify-center group focus:outline-none">
+                    <i class="fa-solid fa-xmark text-[8px] text-[#4c0002] opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </button>
-                <button onclick="closeEasterEggModal()" title="Закрыть (Esc)" class="w-6 h-6 rounded-[2px] bg-white/5 text-fog-gray hover:text-white flex items-center justify-center">
-                    <i class="fa-solid fa-xmark text-[11px]"></i>
+                <button onclick="clearTerminal()" title="Очистить экран" class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:brightness-110 active:brightness-90 transition-all flex items-center justify-center group focus:outline-none">
+                    <i class="fa-solid fa-minus text-[8px] text-[#5c3c00] opacity-0 group-hover:opacity-100 transition-opacity"></i>
                 </button>
+                <button onclick="toggleTerminalExpand()" title="Развернуть" class="w-3 h-3 rounded-full bg-[#27c93f] hover:brightness-110 active:brightness-90 transition-all flex items-center justify-center group focus:outline-none">
+                    <i class="fa-solid fa-expand text-[7px] text-[#004d11] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </button>
+            </div>
+
+            <!-- Terminal Title -->
+            <div class="text-[11px] sm:text-xs text-slate-400 font-medium tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-terminal text-[10px] text-slate-500"></i>
+                <span>gleb — zsh — 80×24</span>
+            </div>
+
+            <!-- Hint -->
+            <div class="text-[10px] text-slate-500 hidden sm:block">
+                esc для выхода
             </div>
         </div>
 
-        <!-- 1. VAG-COM STAGE 3 COCKPIT VIEW -->
-        <div id="egg-view-stage3" class="p-6 space-y-6">
-            <div class="flex items-start justify-between border-b border-white/10 pb-4">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h3 class="font-serif font-bold text-lg text-white">VAG-COM // STAGE 3 PROTOCOL</h3>
-                        <span class="px-2 py-0.5 rounded-[2px] text-[9px] font-mono font-bold bg-deep-teal/20 text-deep-teal border border-deep-teal/40">UNLOCKED</span>
-                    </div>
-                    <p class="text-[11px] font-mono text-fog-gray mt-0.5">BOSCH MED17 FIRMWARE DUMP • ITMO RACING OVERCLOCK</p>
+        <!-- Terminal Output Screen -->
+        <div id="terminal-screen" class="p-4 sm:p-5 h-[340px] sm:h-[420px] overflow-y-auto space-y-2 select-text cursor-text leading-relaxed" onclick="focusTerminalInput()">
+            <div id="terminal-log" class="space-y-1.5">
+                <!-- Welcome Banner -->
+                <div class="text-slate-400 text-[11px] sm:text-xs">
+                    <div>Last login: <span id="terminal-login-time"></span> on ttys001</div>
+                    <div class="text-slate-400 mt-1">Добро пожаловать в персональный шелл Глеба Вохрамеева.</div>
+                    <div class="text-emerald-400/90 mt-0.5">Введите <span class="text-cyan-400 font-bold">'help'</span> для списка доступных команд.</div>
                 </div>
             </div>
 
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-3 gap-3 text-center font-mono">
-                <div class="p-3 rounded-[2px] border border-white/10 bg-white/[0.02]">
-                    <div class="text-[10px] text-fog-gray uppercase tracking-wider">Мощность</div>
-                    <div id="stage3-hp-counter" class="text-xl font-bold text-white mt-0.5">450 HP</div>
-                    <div class="text-[9px] text-fog-gray">+270 over stock</div>
-                </div>
-                <div class="p-3 rounded-[2px] border border-white/10 bg-white/[0.02]">
-                    <div class="text-[10px] text-fog-gray uppercase tracking-wider">Крутящий</div>
-                    <div class="text-xl font-bold text-deep-teal mt-0.5">580 N·m</div>
-                    <div class="text-[9px] text-fog-gray">DSG DQ250 Tuned</div>
-                </div>
-                <div class="p-3 rounded-[2px] border border-white/10 bg-white/[0.02]">
-                    <div class="text-[10px] text-fog-gray uppercase tracking-wider">Наддув</div>
-                    <div class="text-xl font-bold text-electric-violet mt-0.5">2.4 BAR</div>
-                    <div class="text-[9px] text-fog-gray">IS38 Hybrid Turbo</div>
-                </div>
-            </div>
-
-            <!-- Controls (With Reliable Sparks Controller) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button onclick="triggerNitroBoost()" class="btn-teal w-full text-xs py-3">
-                    <i class="fa-solid fa-fire text-amber-300"></i>
-                    <span>ВРУБИТЬ ЗАКИСЬ АЗОТА</span>
-                </button>
-                <button onclick="triggerPopsAndBangs()" class="btn-ghost-light w-full text-xs py-3 border-white/20">
-                    <i class="fa-solid fa-burst text-amber-400"></i>
-                    <span>ОТСТРЕЛЫ ВЫХЛОПА</span>
-                </button>
-                <button onclick="openOctaviaStage3()" class="btn-violet w-full text-xs py-3">
-                    <i class="fa-solid fa-gauge-high"></i>
-                    <span>ТЕСТ-ДРАЙВ ОКТАВИИ</span>
-                </button>
-                <!-- Sparks Toggle Button (Syncs with clickSparksEnabled in real time) -->
-                <button id="toggle-sparks-btn" onclick="toggleClickSparks()" class="btn-ghost-light w-full text-xs py-3 border-white/20">
-                    <i id="toggle-sparks-icon" class="fa-solid fa-wand-magic-sparkles text-fog-gray"></i>
-                    <span id="toggle-sparks-text">ИСКРЫ КЛИКА: ВЫКЛ</span>
-                </button>
-            </div>
-
-            <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-fog-gray">
-                <span>Триггеры: 'vag', 'term', Konami Code, 5x клик по лого</span>
-                <span class="text-white">Esc для закрытия</span>
-            </div>
-        </div>
-
-        <!-- 2. MACOS UNIX TERMINAL VIEW (Hidden by default, toggleable via tab) -->
-        <div id="egg-view-terminal" class="hidden flex-col">
-            <div id="terminal-screen" class="p-4 sm:p-5 h-[340px] sm:h-[400px] overflow-y-auto space-y-2 select-text cursor-text leading-relaxed" onclick="focusTerminalInput()">
-                <div id="terminal-log" class="space-y-1.5">
-                    <div class="text-fog-gray text-xs">
-                        <div>Last login: <span id="terminal-login-time"></span> on ttys001</div>
-                        <div class="text-white mt-1">Персональный шелл Глеба Вохрамеева (Letter Exhibition Mode).</div>
-                        <div class="text-deep-teal mt-0.5">Введите <span class="text-white font-bold">'help'</span> для списка доступных команд.</div>
-                    </div>
-                </div>
-
-                <form id="terminal-form" onsubmit="handleTerminalSubmit(event)" class="flex items-center gap-2 pt-1">
-                    <span class="text-deep-teal font-bold select-none whitespace-nowrap">gleb:~/site$</span>
-                    <input
-                        type="text"
-                        id="terminal-input"
-                        class="flex-1 bg-transparent text-white outline-none border-none p-0 font-mono text-xs sm:text-sm focus:ring-0"
-                        autocomplete="off"
-                        autocorrect="off"
-                        autocapitalize="off"
-                        spellcheck="false"
-                    />
-                </form>
-            </div>
+            <!-- Active Input Line -->
+            <form id="terminal-form" onsubmit="handleTerminalSubmit(event)" class="flex items-center gap-2 pt-1">
+                <span class="text-emerald-400 font-bold select-none whitespace-nowrap">gleb:~/site$</span>
+                <input
+                    type="text"
+                    id="terminal-input"
+                    class="flex-1 bg-transparent text-white outline-none border-none p-0 font-mono text-xs sm:text-sm focus:ring-0"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                />
+            </form>
         </div>
     </div>
 </div>

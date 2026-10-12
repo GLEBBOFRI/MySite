@@ -104,7 +104,7 @@ function switchTab(tabId) {
 
     const activeBtn = document.getElementById('nav-' + tabId);
     if (activeBtn) {
-        activeBtn.className = "nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 bg-paper-white text-vault-ink";
+        activeBtn.className = "nav-btn px-4 py-2 rounded-[2px] text-xs font-medium font-sans uppercase tracking-[0.12em] transition-all duration-200 bg-deep-teal text-white";
     }
 
     // 2. Update Mobile Drawer Buttons
@@ -115,7 +115,7 @@ function switchTab(tabId) {
 
     const activeDrawerBtn = document.getElementById('drawer-nav-' + tabId);
     if (activeDrawerBtn) {
-        activeDrawerBtn.className = "drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-paper-white text-vault-ink";
+        activeDrawerBtn.className = "drawer-nav-btn w-full p-3.5 rounded-[2px] text-left text-xs font-medium uppercase tracking-[0.14em] flex items-center gap-3 transition-all bg-deep-teal text-white";
     }
 
     // 3. Update Mobile Bottom Dock Buttons
@@ -126,7 +126,7 @@ function switchTab(tabId) {
 
     const activeDockBtn = document.getElementById('dock-nav-' + tabId);
     if (activeDockBtn) {
-        activeDockBtn.className = "dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-vault-ink bg-paper-white transition-all";
+        activeDockBtn.className = "dock-nav-btn flex-1 py-2 rounded-[2px] flex flex-col items-center justify-center gap-0.5 text-white bg-deep-teal transition-all";
     }
 
     // Close mobile menu if opened
@@ -1123,12 +1123,12 @@ function filterPortfolio(category, evt) {
 
     const filterBtns = document.querySelectorAll('.port-filter-btn');
     filterBtns.forEach(btn => {
-        btn.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-mist-white text-vault-ink border border-hairline hover:bg-hairline";
+        btn.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-white/5 text-fog-gray border border-white/10 hover:text-white hover:bg-white/10";
     });
 
     const target = evt ? evt.currentTarget || evt.target : (window.event ? window.event.target : null);
     if (target) {
-        target.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-vault-ink text-white font-medium";
+        target.className = "port-filter-btn px-3.5 py-1.5 rounded-[2px] text-xs font-sans uppercase tracking-[0.1em] bg-deep-teal text-white font-medium border border-deep-teal";
     }
 }
 
@@ -1151,7 +1151,7 @@ async function switchCodeTab(fileType) {
     if (tabJs) tabJs.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap";
 
     const targetTab = document.getElementById('code-tab-' + fileType);
-    if (targetTab) targetTab.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono bg-paper-white text-vault-ink font-bold whitespace-nowrap";
+    if (targetTab) targetTab.className = "px-3 py-1.5 rounded-[2px] text-xs font-mono bg-deep-teal text-white font-bold whitespace-nowrap";
 
     const display = document.getElementById('code-display');
     const loading = document.getElementById('code-loading');
@@ -1204,19 +1204,19 @@ function toggleCodeModal() {
     }
 }
 
-// Toast notification helper
+// Toast notification helper (Solid Green for Success, Solid Red for Error)
 function showToast(message, isSuccess = true) {
     const oldToast = document.getElementById('app-toast');
     if (oldToast) oldToast.remove();
 
     const toast = document.createElement('div');
     toast.id = 'app-toast';
-    toast.className = `fixed bottom-24 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-md z-50 px-5 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 shadow-2xl backdrop-blur-xl border transition-all duration-300 ${
+    toast.className = `fixed bottom-20 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-md z-[10002] px-5 py-3.5 rounded-[2px] font-mono text-xs flex items-center gap-3 shadow-2xl transition-all duration-300 ${
         isSuccess 
-        ? 'glass-card-gold text-gold-400 border-gold-500/40' 
-        : 'bg-red-950/90 text-red-300 border-red-500/40'
+        ? 'bg-[#16a34a] text-white border border-[#22c55e]' 
+        : 'bg-[#dc2626] text-white border border-[#ef4444]'
     }`;
-    toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check text-base text-gold-400' : 'fa-circle-exclamation text-base text-red-400'} flex-shrink-0"></i> <span class="break-words leading-relaxed">${message}</span>`;
+    toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'} text-white text-base flex-shrink-0"></i> <span class="break-words leading-relaxed font-medium">${message}</span>`;
     document.body.appendChild(toast);
 
     setTimeout(() => {
@@ -1444,71 +1444,18 @@ window.addEventListener('click', (e) => {
     spawnParticles(e.clientX, e.clientY, 10, ['#186f64', '#536eff', '#ffffff', '#f5d061', '#00f0ff']);
 }, { passive: true });
 
-function switchEasterEggTab(tab) {
-    const stage3View = document.getElementById('egg-view-stage3');
-    const terminalView = document.getElementById('egg-view-terminal');
-    const stage3Tab = document.getElementById('egg-tab-stage3');
-    const terminalTab = document.getElementById('egg-tab-terminal');
-
-    if (tab === 'stage3') {
-        if (stage3View) stage3View.classList.remove('hidden');
-        if (terminalView) {
-            terminalView.classList.add('hidden');
-            terminalView.classList.remove('flex');
-        }
-        if (stage3Tab) {
-            stage3Tab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-bold bg-deep-teal text-white transition-all';
-        }
-        if (terminalTab) {
-            terminalTab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-medium text-fog-gray hover:text-white bg-white/5 transition-all';
-        }
-        syncSparksButtonUI();
-    } else if (tab === 'terminal') {
-        if (stage3View) stage3View.classList.add('hidden');
-        if (terminalView) {
-            terminalView.classList.remove('hidden');
-            terminalView.classList.add('flex');
-        }
-        if (stage3Tab) {
-            stage3Tab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-medium text-fog-gray hover:text-white bg-white/5 transition-all';
-        }
-        if (terminalTab) {
-            terminalTab.className = 'px-3 py-1 rounded-[2px] text-xs font-mono font-bold bg-deep-teal text-white transition-all';
-        }
-        setTimeout(focusTerminalInput, 50);
-    }
-}
-
-function openEasterEggModal(initialTab = 'stage3') {
+function openTerminal() {
     const modal = document.getElementById('easter-egg-modal');
     if (!modal) return;
     initEggCanvas();
     modal.classList.remove('hidden');
     easterEggModalOpen = true;
-
-    switchEasterEggTab(initialTab);
-    syncSparksButtonUI();
-
     soundSystem.playTurboBlowoff();
-
-    // HP Counter animation if in stage3
-    const hpCounter = document.getElementById('stage3-hp-counter');
-    if (hpCounter) {
-        let val = 180;
-        const target = 450;
-        const interval = setInterval(() => {
-            val += 15;
-            if (val >= target) {
-                val = target;
-                clearInterval(interval);
-            }
-            hpCounter.innerText = val + " HP";
-        }, 20);
-    }
+    setTimeout(focusTerminalInput, 60);
 }
 
-function openTerminal() {
-    openEasterEggModal('terminal');
+function openEasterEggModal() {
+    openTerminal();
 }
 
 function closeEasterEggModal() {
@@ -1575,7 +1522,7 @@ function handleLogoClick(e) {
     if (logoClickCount >= 5) {
         if (e) e.preventDefault();
         logoClickCount = 0;
-        openEasterEggModal('stage3');
+        openTerminal();
         return false;
     } else if (logoClickCount >= 3) {
         showToast(`Доступ к секретам: ещё ${5 - logoClickCount} клика...`, true);
@@ -1609,7 +1556,7 @@ window.addEventListener('keydown', (e) => {
         konamiStep++;
         if (konamiStep === konamiSequence.length) {
             konamiStep = 0;
-            openEasterEggModal('stage3');
+            openTerminal();
             return;
         }
     } else {
@@ -1623,11 +1570,11 @@ window.addEventListener('keydown', (e) => {
     if (keyBuffer.endsWith('vag') || keyBuffer.endsWith('ваг') ||
         keyBuffer.endsWith('stage3') || keyBuffer.endsWith('turbo') || keyBuffer.endsWith('турбо')) {
         keyBuffer = '';
-        openEasterEggModal('stage3');
+        openTerminal();
     } else if (keyBuffer.endsWith('term') || keyBuffer.endsWith('терм') ||
         keyBuffer.endsWith('terminal') || keyBuffer.endsWith('zsh') || keyBuffer.endsWith('bash')) {
         keyBuffer = '';
-        openEasterEggModal('terminal');
+        openTerminal();
     }
 });
 
@@ -1668,7 +1615,7 @@ function initTerminal() {
         } else if (e.key === 'Tab') {
             e.preventDefault();
             const val = input.value.trim().toLowerCase();
-            const cmds = ['help', 'about', 'skills', 'stack', 'projects', 'github', 'octavia', 'contact', 'clear', 'exit', 'whoami', 'date'];
+            const cmds = ['help', 'about', 'skills', 'stack', 'projects', 'github', 'octavia', 'contact', 'sparks', 'clear', 'exit', 'whoami', 'date'];
             const match = cmds.find(c => c.startsWith(val));
             if (match) {
                 input.value = match;
@@ -1746,12 +1693,50 @@ async function handleTerminalSubmit(e) {
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">github</span> - live запрос публичных репозиториев GitHub</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">octavia</span> - досье Škoda Octavia A7 Black Edition</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">contact</span> - способы связи и Telegram</div>
+  <div>  <span class="text-deep-teal font-bold w-24 inline-block">sparks</span> - управление искрами клика [on/off]</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">whoami</span> - идентификатор текущего пользователя</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">date</span> - текущее системное время</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">clear</span> - очистить экран</div>
   <div>  <span class="text-deep-teal font-bold w-24 inline-block">exit</span> - закрыть терминал (Esc)</div>
 </div>`;
             break;
+
+        case 'sparks':
+        case 'sparkles':
+        case 'cursor':
+        case 'искры': {
+            const subArg = parts[1] ? parts[1].toLowerCase() : '';
+            if (subArg === 'on' || subArg === '1' || subArg === 'вкл' || subArg === 'true') {
+                clickSparksEnabled = true;
+            } else if (subArg === 'off' || subArg === '0' || subArg === 'выкл' || subArg === 'false') {
+                clickSparksEnabled = false;
+            } else {
+                clickSparksEnabled = !clickSparksEnabled;
+            }
+            try {
+                localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
+            } catch (err) {}
+            syncSparksButtonUI();
+
+            if (clickSparksEnabled) {
+                spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 50, ['#186f64', '#536eff', '#ffffff', '#00f0ff', '#f5d061']);
+                outputDiv.innerHTML = `
+<div class="space-y-1 text-emerald-400 font-mono">
+  <div class="font-bold">✨ Эффект искр из-под курсора: ВКЛЮЧЕН [ACTIVE]</div>
+  <div class="text-slate-300 text-xs">Кликайте в любой точке экрана для генерации неоновых импульсов.</div>
+  <div class="text-slate-500 text-[11px]">Параметр сохранен. Для отключения введите: <span class="text-white">sparks off</span></div>
+</div>`;
+                showToast('✨ Неоновые искры включены! Кликайте по экрану', true);
+            } else {
+                outputDiv.innerHTML = `
+<div class="space-y-1 text-slate-400 font-mono">
+  <div class="text-slate-200 font-bold">Эффект искр из-под курсора: ВЫКЛЮЧЕН [DISABLED]</div>
+  <div class="text-slate-500 text-xs">Для включения введите команду: <span class="text-emerald-400 font-bold">sparks on</span></div>
+</div>`;
+                showToast('Искры клика выключены', true);
+            }
+            break;
+        }
 
         case 'about':
             outputDiv.innerHTML = `
