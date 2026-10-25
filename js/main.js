@@ -607,29 +607,197 @@ class OctaviaSoundSystem {
 const soundSystem = new OctaviaSoundSystem();
 
 // ==========================================
-// INTERACTIVE LIGHTS & HAZARD SYSTEM (PNG PHOTO ANIMATION)
+// INTERACTIVE CAR SELECTION & LIGHTS SYSTEM
 // ==========================================
+let currentCar = 'octavia'; // 'octavia' | 'golf3'
 let headlightsOn = false;
 let isFlashingHeadlights = false;
 let hazardLightsOn = false;
 let hazardInterval = null;
+let golfIronEasterEggActive = false;
+
+function switchCar(carId) {
+    if (carId === currentCar) return;
+    currentCar = carId;
+
+    // Reset hazard flashers if running
+    if (hazardLightsOn) {
+        toggleHazardLights(false);
+    }
+
+    // Reset headlights state cleanly
+    if (headlightsOn) {
+        setHeadlightsState(false);
+        headlightsOn = false;
+        const btnText = document.getElementById('headlight-status-text');
+        const btn = document.getElementById('headlight-toggle-btn');
+        const btnIcon = document.getElementById('headlight-btn-icon');
+        if (btnText) {
+            btnText.innerText = "Фары: ВЫКЛ";
+            btnText.classList.remove('text-cyan-400');
+        }
+        if (btnIcon) {
+            btnIcon.className = "fa-solid fa-lightbulb text-gold-400";
+        }
+        if (btn) btn.classList.remove('border-cyan-400/50', 'bg-cyan-400/10');
+    }
+
+    // Stop engine sound loop if running
+    if (engineRunning) {
+        soundSystem.stopEngineLoop();
+        engineRunning = false;
+    }
+
+    // Reset engine blown / overheat / easter egg states
+    engineBlown = false;
+    engineStarting = false;
+    isPedalPressed = false;
+    targetRpm = 0;
+    currentRpm = 0;
+    coolantTemp = 90.0;
+    golfIronEasterEggActive = false;
+    setCarShake(null);
+
+    // Hide banners & smoke
+    const smokeContainer = document.getElementById('engine-smoke-container');
+    const overheatBanner = document.getElementById('overheat-banner');
+    const ironBlockBanner = document.getElementById('iron-block-banner');
+    if (smokeContainer) smokeContainer.classList.add('hidden');
+    if (overheatBanner) overheatBanner.classList.add('hidden');
+    if (ironBlockBanner) ironBlockBanner.classList.add('hidden');
+
+    // Restore engine toggle button & gas pedal in case they were locked
+    const engineBtn = document.getElementById('engine-toggle-btn');
+    const engineBtnText = document.getElementById('engine-btn-text');
+    const engineBtnIcon = document.getElementById('engine-btn-icon');
+    if (engineBtn) {
+        engineBtn.disabled = false;
+        engineBtn.className = "flex-1 sm:flex-initial px-4 py-2.5 rounded-[2px] bg-gold-500/15 border border-gold-500/40 text-gold-400 text-xs font-mono uppercase tracking-wider hover:bg-gold-500/25 transition-all flex items-center justify-center gap-2";
+    }
+    if (engineBtnText) engineBtnText.innerText = "Завести двигатель";
+    if (engineBtnIcon) engineBtnIcon.className = "fa-solid fa-power-off text-gold-400";
+
+    const pedalBtn = document.getElementById('gas-pedal-btn');
+    if (pedalBtn) {
+        pedalBtn.disabled = false;
+        pedalBtn.className = "gas-pedal w-full sm:w-auto px-5 py-2.5 rounded-[2px] bg-deep-teal/20 border border-deep-teal/40 text-teal-300 text-xs font-mono uppercase tracking-wider select-none flex items-center justify-center gap-2";
+    }
+
+    updateRpmDisplay(0);
+    updateTempDisplay(90.0);
+
+    const onlineTag = document.getElementById('telemetry-online-tag');
+    if (onlineTag) {
+        onlineTag.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE`;
+        onlineTag.className = "text-[10px] text-emerald-400 flex items-center gap-1 font-bold";
+    }
+
+    // Toggle switcher UI buttons styling
+    const octBtn = document.getElementById('car-select-octavia');
+    const golfBtn = document.getElementById('car-select-golf3');
+    const octVisual = document.getElementById('octavia-visual');
+    const golfVisual = document.getElementById('golf3-visual');
+    const octSpecs = document.getElementById('car-specs-octavia');
+    const golfSpecs = document.getElementById('car-specs-golf3');
+    const carTitle = document.getElementById('car-title');
+    const carSubtitle = document.getElementById('car-subtitle');
+    const carDesc = document.getElementById('car-desc-text');
+    const ecuStatus = document.getElementById('ecu-status-text');
+    const log1 = document.getElementById('vcds-log-line-1');
+    const log2 = document.getElementById('vcds-log-line-2');
+    const log3 = document.getElementById('vcds-log-line-3');
+
+    if (currentCar === 'octavia') {
+        if (octBtn) {
+            octBtn.className = "px-3.5 py-1.5 rounded-[2px] text-xs font-mono uppercase tracking-wider transition-all bg-deep-teal text-white font-bold flex items-center gap-2";
+        }
+        if (golfBtn) {
+            golfBtn.className = "px-3.5 py-1.5 rounded-[2px] text-xs font-mono uppercase tracking-wider transition-all text-fog-gray hover:text-white bg-transparent flex items-center gap-2";
+        }
+
+        if (octVisual) { octVisual.classList.remove('hidden'); octVisual.classList.add('flex'); }
+        if (golfVisual) { golfVisual.classList.add('hidden'); golfVisual.classList.remove('flex'); }
+
+        if (octSpecs) octSpecs.classList.remove('hidden');
+        if (golfSpecs) golfSpecs.classList.add('hidden');
+
+        if (carTitle) carTitle.innerText = "Škoda Octavia A7 Black Edition";
+        if (carSubtitle) carSubtitle.innerText = "ИНТЕРАКТИВНЫЙ СТЕНД // ŠKODA OCTAVIA A7";
+        if (carDesc) carDesc.innerText = "Черная Octavia A7 — образец сдержанного автомобильного дизайна и рабочий исследовательский стенд для отладки алгоритмов телеметрии CAN-шины.";
+
+        if (ecuStatus) {
+            ecuStatus.innerText = "Двигатель заглушен (0 RPM)";
+            ecuStatus.className = "text-slate-400 font-bold";
+        }
+        if (log1) log1.innerText = "[VCDS Log]: Address 01: Engine (CWVA 1.6L)";
+        if (log2) log2.innerText = "System: 1.6l R4 MPI H01 3231 • Component: ME17.5.26";
+        if (log3) log3.innerText = "CAN-Bus: Gateway 500kbps • DTC Faults: 0";
+    } else {
+        if (octBtn) {
+            octBtn.className = "px-3.5 py-1.5 rounded-[2px] text-xs font-mono uppercase tracking-wider transition-all text-fog-gray hover:text-white bg-transparent flex items-center gap-2";
+        }
+        if (golfBtn) {
+            golfBtn.className = "px-3.5 py-1.5 rounded-[2px] text-xs font-mono uppercase tracking-wider transition-all bg-deep-teal text-white font-bold flex items-center gap-2";
+        }
+
+        if (octVisual) { octVisual.classList.add('hidden'); octVisual.classList.remove('flex'); }
+        if (golfVisual) { golfVisual.classList.remove('hidden'); golfVisual.classList.add('flex'); }
+
+        if (octSpecs) octSpecs.classList.add('hidden');
+        if (golfSpecs) golfSpecs.classList.remove('hidden');
+
+        if (carTitle) carTitle.innerText = "Volkswagen Golf Mk3 1.8 AAM (3-Door)";
+        if (carSubtitle) carSubtitle.innerText = "ИНТЕРАКТИВНЫЙ СТЕНД // VOLKSWAGEN GOLF MK3";
+        if (carDesc) carDesc.innerText = "Белоснежный трехдверный хэтчбек Golf Mk3 (Candy White) с легендарным 8-клапанным двигателем EA827 1.8 AAM (75 л.с.). Неубиваемый чугунный блок, надежный моновпрыск Mono-Motronic и немецкая классика 90-х.";
+
+        if (ecuStatus) {
+            ecuStatus.innerText = "Двигатель заглушен (0 RPM)";
+            ecuStatus.className = "text-slate-400 font-bold";
+        }
+        if (log1) log1.innerText = "[VAG-COM KKL]: Address 01: Engine (AAM 1.8L Mono)";
+        if (log2) log2.innerText = "ECU: Bosch Mono-Motronic 1.2.3 • Block: EA827 Cast Iron";
+        if (log3) log3.innerText = "K-Line Protocol: 9600 baud • DTC Faults: 0 (No faults)";
+    }
+}
 
 function setOrangeFlash(val) {
-    const orangeImg = document.getElementById('octavia-orange-img');
-    if (orangeImg) {
-        orangeImg.style.opacity = val ? '1' : '0';
+    const octaviaOrange = document.getElementById('octavia-orange-img');
+    const golfOrange = document.getElementById('golf3-orange-img');
+    if (currentCar === 'octavia') {
+        if (octaviaOrange) octaviaOrange.style.opacity = val ? '1' : '0';
+        if (golfOrange) golfOrange.style.opacity = '0';
+    } else {
+        if (golfOrange) golfOrange.style.opacity = val ? '1' : '0';
+        if (octaviaOrange) octaviaOrange.style.opacity = '0';
     }
 }
 
 function setHeadlightsState(val) {
-    const lightsImg = document.getElementById('octavia-lights-img');
-    const frontBeam = document.getElementById('headlight-beam-cone');
-    const rearBeam = document.getElementById('taillight-beam-cone');
+    const octaviaLights = document.getElementById('octavia-lights-img');
+    const octaviaFrontBeam = document.getElementById('headlight-beam-cone');
+    const octaviaRearBeam = document.getElementById('taillight-beam-cone');
+
+    const golfLights = document.getElementById('golf3-lights-img');
+    const golfFrontBeam = document.getElementById('golf3-headlight-beam-cone');
+    const golfRearBeam = document.getElementById('golf3-taillight-beam-cone');
+
     const container = document.getElementById('car-svg-container');
 
-    if (lightsImg) lightsImg.style.opacity = val ? '1' : '0';
-    if (frontBeam) frontBeam.style.opacity = val ? '0.9' : '0';
-    if (rearBeam) rearBeam.style.opacity = val ? '0.85' : '0';
+    if (currentCar === 'octavia') {
+        if (octaviaLights) octaviaLights.style.opacity = val ? '1' : '0';
+        if (octaviaFrontBeam) octaviaFrontBeam.style.opacity = val ? '0.9' : '0';
+        if (octaviaRearBeam) octaviaRearBeam.style.opacity = val ? '0.85' : '0';
+        if (golfLights) golfLights.style.opacity = '0';
+        if (golfFrontBeam) golfFrontBeam.style.opacity = '0';
+        if (golfRearBeam) golfRearBeam.style.opacity = '0';
+    } else {
+        if (golfLights) golfLights.style.opacity = val ? '1' : '0';
+        if (golfFrontBeam) golfFrontBeam.style.opacity = val ? '0.9' : '0';
+        if (golfRearBeam) golfRearBeam.style.opacity = val ? '0.85' : '0';
+        if (octaviaLights) octaviaLights.style.opacity = '0';
+        if (octaviaFrontBeam) octaviaFrontBeam.style.opacity = '0';
+        if (octaviaRearBeam) octaviaRearBeam.style.opacity = '0';
+    }
 
     if (container) {
         if (val) container.classList.add('headlight-on');
@@ -638,10 +806,16 @@ function setHeadlightsState(val) {
 }
 
 function setCarShake(type) {
-    const visual = document.getElementById('octavia-visual');
-    if (!visual) return;
-    visual.classList.remove('engine-idling-shake', 'engine-revving-shake');
-    if (type) visual.classList.add(type);
+    const octaviaVisual = document.getElementById('octavia-visual');
+    const golfVisual = document.getElementById('golf3-visual');
+    const target = currentCar === 'octavia' ? octaviaVisual : golfVisual;
+
+    if (octaviaVisual) octaviaVisual.classList.remove('engine-idling-shake', 'engine-revving-shake');
+    if (golfVisual) golfVisual.classList.remove('engine-idling-shake', 'engine-revving-shake');
+
+    if (target && type) {
+        target.classList.add(type);
+    }
 }
 
 async function toggleHeadlights() {
@@ -893,7 +1067,7 @@ function releaseGasPedal(e) {
     }
 }
 
-// Catastrophic 150°C Overheat Easter Egg Trigger
+// Catastrophic 150°C Overheat Easter Egg Trigger (Octavia 1.6 CWVA)
 function triggerOverheatDisaster() {
     engineBlown = true;
     engineRunning = false;
@@ -969,6 +1143,64 @@ function triggerOverheatDisaster() {
     showToast("Октавия съела все масло! Сухой картер, коленвал намертво заклинил. Перезагрузите сайт.", false);
 }
 
+// Indestructible Cast Iron Block Easter Egg Trigger (Golf Mk3 1.8 AAM)
+function triggerGolfIronBlockEasterEgg() {
+    if (golfIronEasterEggActive) return;
+    golfIronEasterEggActive = true;
+
+    // Cap temperature at 150.0 °C - engine continues running strong!
+    coolantTemp = 150.0;
+    updateTempDisplay(150.0);
+
+    const banner = document.getElementById('iron-block-banner');
+    if (banner) {
+        banner.classList.remove('hidden');
+    }
+
+    const ecuStatus = document.getElementById('ecu-status-text');
+    if (ecuStatus) {
+        ecuStatus.innerText = "ЧУГУННЫЙ БЛОК EA827 • 150°C (ПОЛЁТ НОРМАЛЬНЫЙ!)";
+        ecuStatus.className = "text-emerald-400 font-black animate-pulse";
+    }
+
+    const log1 = document.getElementById('vcds-log-line-1');
+    const log2 = document.getElementById('vcds-log-line-2');
+    const log3 = document.getElementById('vcds-log-line-3');
+    if (log1) log1.innerText = "[DIAGNOSTIC NOTICE]: Block: Heavy-Duty Cast Iron EA827";
+    if (log2) log2.innerText = "Coolant Temp: 150.0°C | Mono-Motronic: NO KNOCK / NO DAMAGE";
+    if (log3) log3.innerText = "STATUS: Чугунный блок неубиваем! Мотор 1.8 AAM продолжает работать.";
+
+    showToast("Чугунный блок EA827 неубиваем! Температура 150°C, но этот 1.8 AAM отказывается умирать!", true);
+}
+
+function resetGolfEasterEgg() {
+    golfIronEasterEggActive = false;
+    const banner = document.getElementById('iron-block-banner');
+    if (banner) {
+        banner.classList.add('hidden');
+    }
+    coolantTemp = 90.0;
+    updateTempDisplay(90.0);
+
+    const ecuStatus = document.getElementById('ecu-status-text');
+    if (ecuStatus) {
+        if (engineRunning) {
+            ecuStatus.innerText = "0 ошибок (OK) • ХХ 780 RPM";
+            ecuStatus.className = "text-emerald-400 font-bold";
+        } else {
+            ecuStatus.innerText = "Двигатель заглушен (0 RPM)";
+            ecuStatus.className = "text-slate-400 font-bold";
+        }
+    }
+
+    const log1 = document.getElementById('vcds-log-line-1');
+    const log2 = document.getElementById('vcds-log-line-2');
+    const log3 = document.getElementById('vcds-log-line-3');
+    if (log1) log1.innerText = "[VAG-COM KKL]: Address 01: Engine (AAM 1.8L Mono)";
+    if (log2) log2.innerText = "ECU: Bosch Mono-Motronic 1.2.3 • Block: EA827 Cast Iron";
+    if (log3) log3.innerText = "K-Line Protocol: 9600 baud • DTC Faults: 0 (No faults)";
+}
+
 // Continuous Frame Loop
 function animationLoop() {
     requestAnimationFrame(animationLoop);
@@ -997,7 +1229,11 @@ function animationLoop() {
                 updateTempDisplay(coolantTemp);
 
                 if (progress >= 1.0 || coolantTemp >= 150.0) {
-                    triggerOverheatDisaster();
+                    if (currentCar === 'octavia') {
+                        triggerOverheatDisaster();
+                    } else if (currentCar === 'golf3') {
+                        triggerGolfIronBlockEasterEgg();
+                    }
                 }
             }
         } else {
@@ -1005,6 +1241,9 @@ function animationLoop() {
             if (coolantTemp > 90.0) {
                 coolantTemp = Math.max(90.0, coolantTemp - 0.35);
                 updateTempDisplay(coolantTemp);
+                if (coolantTemp <= 92.0 && golfIronEasterEggActive) {
+                    golfIronEasterEggActive = false;
+                }
             }
         }
     } else if (!engineRunning && !engineBlown) {
