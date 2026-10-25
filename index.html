@@ -166,6 +166,8 @@
             <button onclick="closeMobileMenu(); openLegalModal('privacy');" class="hover:text-white transition-colors">Политика (152-ФЗ)</button>
             <span>•</span>
             <button onclick="closeMobileMenu(); openLegalModal('consent');" class="hover:text-white transition-colors">Согласие</button>
+            <span>•</span>
+            <button onclick="closeMobileMenu(); showCookieBanner();" class="hover:text-white transition-colors">Cookies</button>
         </div>
         <div class="text-center text-[10px] font-sans text-fog-gray uppercase tracking-[0.12em]">
             © 2026 Глеб Вохрамеев • Saint Petersburg, Russia
@@ -970,6 +972,8 @@
             <span>•</span>
             <button type="button" onclick="openLegalModal('consent')" class="hover:text-white transition-colors">Согласие на обработку ПДн</button>
             <span>•</span>
+            <button type="button" onclick="showCookieBanner()" class="hover:text-white transition-colors">Cookies</button>
+            <span>•</span>
             <a href="https://t.me/TLVRLX" target="_blank" class="hover:text-white transition-colors">Telegram</a>
             <span>•</span>
             <a href="https://github.com/GLEBBOFRI" target="_blank" class="hover:text-white transition-colors">GitHub</a>
@@ -1068,20 +1072,20 @@
 <!-- ==========================================================================
      COOKIE / LOCALSTORAGE NOTIFICATION BANNER (152-FZ & WEB COMPLIANCE)
      ========================================================================== -->
-<aside id="cookie-banner" class="fixed bottom-4 right-4 left-4 sm:left-auto sm:max-w-md z-40 bg-[#14171d]/95 backdrop-blur-md border border-white/15 p-4 rounded-[2px] shadow-2xl transition-all duration-300 transform translate-y-0 hidden flex flex-col gap-3" aria-label="Уведомление об использовании cookies и хранилища">
+<aside id="cookie-banner" class="fixed bottom-20 sm:bottom-6 left-3 right-3 sm:left-auto sm:right-6 sm:max-w-md z-[80] bg-[#12161c]/95 backdrop-blur-xl border border-white/20 p-4 sm:p-5 rounded-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.85)] transition-all duration-500 transform translate-y-8 opacity-0 pointer-events-none flex flex-col gap-3" aria-label="Уведомление об использовании cookies и хранилища">
     <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-2 text-xs font-mono font-bold text-white uppercase tracking-wider">
             <i class="fa-solid fa-shield-halved text-deep-teal"></i>
             <span>Конфиденциальность & Cookies</span>
         </div>
-        <button type="button" onclick="dismissCookieBanner()" aria-label="Закрыть уведомление" class="text-fog-gray hover:text-white text-xs transition-colors">
+        <button type="button" onclick="dismissCookieBanner()" aria-label="Закрыть уведомление" class="w-6 h-6 rounded-[2px] bg-white/5 hover:bg-white/10 text-fog-gray hover:text-white flex items-center justify-center text-xs transition-colors">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
     <p class="text-xs font-sans text-fog-gray leading-relaxed">
         Сайт использует технические файлы cookie и локальное хранилище браузера (localStorage) для сохранения пользовательских настроек сессии и обеспечения стабильной работы интерфейса.
     </p>
-    <div class="flex items-center justify-between gap-3 pt-1">
+    <div class="flex items-center justify-between gap-3 pt-1 border-t border-white/5">
         <button type="button" onclick="openLegalModal('privacy')" class="text-xs font-sans text-white hover:text-deep-teal underline underline-offset-2 transition-colors">
             Подробнее (152-ФЗ)
         </button>

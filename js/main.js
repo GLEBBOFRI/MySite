@@ -2021,19 +2021,18 @@ function printLegalDoc() {
 // ==========================================
 // COOKIE & LOCALSTORAGE BANNER SYSTEM
 // ==========================================
+function showCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    banner.classList.remove('pointer-events-none', 'translate-y-8', 'opacity-0');
+    banner.classList.add('translate-y-0', 'opacity-100');
+}
+
 function initCookieBanner() {
-    try {
-        const consent = localStorage.getItem('gv_cookie_consent');
-        const banner = document.getElementById('cookie-banner');
-        if (!banner) return;
-        if (!consent) {
-            setTimeout(() => {
-                banner.classList.remove('hidden');
-            }, 1200);
-        }
-    } catch (e) {
-        // LocalStorage fallback
-    }
+    // Show banner reliably on site entry across all devices (PC, tablet, mobile)
+    setTimeout(() => {
+        showCookieBanner();
+    }, 500);
 }
 
 function acceptCookieConsent() {
@@ -2041,19 +2040,14 @@ function acceptCookieConsent() {
         localStorage.setItem('gv_cookie_consent', 'accepted');
     } catch (e) {}
     dismissCookieBanner();
-    showToast('Настройки конфиденциальности сохранены', true);
+    showToast('Настройки конфиденциальности приняты', true);
 }
 
 function dismissCookieBanner() {
     const banner = document.getElementById('cookie-banner');
     if (!banner) return;
-    banner.style.opacity = '0';
-    banner.style.transform = 'translateY(16px)';
-    setTimeout(() => {
-        banner.classList.add('hidden');
-        banner.style.opacity = '';
-        banner.style.transform = '';
-    }, 300);
+    banner.classList.remove('translate-y-0', 'opacity-100');
+    banner.classList.add('translate-y-8', 'opacity-0', 'pointer-events-none');
 }
 
 function initDeepLinking() {
