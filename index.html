@@ -249,19 +249,23 @@
                     </div>
                 </div>
 
-                <!-- Metrics Strip in 2px Architectural Panels -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-8 max-w-3xl mx-auto">
+                <!-- Metrics Strip in 2px Architectural Panels (4 cards) -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-8 max-w-4xl mx-auto">
                     <div class="p-5 rounded-[2px] border border-white/10 bg-white/[0.02] text-center">
-                        <div class="user-age-num font-serif text-3xl font-bold text-white">--</div>
+                        <div class="user-age-num font-serif text-2xl sm:text-3xl font-bold text-white">--</div>
                         <div class="text-[11px] font-sans uppercase tracking-[0.14em] text-fog-gray mt-1">Возраст инженера</div>
                     </div>
                     <div class="p-5 rounded-[2px] border border-white/10 bg-white/[0.02] text-center">
-                        <div class="font-serif text-3xl font-bold text-white">НИУ ИТМО</div>
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-white">НИУ ИТМО</div>
                         <div class="text-[11px] font-sans uppercase tracking-[0.14em] text-fog-gray mt-1">Факультет ПИиКТ '29</div>
                     </div>
                     <div class="p-5 rounded-[2px] border border-white/10 bg-white/[0.02] text-center">
-                        <div class="font-serif text-3xl font-bold text-white">1.6 MPI CWVA</div>
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-white">1.6 MPI CWVA</div>
                         <div class="text-[11px] font-sans uppercase tracking-[0.14em] text-fog-gray mt-1">Octavia A7 Black Edition</div>
+                    </div>
+                    <div class="p-5 rounded-[2px] border border-white/10 bg-white/[0.02] text-center">
+                        <div class="font-serif text-2xl sm:text-3xl font-bold text-white">1.8 Mono AAM</div>
+                        <div class="text-[11px] font-sans uppercase tracking-[0.14em] text-fog-gray mt-1">Golf Mk3 Alpine White</div>
                     </div>
                 </div>
             </div>
@@ -606,9 +610,6 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" onclick="resetGolfEasterEgg()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-[2px] font-sans font-medium text-xs whitespace-nowrap transition-colors">
-                        Сбросить 150°C →
-                    </button>
                 </div>
 
                 <!-- Car Stage Presentation -->
@@ -739,7 +740,8 @@
         </div>
 
         <div class="bg-vault-ink px-4 sm:px-8 md:px-12 py-16 sm:py-24 border-b border-white/10">
-            <div class="max-w-[1200px] mx-auto space-y-10">
+            <!-- Octavia Laboratory Section -->
+            <div id="lab-octavia" class="max-w-[1200px] mx-auto space-y-10 transition-all duration-300">
                 <div class="space-y-2 border-b border-white/10 pb-6">
                     <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-electric-violet">
                         ИССЛЕДОВАТЕЛЬСКИЙ СТЕНД // MQB PLATFORM
@@ -779,7 +781,7 @@
                                 <span class="text-xs font-mono font-bold text-deep-teal">
                                     <i class="fa-solid fa-laptop-code mr-2"></i>VCDS / ODIS CAN Bus Protocol Analyzer
                                 </span>
-                                <button onclick="runECUScan()" class="btn-teal text-xs py-1.5 px-3">
+                                <button type="button" onclick="runECUScan()" class="btn-teal text-xs py-1.5 px-3">
                                     Запустить опрос блоков
                                 </button>
                             </div>
@@ -806,6 +808,83 @@
                         <div class="p-4 bg-[#101215] rounded-[2px] border border-white/10 text-center">
                             <div class="text-[10px] font-sans uppercase tracking-[0.14em] text-fog-gray">Персональный гараж</div>
                             <div class="font-serif font-bold text-base text-white mt-0.5">Gleb Vokhrameev Edition</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Golf Mk3 Laboratory Section -->
+            <div id="lab-golf3" class="max-w-[1200px] mx-auto space-y-10 transition-all duration-300 hidden">
+                <div class="space-y-2 border-b border-white/10 pb-6">
+                    <div class="text-[11px] font-sans font-semibold uppercase tracking-[0.18em] text-emerald-400">
+                        ИССЛЕДОВАТЕЛЬСКИЙ СТЕНД // ПЛАТФОРМА A3 (PQ) & ЧУГУН EA827
+                    </div>
+                    <h1 class="font-serif-heading font-semibold text-white tracking-[0.02em]">
+                        Volkswagen Golf Mk3 Laboratory
+                    </h1>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-8 card-dark p-8 space-y-6 border border-white/10">
+                        <h3 class="font-serif-subheading font-bold text-white">
+                            Техническое Досье двигателя 1.8 8V (AAM)
+                        </h3>
+                        <p class="text-sm font-sans text-slate-300 leading-relaxed">
+                            Легендарный 8-клапанный чугунный двигатель семейства EA827 с верхним распредвалом (SOHC) и центральным моновпрыском Bosch Mono-Motronic 1.2.3. Конструкция абсолютного немецкого «миллионника»: степень сжатия 9.0:1 под любой бензин (АИ-92), а при обрыве ремня ГРМ клапана гарантированно не гнёт!
+                        </p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 font-sans text-xs">
+                            <div class="card-peach p-4 text-center">
+                                <span class="text-fog-gray uppercase text-[10px] tracking-wider">Рабочий объем</span>
+                                <div class="font-serif text-lg font-bold text-white mt-1">1781 см³</div>
+                            </div>
+                            <div class="card-mint p-4 text-center">
+                                <span class="text-fog-gray uppercase text-[10px] tracking-wider">Крутящий момент</span>
+                                <div class="font-serif text-lg font-bold text-white mt-1">140 N·m @ 2500</div>
+                            </div>
+                            <div class="card-lavender p-4 text-center">
+                                <span class="text-fog-gray uppercase text-[10px] tracking-wider">Блок цилиндров</span>
+                                <div class="font-serif text-lg font-bold text-emerald-300 mt-1">Чугун EA827</div>
+                            </div>
+                            <div class="card-dark p-4 text-center bg-white/[0.03] border border-white/10">
+                                <span class="text-fog-gray uppercase text-[10px] tracking-wider">ГРМ</span>
+                                <div class="font-serif text-sm font-bold text-white mt-1.5">Не гнёт клапана</div>
+                            </div>
+                        </div>
+
+                        <!-- VAG-COM KKL / OBD-2 Scanner Simulator for Golf 3 -->
+                        <div class="p-6 rounded-[2px] bg-[#101215] border border-white/10 space-y-4 text-white">
+                            <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                                <span class="text-xs font-mono font-bold text-emerald-400">
+                                    <i class="fa-solid fa-microchip mr-2"></i>VAG-COM 409.1 KKL / Диагностика ЭБУ
+                                </span>
+                                <button type="button" onclick="runECUScan()" class="btn-teal text-xs py-1.5 px-3">
+                                    Запустить опрос блоков
+                                </button>
+                            </div>
+                            <div id="ecu-scan-output-golf" class="h-36 overflow-y-auto space-y-1 font-mono text-[11px] p-3 rounded-[2px] bg-black/60 border border-white/10 text-fog-gray">
+                                <div>&gt; Нажмите кнопку для запуска поиска блоков ЭБУ Гольфа 3...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Specification Card (Philosophy of VAG - Platform PQ) -->
+                    <div class="lg:col-span-4 card-dark p-8 flex flex-col justify-between space-y-6 border border-white/10">
+                        <div class="space-y-4">
+                            <div class="w-10 h-10 rounded-[2px] bg-white/5 border border-white/10 flex items-center justify-center text-amber-400 text-lg">
+                                <i class="fa-solid fa-wrench"></i>
+                            </div>
+                            <h3 class="font-serif-subheading font-bold text-white">
+                                Философия VAG & Платформа PQ
+                            </h3>
+                            <p class="text-sm font-sans text-slate-300 leading-relaxed">
+                                Архитектура платформы Volkswagen A3 (PQ) — триумф механической долговечности 90-х. Предельная простота конструкции, феноменальная ремонтопригодность «на коленке в гараже», толстый кузовной металл и инженерный фундамент, на котором выросла вся модульная империя VAG.
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-[#101215] rounded-[2px] border border-white/10 text-center">
+                            <div class="text-[10px] font-sans uppercase tracking-[0.14em] text-fog-gray">Персональный гараж</div>
+                            <div class="font-serif font-bold text-base text-white mt-0.5">Golf Mk3 Alpine White Edition</div>
                         </div>
                     </div>
                 </div>

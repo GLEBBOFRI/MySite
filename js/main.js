@@ -721,6 +721,11 @@ function switchCar(carId) {
         if (octSpecs) octSpecs.classList.remove('hidden');
         if (golfSpecs) golfSpecs.classList.add('hidden');
 
+        const octLab = document.getElementById('lab-octavia');
+        const golfLab = document.getElementById('lab-golf3');
+        if (octLab) octLab.classList.remove('hidden');
+        if (golfLab) golfLab.classList.add('hidden');
+
         if (carTitle) carTitle.innerText = "Škoda Octavia A7 Black Edition";
         if (carSubtitle) carSubtitle.innerText = "ИНТЕРАКТИВНЫЙ СТЕНД // ŠKODA OCTAVIA A7";
         if (carDesc) carDesc.innerText = "Черная Octavia A7 — образец сдержанного автомобильного дизайна и рабочий исследовательский стенд для отладки алгоритмов телеметрии CAN-шины.";
@@ -745,6 +750,11 @@ function switchCar(carId) {
 
         if (octSpecs) octSpecs.classList.add('hidden');
         if (golfSpecs) golfSpecs.classList.remove('hidden');
+
+        const octLab = document.getElementById('lab-octavia');
+        const golfLab = document.getElementById('lab-golf3');
+        if (octLab) octLab.classList.add('hidden');
+        if (golfLab) golfLab.classList.remove('hidden');
 
         if (carTitle) carTitle.innerText = "Volkswagen Golf Mk3 1.8 AAM (3-Door)";
         if (carSubtitle) carSubtitle.innerText = "ИНТЕРАКТИВНЫЙ СТЕНД // VOLKSWAGEN GOLF MK3";
@@ -1294,8 +1304,37 @@ if (document.readyState !== 'loading') {
     animationLoop();
 }
 
-// ECU Scan Simulator Logic (with dramatic blown engine diagnostic output)
+// ECU Scan Simulator Logic (with dramatic blown engine diagnostic output & Golf 3 OBD-2 Easter Egg)
 function runECUScan() {
+    if (currentCar === 'golf3') {
+        const golfOutput = document.getElementById('ecu-scan-output-golf') || document.getElementById('ecu-scan-output');
+        if (!golfOutput) return;
+        golfOutput.innerHTML = "";
+
+        const golfLogs = [
+            { icon: "fa-solid fa-terminal text-emerald-400", text: "[K-Line / 2x2 переходник]: Подключение диагностических фишек под заглушкой у пепельницы...", color: "text-slate-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 01 [ЭБУ Двигателя Bosch Mono-Motronic]: Опрос датчиков... Ошибка: НЕ ЗНАЮ (ECU не отвечает на современные пакеты)", color: "text-amber-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 02 [АКПП / Трансмиссия]: Поиск блока управления... Ошибка: НЕ ЗНАЮ! (Здесь стоит чистая 5-ступенчатая механика 020)", color: "text-amber-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 03 [Тормозная система ABS/ESP]: Опрос шины... Ошибка: НЕ ЗНАЮ (Торможение силой правой ноги, системы стабилизации отсутствуют)", color: "text-amber-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 08 [Климат-контроль]: Опрос климатической установки... Ошибка: НЕ ЗНАЮ (Из климата — только тросики заслонок печки и ручной люк)", color: "text-amber-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 15 [Подушки безопасности SRS]: Опрос датчиков удара... Ошибка: НЕ ЗНАЮ", color: "text-amber-300" },
+            { icon: "fa-solid fa-question text-amber-400", text: "Адрес 17 [Приборная панель]: Чтение цифрового одометра... Ошибка: НЕ ЗНАЮ (Спидометр крутится железным механическим тросиком)", color: "text-amber-300" },
+            { icon: "fa-solid fa-triangle-exclamation text-amber-400", text: "Адрес 19 [Диагностический CAN Gateway]: Поиск цифровой шины данных... ВЫ СЕРЬЁЗНО?! Какая CAN-шина на платформе A3 в 90-х?!", color: "text-amber-400 font-bold" },
+            { icon: "fa-solid fa-face-laugh-squint text-emerald-400 text-base", text: "ИТОГОВЫЙ ВЕРДИКТ: Брат, у Гольфа 3 НЕТУ OBD-2! Чего ты там вообще прочитать пытаешься?! Бери стробоскоп и ключ на 13 — чугунный 1.8 AAM переживёт нас всех!", color: "text-emerald-300 font-black" }
+        ];
+
+        golfLogs.forEach((item, index) => {
+            setTimeout(() => {
+                const line = document.createElement('div');
+                line.className = `flex items-start gap-2 ${item.color}`;
+                line.innerHTML = `<i class="${item.icon} mt-0.5 flex-shrink-0"></i><span>${item.text}</span>`;
+                golfOutput.appendChild(line);
+                golfOutput.scrollTop = golfOutput.scrollHeight;
+            }, index * 260);
+        });
+        return;
+    }
+
     const output = document.getElementById('ecu-scan-output');
     if (!output) return;
     output.innerHTML = "";
