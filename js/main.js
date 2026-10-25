@@ -1260,6 +1260,13 @@ async function handleContactSubmit(event) {
     const contact = document.getElementById('contact-contact').value.trim();
     const subject = document.getElementById('contact-subject').value.trim();
     const message = document.getElementById('contact-message').value.trim();
+    const consent = document.getElementById('contact-consent');
+
+    if (consent && !consent.checked) {
+        showToast('Для отправки подтвердите согласие на обработку персональных данных (152-ФЗ)', false);
+        consent.focus();
+        return;
+    }
 
     if (!BOT_TOKEN || BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
         showToast('Токен бота не настроен в js/config.js. Заполните js/config.js для отправки.', false);
@@ -1541,6 +1548,16 @@ window.addEventListener('keydown', (e) => {
     if (targetTag === 'textarea') return;
 
     if (e.key === 'Escape') {
+        const legalModal = document.getElementById('legal-modal');
+        if (legalModal && !legalModal.classList.contains('hidden')) {
+            closeLegalModal();
+            return;
+        }
+        const codeModal = document.getElementById('code-modal');
+        if (codeModal && !codeModal.classList.contains('hidden')) {
+            toggleCodeModal();
+            return;
+        }
         if (easterEggModalOpen) {
             closeEasterEggModal();
             return;
@@ -1894,12 +1911,163 @@ function escapeHtml(str) {
         .replace(/'/g, '&#039;');
 }
 
+
+// ==========================================
+// 152-FZ COMPLIANCE & LEGAL MODAL SYSTEM
+// ==========================================
+let currentLegalTab = 'privacy';
+
+function openLegalModal(tab = 'privacy') {
+    const modal = document.getElementById('legal-modal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    switchLegalTab(tab);
+}
+
+function closeLegalModal() {
+    const modal = document.getElementById('legal-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+    if (window.location.hash === '#privacy' || window.location.hash === '#consent') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+}
+
+function handleLegalModalBackdrop(e) {
+    if (e.target && e.target.id === 'legal-modal') {
+        closeLegalModal();
+    }
+}
+
+function switchLegalTab(tab = 'privacy') {
+    currentLegalTab = tab;
+    const tabPrivacyBtn = document.getElementById('legal-tab-privacy');
+    const tabConsentBtn = document.getElementById('legal-tab-consent');
+    const viewPrivacy = document.getElementById('legal-view-privacy');
+    const viewConsent = document.getElementById('legal-view-consent');
+    const bodyContainer = document.getElementById('legal-modal-body');
+
+    if (tab === 'consent') {
+        if (tabPrivacyBtn) {
+            tabPrivacyBtn.className = 'px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap transition-colors';
+        }
+        if (tabConsentBtn) {
+            tabConsentBtn.className = 'px-3 py-1.5 rounded-[2px] text-xs font-mono bg-deep-teal text-white font-bold whitespace-nowrap transition-colors';
+        }
+        if (viewPrivacy) viewPrivacy.classList.add('hidden');
+        if (viewConsent) viewConsent.classList.remove('hidden');
+    } else {
+        if (tabPrivacyBtn) {
+            tabPrivacyBtn.className = 'px-3 py-1.5 rounded-[2px] text-xs font-mono bg-deep-teal text-white font-bold whitespace-nowrap transition-colors';
+        }
+        if (tabConsentBtn) {
+            tabConsentBtn.className = 'px-3 py-1.5 rounded-[2px] text-xs font-mono text-fog-gray hover:text-white bg-white/5 whitespace-nowrap transition-colors';
+        }
+        if (viewPrivacy) viewPrivacy.classList.remove('hidden');
+        if (viewConsent) viewConsent.classList.add('hidden');
+    }
+    if (bodyContainer) {
+        bodyContainer.scrollTop = 0;
+    }
+}
+
+function printLegalDoc() {
+    const activeView = currentLegalTab === 'consent'
+        ? document.getElementById('legal-view-consent')
+        : document.getElementById('legal-view-privacy');
+
+    if (!activeView) {
+        window.print();
+        return;
+    }
+
+    const printWin = window.open('', '_blank');
+    if (!printWin) {
+        window.print();
+        return;
+    }
+
+    printWin.document.write(`
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+            <title>${currentLegalTab === 'consent' ? 'Согласие на обработку персональных данных' : 'Политика конфиденциальности (152-ФЗ)'}</title>
+            <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #111; padding: 40px; max-width: 800px; margin: 0 auto; font-size: 14px; }
+                h2 { font-size: 20px; border-bottom: 2px solid #ccc; padding-bottom: 8px; margin-bottom: 20px; }
+                h3 { font-size: 15px; margin-top: 20px; margin-bottom: 8px; }
+                p, li { margin-bottom: 8px; color: #333; }
+                ul { padding-left: 20px; }
+                @media print { body { padding: 0; } }
+            </style>
+        </head>
+        <body>
+            ${activeView.innerHTML}
+        </body>
+        </html>
+    `);
+    printWin.document.close();
+    printWin.focus();
+    setTimeout(() => {
+        try {
+            printWin.print();
+        } catch (e) {}
+    }, 250);
+}
+
+// ==========================================
+// COOKIE & LOCALSTORAGE BANNER SYSTEM
+// ==========================================
+function initCookieBanner() {
+    try {
+        const consent = localStorage.getItem('gv_cookie_consent');
+        const banner = document.getElementById('cookie-banner');
+        if (!banner) return;
+        if (!consent) {
+            setTimeout(() => {
+                banner.classList.remove('hidden');
+            }, 1200);
+        }
+    } catch (e) {
+        // LocalStorage fallback
+    }
+}
+
+function acceptCookieConsent() {
+    try {
+        localStorage.setItem('gv_cookie_consent', 'accepted');
+    } catch (e) {}
+    dismissCookieBanner();
+    showToast('Настройки конфиденциальности сохранены', true);
+}
+
+function dismissCookieBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(16px)';
+    setTimeout(() => {
+        banner.classList.add('hidden');
+        banner.style.opacity = '';
+        banner.style.transform = '';
+    }, 300);
+}
+
 function initDeepLinking() {
     const hash = window.location.hash.replace('#', '').toLowerCase();
-    if (hash && ['home', 'about', 'octavia', 'portfolio', 'contact'].includes(hash)) {
+    if (hash === 'privacy' || hash === 'consent') {
+        openLegalModal(hash);
+    } else if (hash && ['home', 'about', 'octavia', 'portfolio', 'contact'].includes(hash)) {
         switchTab(hash);
     }
 }
+
+window.addEventListener('hashchange', () => {
+    initDeepLinking();
+});
 
 // Initialize on DOM load
 if (document.readyState === 'loading') {
@@ -1908,12 +2076,14 @@ if (document.readyState === 'loading') {
         initEggCanvas();
         syncSparksButtonUI();
         initDeepLinking();
+        initCookieBanner();
     });
 } else {
     initTerminal();
     initEggCanvas();
     syncSparksButtonUI();
     initDeepLinking();
+    initCookieBanner();
 }
 
 console.log(
