@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#191b1f"/>
+      <stop offset="100%" stop-color="#0f1114"/>
+    </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5d061"/>
+      <stop offset="100%" stop-color="#186f64"/>
+    </linearGradient>
+  </defs>
+  <!-- Background with 2px architectural feel -->
+  <rect x="2" y="2" width="60" height="60" rx="10" ry="10" fill="url(#bgGrad)" stroke="#186f64" stroke-width="2.5" stroke-opacity="0.8"/>
+  <!-- Inner Monogram Border -->
+  <rect x="6" y="6" width="52" height="52" rx="7" ry="7" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.1"/>
+  <!-- GV Monogram -->
+  <text x="32" y="42" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-size="28" font-weight="800" text-anchor="middle" letter-spacing="-1.5" fill="url(#brandGrad)">GV</text>
+</svg>

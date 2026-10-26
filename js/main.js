@@ -1520,16 +1520,13 @@ function escapeHtml(str) {
         .replace(/'/g, "&#039;");
 }
 
-// Unified Contact Form Submission Handler (reads token securely from git-ignored config.js)
+// Secure Contact Form Backend Endpoint (Cloudflare Worker / Serverless Proxy)
+// Replace with your deployed Cloudflare Worker URL or set window.CONTACT_API_URL
+const CONTACT_API_ENDPOINT = window.CONTACT_API_URL || 'https://vokhr-contact-api.workers.dev';
+
+// Unified Contact Form Submission Handler (Secure Serverless Architecture)
 async function handleContactSubmit(event) {
     event.preventDefault();
-
-    const BOT_TOKEN = (window.TG_CONFIG && window.TG_CONFIG.BOT_TOKEN) 
-        ? window.TG_CONFIG.BOT_TOKEN 
-        : '';
-    const CHAT_ID = (window.TG_CONFIG && window.TG_CONFIG.CHAT_ID) 
-        ? window.TG_CONFIG.CHAT_ID 
-        : '1016044756';
 
     const btn = document.getElementById('contact-submit-btn');
     const btnText = document.getElementById('btn-text');
@@ -1546,56 +1543,62 @@ async function handleContactSubmit(event) {
         return;
     }
 
-    if (!BOT_TOKEN || BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-        showToast('Токен бота не настроен в js/config.js. Заполните js/config.js для отправки.', false);
+    if (!name || !contact || !message) {
+        showToast('Пожалуйста, заполните все обязательные поля формы.', false);
         return;
     }
-
-    const text = `<b>[НОВОЕ СООБЩЕНИЕ С САЙТА]</b>\n\n` +
-        `<b>От:</b> ${escapeHtml(name)}\n` +
-        `<b>Контакт:</b> ${escapeHtml(contact)}\n` +
-        `<b>Тема:</b> ${escapeHtml(subject)}\n\n` +
-        `<b>Сообщение:</b>\n${escapeHtml(message)}`;
 
     if (btn) btn.disabled = true;
     if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Отправка...';
 
     try {
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        const response = await fetch(CONTACT_API_ENDPOINT, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: text,
-                parse_mode: 'HTML'
+                name: name,
+                contact: contact,
+                subject: subject || 'Сообщение с сайта vokhr.is-a.dev',
+                message: message
             })
         });
 
-        const data = await response.json();
+        let data = {};
+        try {
+            data = await response.json();
+        } catch (e) {
+            data = { ok: response.ok };
+        }
 
-        if (data.ok) {
+        if (response.ok && data.ok) {
             if (btnText) btnText.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Отправлено!';
             document.getElementById('contact-form').reset();
             showToast('Сообщение успешно отправлено мне в Telegram!', true);
 
             setTimeout(() => {
-                if (btnText) btnText.innerHTML = 'Отправить <i class="fa-solid fa-paper-plane ml-2"></i>';
+                if (btnText) btnText.innerHTML = 'Отправить в Telegram <i class="fa-solid fa-paper-plane ml-2"></i>';
                 if (btn) btn.disabled = false;
             }, 3000);
         } else {
-            throw new Error(data.description || 'Ошибка Telegram API');
+            throw new Error(data.error || data.message || `Ошибка сервера (${response.status})`);
         }
     } catch (error) {
-        console.error('Ошибка отправки сообщения:', error);
+        console.error('Ошибка отправки формы:', error);
         if (btnText) btnText.innerHTML = '<i class="fa-solid fa-xmark mr-2"></i>Ошибка';
-        showToast('Не удалось отправить сообщение: ' + (error.message || 'Ошибка сети'), false);
+        
+        // Informative message if worker is still deploying
+        const msg = error.message.includes('Failed to fetch') 
+            ? 'Сервер отправки недоступен или развертывается. Напишите мне напрямую в Telegram: @TLVRLX' 
+            : error.message;
+        showToast('Не удалось отправить: ' + msg, false);
 
         setTimeout(() => {
-            if (btnText) btnText.innerHTML = 'Отправить <i class="fa-solid fa-paper-plane ml-2"></i>';
+            if (btnText) btnText.innerHTML = 'Отправить в Telegram <i class="fa-solid fa-paper-plane ml-2"></i>';
             if (btn) btn.disabled = false;
-        }, 3000);
+        }, 4000);
     }
 }
 

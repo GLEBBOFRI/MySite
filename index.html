@@ -6,6 +6,10 @@
     <title>Глеб Вохрамеев — Backend Engineer & Automotive VAG Lab</title>
     <meta name="description" content="Глеб Вохрамеев — Backend-разработчик (Java Spring Boot) и студент НИУ ИТМО. Исследования VAG CAN-Bus, распределенные сервисы и системная инженерия.">
 
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+
     <!-- Typography: Plus Jakarta Sans (Clean Minimalist Grotesque), Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1059,20 +1063,20 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
                                     <label for="contact-name" class="text-xs font-sans text-fog-gray uppercase tracking-wider">Ваше имя</label>
-                                    <input type="text" id="contact-name" name="name" required placeholder="Александр" class="letter-input-dark w-full">
+                                    <input type="text" id="contact-name" name="name" autocomplete="name" required placeholder="Александр" class="letter-input-dark w-full">
                                 </div>
                                 <div class="space-y-1.5">
                                     <label for="contact-contact" class="text-xs font-sans text-fog-gray uppercase tracking-wider">Email или Telegram</label>
-                                    <input type="text" id="contact-contact" name="contact" required placeholder="@username" class="letter-input-dark w-full">
+                                    <input type="text" id="contact-contact" name="contact" autocomplete="email" required placeholder="@username" class="letter-input-dark w-full">
                                 </div>
                             </div>
                             <div class="space-y-1.5">
                                 <label for="contact-subject" class="text-xs font-sans text-fog-gray uppercase tracking-wider">Тема</label>
-                                <input type="text" id="contact-subject" name="subject" required placeholder="Предложение о сотрудничестве" class="letter-input-dark w-full">
+                                <input type="text" id="contact-subject" name="subject" autocomplete="off" required placeholder="Предложение о сотрудничестве" class="letter-input-dark w-full">
                             </div>
                             <div class="space-y-1.5">
                                 <label for="contact-message" class="text-xs font-sans text-fog-gray uppercase tracking-wider">Сообщение</label>
-                                <textarea id="contact-message" name="message" rows="4" required placeholder="Опишите детали проекта или задачи..." class="letter-input-dark w-full"></textarea>
+                                <textarea id="contact-message" name="message" rows="4" autocomplete="off" required placeholder="Опишите детали проекта или задачи..." class="letter-input-dark w-full"></textarea>
                             </div>
                             <!-- 152-FZ Consent Checkbox -->
                             <div class="pt-1">
@@ -1498,7 +1502,6 @@
 <canvas id="easter-egg-canvas" class="pointer-events-none fixed inset-0 z-[10000]"></canvas>
 
 <!-- Scripts -->
-<script src="js/config.js"></script>
 <script src="js/main.js" defer></script>
 </body>
 </html>
