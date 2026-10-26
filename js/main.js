@@ -207,7 +207,7 @@ class OctaviaSoundSystem {
             gain.connect(this.masterGain);
             osc.start(now);
             osc.stop(now + 0.025);
-        } catch (e) {}
+        } catch (e) { }
     }
 
     // Play starter cranking sequence
@@ -422,7 +422,7 @@ class OctaviaSoundSystem {
                 if (this.oscMid) this.oscMid.stop();
                 if (this.oscHigh) this.oscHigh.stop();
                 if (this.intakeNoise) this.intakeNoise.stop();
-            } catch (e) {}
+            } catch (e) { }
             this.isPlaying = false;
         }, 700);
     }
@@ -1493,11 +1493,10 @@ function showToast(message, isSuccess = true) {
 
     const toast = document.createElement('div');
     toast.id = 'app-toast';
-    toast.className = `fixed bottom-20 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-md z-[10002] px-5 py-3.5 rounded-[2px] font-mono text-xs flex items-center gap-3 shadow-2xl transition-all duration-300 ${
-        isSuccess 
-        ? 'bg-[#16a34a] text-white border border-[#22c55e]' 
+    toast.className = `fixed bottom-20 sm:bottom-8 left-4 right-4 sm:left-auto sm:right-8 sm:max-w-md z-[10002] px-5 py-3.5 rounded-[2px] font-mono text-xs flex items-center gap-3 shadow-2xl transition-all duration-300 ${isSuccess
+        ? 'bg-[#16a34a] text-white border border-[#22c55e]'
         : 'bg-[#dc2626] text-white border border-[#ef4444]'
-    }`;
+        }`;
     toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'} text-white text-base flex-shrink-0"></i> <span class="break-words leading-relaxed font-medium">${message}</span>`;
     document.body.appendChild(toast);
 
@@ -1522,7 +1521,7 @@ function escapeHtml(str) {
 
 // Secure Contact Form Backend Endpoint (Cloudflare Worker / Serverless Proxy)
 // Replace with your deployed Cloudflare Worker URL or set window.CONTACT_API_URL
-const CONTACT_API_ENDPOINT = window.CONTACT_API_URL || 'https://vokhr-contact-api.workers.dev';
+const CONTACT_API_ENDPOINT = window.CONTACT_API_URL || 'https://tgapi.vokhrameevgl.workers.dev';
 
 // Unified Contact Form Submission Handler (Secure Serverless Architecture)
 async function handleContactSubmit(event) {
@@ -1588,10 +1587,10 @@ async function handleContactSubmit(event) {
     } catch (error) {
         console.error('Ошибка отправки формы:', error);
         if (btnText) btnText.innerHTML = '<i class="fa-solid fa-xmark mr-2"></i>Ошибка';
-        
+
         // Informative message if worker is still deploying
-        const msg = error.message.includes('Failed to fetch') 
-            ? 'Сервер отправки недоступен или развертывается. Напишите мне напрямую в Telegram: @TLVRLX' 
+        const msg = error.message.includes('Failed to fetch')
+            ? 'Сервер отправки недоступен или развертывается. Напишите мне напрямую в Telegram: @TLVRLX'
             : error.message;
         showToast('Не удалось отправить: ' + msg, false);
 
@@ -1718,7 +1717,7 @@ function toggleClickSparks() {
     clickSparksEnabled = !clickSparksEnabled;
     try {
         localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
-    } catch (e) {}
+    } catch (e) { }
     syncSparksButtonUI();
     if (clickSparksEnabled) {
         spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 45, ['#186f64', '#536eff', '#ffffff', '#00f0ff', '#f5d061']);
@@ -2018,7 +2017,7 @@ async function handleTerminalSubmit(e) {
             }
             try {
                 localStorage.setItem('vag_click_sparks', clickSparksEnabled ? 'true' : 'false');
-            } catch (err) {}
+            } catch (err) { }
             syncSparksButtonUI();
 
             if (clickSparksEnabled) {
@@ -2295,7 +2294,7 @@ function printLegalDoc() {
     setTimeout(() => {
         try {
             printWin.print();
-        } catch (e) {}
+        } catch (e) { }
     }, 250);
 }
 
@@ -2319,7 +2318,7 @@ function initCookieBanner() {
 function acceptCookieConsent() {
     try {
         localStorage.setItem('gv_cookie_consent', 'accepted');
-    } catch (e) {}
+    } catch (e) { }
     dismissCookieBanner();
     showToast('Настройки конфиденциальности приняты', true);
 }
